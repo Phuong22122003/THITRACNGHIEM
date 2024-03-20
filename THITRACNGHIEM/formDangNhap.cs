@@ -71,7 +71,5 @@ namespace WindowsFormsApp1
             this.cmbCoSo.ValueMember = "TENSERVER";
             conn.Close();
         }
-
-
     }
 }
