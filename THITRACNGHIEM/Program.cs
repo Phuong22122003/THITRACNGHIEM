@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
         /// </summary>
         public static SqlConnection conn = new SqlConnection();// kết nối về bằng tài khoảng đã đăng nhập
         public static String connstr;
-        public static String connstr_publisher = "Data Source=PHUONG;Initial Catalog=TN_CSDLPT;Integrated Security=True";
+        public static String connstr_publisher = "Data Source=LAPTOP-3KF7N80A;Initial Catalog=TN_CSDLPT;Integrated Security=True";
 
         public static SqlDataReader myReader;
         public static String servername = "";
