@@ -31,12 +31,15 @@ namespace WindowsFormsApp1
             String loginName;
             String password;
             Program.servername = cmbCoSo.SelectedValue.ToString();
-            loginName= Program.mlogin = inputTK.Text;
-            password=  Program.password = inputMK.Text;
+            loginName= Program.mloginDN = Program.mlogin = inputTK.Text;
+            password= Program.passwordDN = Program.password = inputMK.Text;
+            Program.mCoSo = cmbCoSo.SelectedIndex;
             if (Program.KetNoi() == 1)
             {
                 SqlDataReader reader =  Program.ExecSqlDataReader("exec SP_LayThongTinDangNhap " + Program.mlogin);
-                if (reader.Read()) this.parentForm.showInfo((String)reader[0], (String)reader[1]);
+                if (reader.Read())this.parentForm.showInfo((String)reader[0], (String)reader[1]);
+                
+                else MessageBox.Show("Tài khoảng không hợp lệ");
             }
             else
             {
@@ -46,8 +49,8 @@ namespace WindowsFormsApp1
                 {
                 SqlDataReader reader = Program.ExecSqlDataReader("exec  Sp_LayThongTinSinhVien '" + loginName + "' , '"+ password+"'" );
                 Console.WriteLine(loginName+ ' '+ password);
-                if (reader.Read()) this.parentForm.showInfo((String)reader[0],"SINHVIEN");
-                else MessageBox.Show("Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n ", "", MessageBoxButtons.OK);
+                    if (reader.Read()) this.parentForm.showInfo((String)reader[0], "SINHVIEN");
+                    else MessageBox.Show("Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n ", "", MessageBoxButtons.OK);
                 }
             }
         }
@@ -69,6 +72,7 @@ namespace WindowsFormsApp1
             this.cmbCoSo.DataSource = tmp;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
+            Program.bds_dspm.DataSource = tmp;
             conn.Close();
         }
 
