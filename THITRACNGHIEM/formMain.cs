@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using THITRACNGHIEM;
 
 namespace WindowsFormsApp1
 {
@@ -65,5 +66,16 @@ namespace WindowsFormsApp1
             btnDangNhap.PerformClick();
         }
 
+        private void btnMonHoc_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExist(typeof(formMonHoc));
+            if (frm != null) frm.Activate();
+            else
+            {
+                formMonHoc f = new formMonHoc(this);
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
     }
 }

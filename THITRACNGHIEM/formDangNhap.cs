@@ -69,13 +69,12 @@ namespace WindowsFormsApp1
             String statement = "SELECT * FROM V_DS_PHANMANH";
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement,conn);
             sqlDataAdapter.Fill(tmp);
-            this.cmbCoSo.DataSource = tmp;
+            Program.bds_dspm.DataSource = tmp;
+            this.cmbCoSo.DataSource = Program.bds_dspm;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             Program.bds_dspm.DataSource = tmp;
             conn.Close();
         }
-
-
     }
 }

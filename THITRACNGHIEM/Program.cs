@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using THITRACNGHIEM;
 
 namespace WindowsFormsApp1
 {
