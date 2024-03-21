@@ -52,6 +52,7 @@ namespace WindowsFormsApp1
                 this.userName.Caption = "UserName: " + loginName;
             else this.userName.Caption = "Họ và tên: " + loginName;
                 this.group.Caption = "Nhóm: " + group;
+            Program.mGroup = group;
         }
         public void clearInfo()
         {
