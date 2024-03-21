@@ -42,7 +42,7 @@
             // 
             // inputTK
             // 
-            this.inputTK.Location = new System.Drawing.Point(678, 454);
+            this.inputTK.Location = new System.Drawing.Point(339, 257);
             this.inputTK.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.inputTK.Name = "inputTK";
             this.inputTK.Size = new System.Drawing.Size(609, 26);
@@ -50,7 +50,7 @@
             // 
             // inputMK
             // 
-            this.inputMK.Location = new System.Drawing.Point(678, 585);
+            this.inputMK.Location = new System.Drawing.Point(339, 329);
             this.inputMK.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.inputMK.Name = "inputMK";
             this.inputMK.Properties.PasswordChar = '*';
@@ -86,7 +86,7 @@
             // 
             // btnDangNhap
             // 
-            this.btnDangNhap.Location = new System.Drawing.Point(618, 831);
+            this.btnDangNhap.Location = new System.Drawing.Point(224, 495);
             this.btnDangNhap.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.btnDangNhap.Name = "btnDangNhap";
             this.btnDangNhap.Size = new System.Drawing.Size(240, 68);
@@ -96,7 +96,7 @@
             // 
             // btnThoat
             // 
-            this.btnThoat.Location = new System.Drawing.Point(1014, 831);
+            this.btnThoat.Location = new System.Drawing.Point(639, 495);
             this.btnThoat.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.btnThoat.Name = "btnThoat";
             this.btnThoat.Size = new System.Drawing.Size(240, 68);

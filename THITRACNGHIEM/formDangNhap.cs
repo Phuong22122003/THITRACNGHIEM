@@ -31,6 +31,7 @@ namespace WindowsFormsApp1
             String loginName;
             String password;
             Program.servername = cmbCoSo.SelectedValue.ToString();
+            Program.mChinhanh = cmbCoSo.SelectedIndex;
             loginName= Program.mlogin = inputTK.Text;
             password=  Program.password = inputMK.Text;
             if (Program.KetNoi() == 1)
@@ -66,7 +67,8 @@ namespace WindowsFormsApp1
             String statement = "SELECT * FROM V_DS_PHANMANH";
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement,conn);
             sqlDataAdapter.Fill(tmp);
-            this.cmbCoSo.DataSource = tmp;
+            Program.bds_dspm.DataSource = tmp;
+            this.cmbCoSo.DataSource = Program.bds_dspm;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             conn.Close();

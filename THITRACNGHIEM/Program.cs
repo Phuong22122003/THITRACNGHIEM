@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using THITRACNGHIEM;
 
 namespace WindowsFormsApp1
 {
@@ -35,7 +36,7 @@ namespace WindowsFormsApp1
         public static String mGroup = "";
         public static String mHoten = "";
 
-        public static int mChinhanh = 0;
+        public static int mChinhanh = 1;
 
         public static BindingSource bds_dspm = new BindingSource();  // giữ bdsPM khi đăng nhập
         public static formMain frmChinh;
