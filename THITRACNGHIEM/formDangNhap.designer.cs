@@ -36,70 +36,72 @@
             this.btnDangNhap = new DevExpress.XtraEditors.SimpleButton();
             this.btnThoat = new DevExpress.XtraEditors.SimpleButton();
             this.cmbCoSo = new System.Windows.Forms.ComboBox();
+            this.radioGiaoVien = new System.Windows.Forms.RadioButton();
+            this.radioSinhVien = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.inputTK.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputMK.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // inputTK
             // 
-            this.inputTK.Location = new System.Drawing.Point(339, 257);
-            this.inputTK.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.inputTK.Location = new System.Drawing.Point(649, 296);
+            this.inputTK.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.inputTK.Name = "inputTK";
-            this.inputTK.Size = new System.Drawing.Size(609, 26);
+            this.inputTK.Size = new System.Drawing.Size(253, 22);
             this.inputTK.TabIndex = 1;
             // 
             // inputMK
             // 
-            this.inputMK.Location = new System.Drawing.Point(339, 329);
-            this.inputMK.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.inputMK.Location = new System.Drawing.Point(649, 353);
+            this.inputMK.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.inputMK.Name = "inputMK";
             this.inputMK.Properties.PasswordChar = '*';
-            this.inputMK.Size = new System.Drawing.Size(609, 26);
+            this.inputMK.Size = new System.Drawing.Size(253, 22);
             this.inputMK.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(201, 166);
+            this.label1.Location = new System.Drawing.Point(527, 223);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
+            this.label1.Size = new System.Drawing.Size(42, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Cơ sở";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(201, 260);
+            this.label2.Location = new System.Drawing.Point(527, 298);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 20);
+            this.label2.Size = new System.Drawing.Size(68, 16);
             this.label2.TabIndex = 4;
             this.label2.Text = "Tài Khoản";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(201, 332);
+            this.label3.Location = new System.Drawing.Point(527, 356);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 20);
+            this.label3.Size = new System.Drawing.Size(61, 16);
             this.label3.TabIndex = 5;
             this.label3.Text = "Mật khẩu";
             // 
             // btnDangNhap
             // 
-            this.btnDangNhap.Location = new System.Drawing.Point(224, 495);
-            this.btnDangNhap.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.btnDangNhap.Location = new System.Drawing.Point(557, 473);
+            this.btnDangNhap.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnDangNhap.Name = "btnDangNhap";
-            this.btnDangNhap.Size = new System.Drawing.Size(240, 68);
+            this.btnDangNhap.Size = new System.Drawing.Size(135, 36);
             this.btnDangNhap.TabIndex = 6;
             this.btnDangNhap.Text = "Đăng nhập";
             this.btnDangNhap.Click += new System.EventHandler(this.btnDangNhap_Click);
             // 
             // btnThoat
             // 
-            this.btnThoat.Location = new System.Drawing.Point(639, 495);
-            this.btnThoat.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.btnThoat.Location = new System.Drawing.Point(827, 473);
+            this.btnThoat.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(240, 68);
+            this.btnThoat.Size = new System.Drawing.Size(135, 36);
             this.btnThoat.TabIndex = 7;
             this.btnThoat.Text = "Thoát";
             this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
@@ -107,17 +109,41 @@
             // cmbCoSo
             // 
             this.cmbCoSo.FormattingEnabled = true;
-            this.cmbCoSo.Location = new System.Drawing.Point(339, 161);
-            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cmbCoSo.Location = new System.Drawing.Point(649, 219);
+            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCoSo.Name = "cmbCoSo";
-            this.cmbCoSo.Size = new System.Drawing.Size(302, 28);
+            this.cmbCoSo.Size = new System.Drawing.Size(253, 24);
             this.cmbCoSo.TabIndex = 8;
+            // 
+            // radioGiaoVien
+            // 
+            this.radioGiaoVien.AutoSize = true;
+            this.radioGiaoVien.Checked = true;
+            this.radioGiaoVien.Location = new System.Drawing.Point(649, 413);
+            this.radioGiaoVien.Name = "radioGiaoVien";
+            this.radioGiaoVien.Size = new System.Drawing.Size(85, 20);
+            this.radioGiaoVien.TabIndex = 9;
+            this.radioGiaoVien.TabStop = true;
+            this.radioGiaoVien.Text = "Giáo viên";
+            this.radioGiaoVien.UseVisualStyleBackColor = true;
+            // 
+            // radioSinhVien
+            // 
+            this.radioSinhVien.AutoSize = true;
+            this.radioSinhVien.Location = new System.Drawing.Point(799, 413);
+            this.radioSinhVien.Name = "radioSinhVien";
+            this.radioSinhVien.Size = new System.Drawing.Size(81, 20);
+            this.radioSinhVien.TabIndex = 10;
+            this.radioSinhVien.Text = "SinhVien";
+            this.radioSinhVien.UseVisualStyleBackColor = true;
             // 
             // formDangNhap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 898);
+            this.ClientSize = new System.Drawing.Size(1060, 718);
+            this.Controls.Add(this.radioSinhVien);
+            this.Controls.Add(this.radioGiaoVien);
             this.Controls.Add(this.cmbCoSo);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.btnDangNhap);
@@ -148,5 +174,7 @@
         private DevExpress.XtraEditors.SimpleButton btnThoat;
         private System.Windows.Forms.ComboBox cmbCoSo;
         private formMain parentForm;
+        private System.Windows.Forms.RadioButton radioGiaoVien;
+        private System.Windows.Forms.RadioButton radioSinhVien;
     }
 }

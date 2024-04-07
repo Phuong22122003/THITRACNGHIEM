@@ -23,36 +23,80 @@ namespace WindowsFormsApp1
 
         private void formDangNhap_Load(object sender, EventArgs e)
         {
-            loadCoSO();
+            DataTable tmp = new DataTable();
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString = Program.connstr_publisher;
+           conn.Open();
+            String statement = "SELECT * FROM V_DS_PHANMANH";
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement, conn);
+            try
+            {
+                sqlDataAdapter.Fill(tmp);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi không thể đăng nhập lúc này!\n" + ex.Message);
+                return;
+            }
+            finally 
+            {
+                conn.Close(); 
+            }
+            Program.bds_dspm.DataSource = tmp;
+            this.cmbCoSo.DataSource = Program.bds_dspm;
+            this.cmbCoSo.DisplayMember = "TENCS";
+            this.cmbCoSo.ValueMember = "TENSERVER";
+            Program.bds_dspm.DataSource = tmp;
         }
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            String loginName;
-            String password;
             Program.servername = cmbCoSo.SelectedValue.ToString();
-            loginName= Program.mloginDN = Program.mlogin = inputTK.Text;
-            password= Program.passwordDN = Program.password = inputMK.Text;
-            Program.mCoSo = cmbCoSo.SelectedIndex;
-            if (Program.KetNoi() == 1)
+            if (radioGiaoVien.Checked == true)
             {
-                SqlDataReader reader =  Program.ExecSqlDataReader("exec SP_LayThongTinDangNhap " + Program.mlogin);
-                if (reader.Read())this.parentForm.showInfo((String)reader[0], (String)reader[1]);
-                
-                else MessageBox.Show("Tài khoảng không hợp lệ");
-            }
-            else
-            {
-                Program.mlogin = Program.svlogin;
-                Program.password = Program.svpassword;
+                Program.mloginDN =Program.mlogin = inputTK.Text;
+                Program.passwordDN =  Program.password = inputMK.Text;
                 if (Program.KetNoi(true) == 1)
                 {
-                SqlDataReader reader = Program.ExecSqlDataReader("exec  Sp_LayThongTinSinhVien '" + loginName + "' , '"+ password+"'" );
-                Console.WriteLine(loginName+ ' '+ password);
-                    if (reader.Read()) this.parentForm.showInfo((String)reader[0], "SINHVIEN");
-                    else MessageBox.Show("Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n ", "", MessageBoxButtons.OK);
+                    SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinGV " + Program.mlogin);
+                    if (reader.Read())
+                    {
+                        Program.username = reader[0].ToString();
+                        Program.mHoten = reader[1].ToString();
+                        Program.mGroup = reader[2].ToString();
+                    }
+                    else
+                        MessageBox.Show("Tài khoảng chưa được đăng ký!");
                 }
             }
+            else
+                {
+                    Program.mlogin = Program.svlogin;
+                    Program.password = Program.svpassword;
+                    if (Program.KetNoi(true) == 1)
+                    {
+                        Program.username = Program.mlogin = inputTK.Text;
+                        Program.password = inputMK.Text;
+                        Program.mGroup = "SINH VIÊN";
+                        SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinSV " + Program.mlogin + ", " +Program.password);
+                            try
+                            {
+                                if(reader.Read()) 
+                                        Program.mHoten = reader[0].ToString();
+                                else
+                                {
+                                    MessageBox.Show("Bạn xem lại user name và password.\n ");
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                MessageBox.Show(ex.Message);
+                            }    
+                    }
+                }
+                    this.parentForm.showInfo(Program.mHoten,Program.mGroup);           
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -60,21 +104,5 @@ namespace WindowsFormsApp1
             this.Close();
         }
 
-        private void loadCoSO()
-        {
-            DataTable tmp = new DataTable();
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = Program.connstr_publisher;
-            if (conn.State == ConnectionState.Closed)conn.Open();
-            String statement = "SELECT * FROM V_DS_PHANMANH";
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement,conn);
-            sqlDataAdapter.Fill(tmp);
-            Program.bds_dspm.DataSource = tmp;
-            this.cmbCoSo.DataSource = Program.bds_dspm;
-            this.cmbCoSo.DisplayMember = "TENCS";
-            this.cmbCoSo.ValueMember = "TENSERVER";
-            Program.bds_dspm.DataSource = tmp;
-            conn.Close();
-        }
     }
 }
