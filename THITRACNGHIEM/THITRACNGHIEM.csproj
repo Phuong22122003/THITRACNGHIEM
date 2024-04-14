@@ -34,17 +34,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v22.2" />
+    <Reference Include="DevExpress.Charts.v22.2.Core, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.Desktop.v22.2" />
     <Reference Include="DevExpress.Data.v22.2" />
+    <Reference Include="DevExpress.DataAccess.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v22.2.Core, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v22.2.Core, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v22.2.Core, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v22.2.Core" />
+    <Reference Include="DevExpress.RichEdit.v22.2.Core, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v22.2.Export, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v22.2" />
+    <Reference Include="DevExpress.Utils.v22.2.UI, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v22.2" />
     <Reference Include="DevExpress.Sparkline.v22.2.Core" />
+    <Reference Include="DevExpress.XtraCharts.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v22.2" />
     <Reference Include="DevExpress.Drawing.v22.2" />
+    <Reference Include="DevExpress.XtraGauges.v22.2.Core, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v22.2.Extensions, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +71,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CTBTs.cs" />
+    <Compile Include="DS_BODE.cs">
+      <DependentUpon>DS_BODE.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS_BODE.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS_BODE.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS_SV.cs">
+      <DependentUpon>DS_SV.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS_SV.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS_SV.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS_THI.cs">
+      <DependentUpon>DS_THI.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS_THI.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS_THI.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="formBoDe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formBoDe.Designer.cs">
+      <DependentUpon>formBoDe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formLichThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formLichThi.Designer.cs">
+      <DependentUpon>formLichThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formXemDanhSachDangKy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formXemDanhSachDangKy.Designer.cs">
+      <DependentUpon>formXemDanhSachDangKy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSinhVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSinhVien.Designer.cs">
+      <DependentUpon>frmSinhVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="DSMonHoc.cs">
       <DependentUpon>DSMonHoc.xsd</DependentUpon>
     </Compile>
@@ -97,6 +160,31 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MyStack.cs" />
+    <Compile Include="Thi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Thi.Designer.cs">
+      <DependentUpon>Thi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xrpt_DangKyThi.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Xrpt_DangKyThi.Designer.cs">
+      <DependentUpon>Xrpt_DangKyThi.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="formBoDe.resx">
+      <DependentUpon>formBoDe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formLichThi.resx">
+      <DependentUpon>formLichThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formXemDanhSachDangKy.resx">
+      <DependentUpon>formXemDanhSachDangKy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSinhVien.resx">
+      <DependentUpon>frmSinhVien.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,7 +211,35 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Thi.resx">
+      <DependentUpon>Thi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xrpt_DangKyThi.resx">
+      <DependentUpon>Xrpt_DangKyThi.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="DS_BODE.xsc">
+      <DependentUpon>DS_BODE.xsd</DependentUpon>
+    </None>
+    <None Include="DS_BODE.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS_BODE.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS_BODE.xss">
+      <DependentUpon>DS_BODE.xsd</DependentUpon>
+    </None>
+    <None Include="DS_SV.xsc">
+      <DependentUpon>DS_SV.xsd</DependentUpon>
+    </None>
+    <None Include="DS_SV.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS_SV.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS_SV.xss">
+      <DependentUpon>DS_SV.xsd</DependentUpon>
+    </None>
     <None Include="DSMonHoc.xsc">
       <DependentUpon>DSMonHoc.xsd</DependentUpon>
     </None>
@@ -135,6 +251,17 @@
     <None Include="DSMonHoc.xss">
       <DependentUpon>DSMonHoc.xsd</DependentUpon>
     </None>
+    <None Include="DS_THI.xsc">
+      <DependentUpon>DS_THI.xsd</DependentUpon>
+    </None>
+    <None Include="DS_THI.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS_THI.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS_THI.xss">
+      <DependentUpon>DS_THI.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,6 +271,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\9-98501_transparent-red-circle-slash-png-red-close-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
