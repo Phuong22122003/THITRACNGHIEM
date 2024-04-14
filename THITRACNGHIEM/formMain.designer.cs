@@ -37,22 +37,27 @@
             this.barListItem1 = new DevExpress.XtraBars.BarListItem();
             this.userName = new DevExpress.XtraBars.BarStaticItem();
             this.group = new DevExpress.XtraBars.BarStaticItem();
+            this.btnMonHoc = new DevExpress.XtraBars.BarButtonItem();
+            this.btnXemLichThi = new DevExpress.XtraBars.BarButtonItem();
+            this.btnQuanLyCauHoi = new DevExpress.XtraBars.BarButtonItem();
+            this.btnQuanLySinhVien = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage3 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.btnMonHoc = new DevExpress.XtraBars.BarButtonItem();
+            this.btnXemDanhSachDk = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
             // 
-            this.ribbon.EmptyAreaImageOptions.ImagePadding = new System.Windows.Forms.Padding(87, 79, 87, 79);
+            this.ribbon.EmptyAreaImageOptions.ImagePadding = new System.Windows.Forms.Padding(68, 67, 68, 67);
             this.ribbon.ExpandCollapseItem.Id = 0;
             this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbon.ExpandCollapseItem,
@@ -64,18 +69,22 @@
             this.barListItem1,
             this.userName,
             this.group,
-            this.btnMonHoc});
+            this.btnMonHoc,
+            this.btnXemLichThi,
+            this.btnQuanLyCauHoi,
+            this.btnQuanLySinhVien,
+            this.btnXemDanhSachDk});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.ribbon.MaxItemId = 12;
+            this.ribbon.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.ribbon.MaxItemId = 16;
             this.ribbon.Name = "ribbon";
-            this.ribbon.OptionsMenuMinWidth = 954;
+            this.ribbon.OptionsMenuMinWidth = 742;
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
             this.ribbonPage2,
             this.ribbonPage3,
             this.ribbonPage4});
-            this.ribbon.Size = new System.Drawing.Size(1432, 231);
+            this.ribbon.Size = new System.Drawing.Size(1114, 193);
             this.ribbon.StatusBar = this.ribbonStatusBar;
             // 
             // btnDangNhap
@@ -131,6 +140,39 @@
             this.group.Id = 10;
             this.group.Name = "group";
             // 
+            // btnMonHoc
+            // 
+            this.btnMonHoc.Caption = "Quản lí môn học";
+            this.btnMonHoc.Id = 11;
+            this.btnMonHoc.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnMonHoc.ImageOptions.Image")));
+            this.btnMonHoc.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnMonHoc.ImageOptions.LargeImage")));
+            this.btnMonHoc.Name = "btnMonHoc";
+            this.btnMonHoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnMonHoc_ItemClick);
+            // 
+            // btnXemLichThi
+            // 
+            this.btnXemLichThi.Caption = "Xem lịch thi";
+            this.btnXemLichThi.Id = 12;
+            this.btnXemLichThi.Name = "btnXemLichThi";
+            this.btnXemLichThi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXemLichThi_ItemClick);
+            // 
+            // btnQuanLyCauHoi
+            // 
+            this.btnQuanLyCauHoi.Caption = "Quản lý câu hỏi";
+            this.btnQuanLyCauHoi.Id = 13;
+            this.btnQuanLyCauHoi.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnQuanLyCauHoi.ImageOptions.Image")));
+            this.btnQuanLyCauHoi.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnQuanLyCauHoi.ImageOptions.LargeImage")));
+            this.btnQuanLyCauHoi.Name = "btnQuanLyCauHoi";
+            this.btnQuanLyCauHoi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnQuanLyCauHoi_ItemClick);
+            // 
+            // btnQuanLySinhVien
+            // 
+            this.btnQuanLySinhVien.Caption = "Quản lý sinh viên";
+            this.btnQuanLySinhVien.Id = 14;
+            this.btnQuanLySinhVien.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnQuanLySinhVien.ImageOptions.Image")));
+            this.btnQuanLySinhVien.Name = "btnQuanLySinhVien";
+            this.btnQuanLySinhVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnQuanLySinhVien_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -148,15 +190,23 @@
             // ribbonPage2
             // 
             this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup5});
             this.ribbonPage2.Name = "ribbonPage2";
             this.ribbonPage2.Text = "Nghiệp vụ";
             // 
             // ribbonPageGroup2
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.btnMonHoc);
+            this.ribbonPageGroup2.ItemLinks.Add(this.btnQuanLyCauHoi);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "ribbonPageGroup2";
+            // 
+            // ribbonPageGroup5
+            // 
+            this.ribbonPageGroup5.ItemLinks.Add(this.btnQuanLySinhVien);
+            this.ribbonPageGroup5.Name = "ribbonPageGroup5";
+            this.ribbonPageGroup5.Text = "ribbonPageGroup5";
             // 
             // ribbonPage3
             // 
@@ -167,6 +217,7 @@
             // 
             // ribbonPageGroup3
             // 
+            this.ribbonPageGroup3.ItemLinks.Add(this.btnXemDanhSachDk);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "ribbonPageGroup3";
             // 
@@ -179,6 +230,7 @@
             // 
             // ribbonPageGroup4
             // 
+            this.ribbonPageGroup4.ItemLinks.Add(this.btnXemLichThi);
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "ribbonPageGroup4";
             // 
@@ -186,29 +238,26 @@
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.userName);
             this.ribbonStatusBar.ItemLinks.Add(this.group);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 869);
-            this.ribbonStatusBar.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 732);
+            this.ribbonStatusBar.Margin = new System.Windows.Forms.Padding(5);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbon;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1432, 36);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1114, 30);
             // 
-            // btnMonHoc
+            // btnXemDanhSachDk
             // 
-            this.btnMonHoc.Caption = "Quản lí môn học";
-            this.btnMonHoc.Id = 11;
-            this.btnMonHoc.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
-            this.btnMonHoc.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
-            this.btnMonHoc.Name = "btnMonHoc";
-            this.btnMonHoc.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnMonHoc_ItemClick);
+            this.btnXemDanhSachDk.Caption = "Xem danh sách đăng ký";
+            this.btnXemDanhSachDk.Id = 15;
+            this.btnXemDanhSachDk.Name = "btnXemDanhSachDk";
+            this.btnXemDanhSachDk.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXemDanhSachDk_ItemClick);
             // 
             // formMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1432, 905);
+            this.ClientSize = new System.Drawing.Size(1114, 762);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbon);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "formMain";
             this.Ribbon = this.ribbon;
             this.StatusBar = this.ribbonStatusBar;
@@ -241,5 +290,10 @@
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage4;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
         private DevExpress.XtraBars.BarButtonItem btnMonHoc;
+        private DevExpress.XtraBars.BarButtonItem btnXemLichThi;
+        private DevExpress.XtraBars.BarButtonItem btnQuanLyCauHoi;
+        private DevExpress.XtraBars.BarButtonItem btnQuanLySinhVien;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
+        private DevExpress.XtraBars.BarButtonItem btnXemDanhSachDk;
     }
 }

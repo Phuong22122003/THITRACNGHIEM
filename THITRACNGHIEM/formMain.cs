@@ -24,10 +24,11 @@ namespace WindowsFormsApp1
         private void dangXuatBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
             clearInfo();
+            Program.conn.Close();
             this.Close();
         }
 
-        private Form CheckExist(Type type)
+        public Form CheckExist(Type type)
         {
             foreach(Form f in this.MdiChildren ) {
             if(f.GetType() == type) 
@@ -53,7 +54,6 @@ namespace WindowsFormsApp1
                 this.userName.Caption = "UserName: " + loginName;
             else this.userName.Caption = "Họ và tên: " + loginName;
                 this.group.Caption = "Nhóm: " + group;
-            Program.mGroup = group;
         }
         public void clearInfo()
         {
@@ -73,6 +73,82 @@ namespace WindowsFormsApp1
             else
             {
                 formMonHoc f = new formMonHoc(this);
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
+
+        private void btnXemLichThi_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExist(typeof(formLichThi));
+            if (frm != null) frm.Activate();
+            else
+            {
+                try
+                {
+                     formLichThi f = new formLichThi(this);
+
+                    f.MdiParent = this;
+                    f.Show();
+
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải lịch thi" + ex.Message);
+                }
+            }
+        }
+
+        private void btnQuanLyCauHoi_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExist(typeof(formBoDe));
+            if (frm != null) frm.Activate();
+            else
+            {
+                try
+                {
+                    formBoDe f = new formBoDe();
+
+                    f.MdiParent = this;
+                    f.Show();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải bộ đề" + ex.Message);
+                }
+            }
+        }
+
+        private void btnQuanLySinhVien_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExist(typeof(frmSinhVien));
+            if (frm != null) frm.Activate();
+            else
+            {
+                try
+                {
+                    frmSinhVien f = new frmSinhVien();
+
+                    f.MdiParent = this;
+                    f.Show();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải danh sách sinh viên" + ex.Message);
+                }
+            }
+        }
+
+        private void btnXemDanhSachDk_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExist(typeof(formXemDanhSachDangKy));
+            if (frm != null) frm.Activate();
+            else
+            {
+                formXemDanhSachDangKy f = new formXemDanhSachDangKy();
+
                 f.MdiParent = this;
                 f.Show();
             }
