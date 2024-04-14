@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panelThongtin = new DevExpress.XtraEditors.PanelControl();
+            this.button1 = new System.Windows.Forms.Button();
             this.lblConLai = new System.Windows.Forms.Label();
             this.txtConLai = new System.Windows.Forms.TextBox();
             this.lblThoiGian = new System.Windows.Forms.Label();
@@ -67,7 +68,6 @@
             this.colD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SP_LAYCAUHOITHITableAdapter = new THITRACNGHIEM.DS_THITableAdapters.SP_LAYCAUHOITHITableAdapter();
             this.tableAdapterManager = new THITRACNGHIEM.DS_THITableAdapters.TableAdapterManager();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.panelThongtin)).BeginInit();
             this.panelThongtin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ngaySinh.Properties)).BeginInit();
@@ -105,6 +105,16 @@
             this.panelThongtin.Name = "panelThongtin";
             this.panelThongtin.Size = new System.Drawing.Size(1924, 124);
             this.panelThongtin.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1586, 44);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "Nộp bài";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lblConLai
             // 
@@ -344,21 +354,21 @@
             // 
             this.txtC.Location = new System.Drawing.Point(304, 467);
             this.txtC.Name = "txtC";
-            this.txtC.Size = new System.Drawing.Size(1416, 22);
+            this.txtC.Size = new System.Drawing.Size(1288, 22);
             this.txtC.TabIndex = 7;
             // 
             // txtB
             // 
             this.txtB.Location = new System.Drawing.Point(304, 379);
             this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(1416, 22);
+            this.txtB.Size = new System.Drawing.Size(1306, 22);
             this.txtB.TabIndex = 5;
             // 
             // txtA
             // 
             this.txtA.Location = new System.Drawing.Point(304, 298);
             this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(1400, 22);
+            this.txtA.Size = new System.Drawing.Size(1306, 22);
             this.txtA.TabIndex = 3;
             // 
             // txtNoiDung
@@ -366,7 +376,7 @@
             this.txtNoiDung.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsCauHoi, "NOIDUNG", true));
             this.txtNoiDung.Location = new System.Drawing.Point(304, 176);
             this.txtNoiDung.Name = "txtNoiDung";
-            this.txtNoiDung.Size = new System.Drawing.Size(1471, 22);
+            this.txtNoiDung.Size = new System.Drawing.Size(1306, 22);
             this.txtNoiDung.TabIndex = 1;
             // 
             // bdsCauHoi
@@ -390,9 +400,9 @@
             this.lvLuaChon.Dock = System.Windows.Forms.DockStyle.Right;
             this.lvLuaChon.GridLines = true;
             this.lvLuaChon.HideSelection = false;
-            this.lvLuaChon.Location = new System.Drawing.Point(1531, 124);
+            this.lvLuaChon.Location = new System.Drawing.Point(1616, 124);
             this.lvLuaChon.Name = "lvLuaChon";
-            this.lvLuaChon.Size = new System.Drawing.Size(393, 618);
+            this.lvLuaChon.Size = new System.Drawing.Size(308, 618);
             this.lvLuaChon.TabIndex = 4;
             this.lvLuaChon.UseCompatibleStateImageBehavior = false;
             this.lvLuaChon.View = System.Windows.Forms.View.Details;
@@ -426,16 +436,6 @@
             this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
             this.tableAdapterManager.Connection = null;
             this.tableAdapterManager.UpdateOrder = THITRACNGHIEM.DS_THITableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1586, 44);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Nộp bài";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Thi
             // 
