@@ -45,6 +45,7 @@
             this.btnGhi = new DevExpress.XtraBars.BarButtonItem();
             this.btnXoa = new DevExpress.XtraBars.BarButtonItem();
             this.btnPhucHoi = new DevExpress.XtraBars.BarButtonItem();
+            this.btnRedo = new DevExpress.XtraBars.BarButtonItem();
             this.btnReload = new DevExpress.XtraBars.BarButtonItem();
             this.btnThoat = new DevExpress.XtraBars.BarButtonItem();
             this.bar2 = new DevExpress.XtraBars.Bar();
@@ -80,6 +81,7 @@
             this.colDAP_AN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMAGV = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTD = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colISUED = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelEditCauHoi = new DevExpress.XtraEditors.PanelControl();
             this.btnHuy = new System.Windows.Forms.Button();
             this.btnXong = new System.Windows.Forms.Button();
@@ -208,9 +210,10 @@
             this.btnXoa,
             this.btnPhucHoi,
             this.btnReload,
-            this.btnThoat});
+            this.btnThoat,
+            this.btnRedo});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 7;
+            this.barManager1.MaxItemId = 8;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -225,6 +228,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnGhi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnXoa, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPhucHoi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRedo, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnReload, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnThoat, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar1.Text = "Tools";
@@ -273,6 +277,15 @@
             this.btnPhucHoi.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnPhucHoi.ImageOptions.LargeImage")));
             this.btnPhucHoi.Name = "btnPhucHoi";
             this.btnPhucHoi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPhucHoi_ItemClick);
+            // 
+            // btnRedo
+            // 
+            this.btnRedo.Caption = "Redo";
+            this.btnRedo.Id = 7;
+            this.btnRedo.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
+            this.btnRedo.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
+            this.btnRedo.Name = "btnRedo";
+            this.btnRedo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRedo_ItemClick);
             // 
             // btnReload
             // 
@@ -478,7 +491,8 @@
             this.colD,
             this.colDAP_AN,
             this.colMAGV,
-            this.colTD});
+            this.colTD,
+            this.colISUED});
             this.gridView1.DetailHeight = 373;
             this.gridView1.GridControl = this.gcBode;
             this.gridView1.Name = "gridView1";
@@ -579,6 +593,16 @@
             this.colTD.Visible = true;
             this.colTD.VisibleIndex = 7;
             this.colTD.Width = 235;
+            // 
+            // colISUED
+            // 
+            this.colISUED.Caption = "Is used";
+            this.colISUED.FieldName = "ISUSED";
+            this.colISUED.MinWidth = 25;
+            this.colISUED.Name = "colISUED";
+            this.colISUED.Visible = true;
+            this.colISUED.VisibleIndex = 8;
+            this.colISUED.Width = 94;
             // 
             // panelEditCauHoi
             // 
@@ -695,6 +719,7 @@
             0,
             0,
             0});
+            this.speCauHoi.Enabled = false;
             this.speCauHoi.Location = new System.Drawing.Point(452, 15);
             this.speCauHoi.MenuManager = this.barManager1;
             this.speCauHoi.Name = "speCauHoi";
@@ -806,5 +831,7 @@
         private DevExpress.XtraEditors.TextEdit txtD;
         private DevExpress.XtraEditors.TextEdit txtC;
         private DevExpress.XtraGrid.Columns.GridColumn colTD;
+        private DevExpress.XtraGrid.Columns.GridColumn colISUED;
+        private DevExpress.XtraBars.BarButtonItem btnRedo;
     }
 }
