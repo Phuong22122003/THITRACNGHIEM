@@ -26,7 +26,6 @@ namespace THITRACNGHIEM
         }
         private void formLichThi_Load(object sender, EventArgs e)
         {
-            int check = 0;
             panelThongTinThi.Visible = false;
             panelThongTinThi.Dock = DockStyle.None;
             try
@@ -37,9 +36,7 @@ namespace THITRACNGHIEM
             catch (System.Exception ex)
             {
                 MessageBox.Show("Lỗi tải lich thi" + ex.Message);
-                check = 1;
             }
-            if(check == 1) this.Close();
         }
 
         private void allowBtnThi(object sender, EventArgs e)
@@ -84,7 +81,7 @@ namespace THITRACNGHIEM
                 try
                 {
                     int ID_CTDK = (int)((DataRowView)bdsLichThi.Current)["ID_CTDK"];
-                    Thi thi = new Thi(ID_CTDK,txtMaMH.Text, (int)speLanThi.Value);
+                    Thi thi = new Thi(ID_CTDK,txtMaMH.Text, (int)speLanThi.Value,(int)speThoiLuong.Value);
                     thi.Show();
                     btnThi.Enabled = false;
                 }
