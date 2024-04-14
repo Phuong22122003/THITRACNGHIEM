@@ -18,10 +18,13 @@ namespace THITRACNGHIEM
     {
         //Lưu vị trí hiện tại
         private int vitri;
-        private MyStack myStack = new MyStack();
-        private Action action;
         private int count;
-        private DataRowView currentRowView;
+        private int IndexOfStack;
+        private MyStack UndoStack;
+        private MyStack RedoStack = new MyStack();
+        private Action action;
+        private DataRow currentDataRow;
+        Object[] previousData;
         private SqlConnection mySqlConnection = new SqlConnection();
         private SqlCommand sqlcmd;
         private SqlParameter parameter;
@@ -33,13 +36,13 @@ namespace THITRACNGHIEM
         //Load cơ sở dữ liệu
         private void frmSinhVien_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'dS_SV.LOP' table. You can move, or remove it, as needed.
+           
            this.LOPTableAdapter.Connection.ConnectionString = Program.connstr;
             this.LOPTableAdapter.Fill(this.DS_SV.LOP);
-            // TODO: This line of code loads data into the 'DS_SV.SINHVIEN' table. You can move, or remove it, as needed.
+           
             this.SINHVIENTableAdapter.Connection.ConnectionString = Program.connstr;
             this.SINHVIENTableAdapter.Fill(this.DS_SV.SINHVIEN);
-            // TODO: This line of code loads data into the 'DS_SV.BANGDIEM' table. You can move, or remove it, as needed.
+           
             this.BANGDIEMTableAdapter.Connection.ConnectionString = Program.connstr;
             this.BANGDIEMTableAdapter.Fill(this.DS_SV.BANGDIEM);
             //Load cơ sở
@@ -52,7 +55,12 @@ namespace THITRACNGHIEM
             this.cmbCoSo.SelectedIndexChanged += cmbSelected_IndexChanged;
             this.gcSinhVien.MouseClick += showCMS;
             // xử lý khi stack thay đổi
-            this.myStack.StackChange += StackChange;
+            this.UndoStack =  new MyStack();
+            this.UndoStack.StackChange += UndoStackChange;
+            this.UndoStack.TriggerEvent();
+            this.RedoStack = new MyStack();
+            this.RedoStack.StackChange += RedoStackChange;
+            this.RedoStack.TriggerEvent();
             //Kết nối về site tra cứu
            if(this.connectSiteTraCuu())
             {
@@ -121,23 +129,20 @@ namespace THITRACNGHIEM
             }
         }
 
-        private void StackChange()
+        private void UndoStackChange()
         {
-            Console.WriteLine("here");
-            if(myStack.getSize() > 0)
-            {
-                btnGhi.Enabled = btnPhucHoi.Enabled = true;
-                btnReload.Enabled = btnThoat.Enabled = false;
-                
-            }
-            else 
-            {
-                btnGhi.Enabled = btnPhucHoi.Enabled = false;
-                btnReload.Enabled = btnThoat.Enabled = true;
-            }
+            btnPhucHoi.Enabled = (UndoStack.getSize() > 0);
+
+            btnReload.Enabled = btnThoat.Enabled = (UndoStack.getSize() == IndexOfStack);
+
+            btnGhi.Enabled = (UndoStack.getSize() != IndexOfStack);
         }
 
-        private void hidePanelEdit(bool allow)
+        private void RedoStackChange()
+        {
+            if (RedoStack.getSize() == 0) btnRedo.Enabled = false;
+        }
+        private void HidePanelEdit(bool allow)
         {
             if (allow)
                panelEditSV.Dock = DockStyle.None;
@@ -171,7 +176,7 @@ namespace THITRACNGHIEM
             //lưu vị trí hiện tại
             vitri = bdsSinhVien.Position;
             //Chuyển sang giao diện edit
-            hidePanelEdit(false);
+            HidePanelEdit(false);
 
             //thêm dòng mới
             bdsSinhVien.AddNew();
@@ -183,13 +188,13 @@ namespace THITRACNGHIEM
         }
         private void btnXong_Click(object sender, EventArgs e)
         {
-            currentRowView = (DataRowView)bdsSinhVien.Current;
+            currentDataRow = ((DataRowView)bdsSinhVien.Current).Row;
             if (txtMasv.Text.Trim().Equals(""))
             {
                 MessageBox.Show("Mã sinh viên không được phép trống");
                 return;
             }
-            if (currentRowView.Row.RowState == DataRowState.Detached)
+            if (currentDataRow.RowState == DataRowState.Detached)//check
             {
                 if(DS_SV.SINHVIEN.FindByMASV(txtMasv.Text.Trim()) != null)
                 {
@@ -229,27 +234,22 @@ namespace THITRACNGHIEM
             
             
 
+             
             try {
-                //6 trường hợp:
-                //0 Không thay đổi gì cả
-                // 1. Thêm mới hoàn toàn-> lưu vào stack
-                // 2. Hiệu chỉnh trên dòng vừa thêm-> không lưu vào stack
-                // 3. Hiệu chỉnh trên dòng củ-> lưu vào stack
-                // 4. Xóa trên dòng vừa thêm -> lưu vào stack
-                // 5. Xóa trên dòng củ-> lưu vào stack
-                currentRowView.EndEdit();
-                hidePanelEdit(true);
+                //currentDataRow.EndEdit();
+                ((DataRowView)bdsSinhVien.Current).EndEdit();
+                HidePanelEdit(true);
                 btnHieuChinh.Enabled = btnXoa.Enabled = btnThem.Enabled = true;
-
-                if (currentRowView.Row.RowState == DataRowState.Unchanged) return;
-                if (currentRowView.Row.RowState == DataRowState.Detached)
+                if (currentDataRow.RowState == DataRowState.Unchanged) return;
+                if (currentDataRow.RowState == DataRowState.Detached || currentDataRow.RowState == DataRowState.Added)
                 {
-                    myStack.Push(Action.ADDED, (DataRowView)bdsSinhVien.Current);
-                    DS_SV.SINHVIEN.Rows.Add(currentRowView.Row);
+                    UndoStack.Push(ActionState.ADDED, currentDataRow, currentDataRow.ItemArray);
+                    //DS_SV.SINHVIEN.Rows.Add(currentRowView.Row);
                 }
-                else if (currentRowView.Row.RowState == DataRowState.Modified)
-                    myStack.Push(Action.MODIFIED, bdsSinhVien.Position, (DataRowView)bdsSinhVien.Current);
+                else
+                    UndoStack.Push(ActionState.MODIFIED, currentDataRow,previousData);
 
+                RedoStack.Clear();
             }
             catch (Exception ex)
             {
@@ -264,9 +264,11 @@ namespace THITRACNGHIEM
                 bdsSinhVien.EndEdit();
                 this.SINHVIENTableAdapter.Update(DS_SV.SINHVIEN);
                 MessageBox.Show("Ghi thành công");
-                btnHieuChinh.Enabled = btnXoa.Enabled  = btnThem.Enabled= true;
-                //trường hợp chưa nhấn xong thì nhấn ghi
-                myStack.Clear();
+                if(bdsSinhVien.Count == 0) btnXoa.Enabled = btnHieuChinh.Enabled = false;
+                else btnXoa.Enabled = btnHieuChinh.Enabled = true;
+                btnThem.Enabled= true;
+                IndexOfStack = this.UndoStack.getSize();
+                UndoStack.TriggerEvent();
             }
             catch(Exception ex)
             {
@@ -274,7 +276,7 @@ namespace THITRACNGHIEM
             }
             finally
             {
-                hidePanelEdit(true);
+                HidePanelEdit(true);
             }
         }
 
@@ -289,61 +291,48 @@ namespace THITRACNGHIEM
             {
                 return;
             }
-            currentRowView = (DataRowView)bdsSinhVien.Current;
-            if(currentRowView.Row.RowState == DataRowState.Added)
-            {
-                myStack.Push(Action.DELETED_NEW_ROW,currentRowView,currentRowView.Row.ItemArray);
-
-                currentRowView.Row.RejectChanges();
-            }
-            else if (currentRowView.Row.RowState == DataRowState.Modified)
-            {
-                myStack.Push(Action.DELETED_MODIFIED_ROW, currentRowView,currentRowView.Row.ItemArray);
-                currentRowView.Row.Delete();
-            }
-            else
-            {
-                myStack.Push(Action.DELETED, currentRowView);
-                currentRowView.Row.Delete();
-            }
+            currentDataRow = ((DataRowView)bdsSinhVien.Current).Row;
+            UndoStack.Push(ActionState.DELETED, currentDataRow, currentDataRow.ItemArray);
+            RedoStack.Clear();
+            bdsSinhVien.RemoveCurrent();
+            if (bdsSinhVien.Count == 0)
+                    btnHieuChinh.Enabled = btnXoa.Enabled = false;
 
         }
 
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (myStack.getSize() == 0) return;
-            action = myStack.Pop();
+            if (UndoStack.getSize() == 0) return;
+            action = UndoStack.Pop();
             switch(action.action)
             {
-                
-                case 1:
-                    //Bỏ đi dòng mới thêm
-                    // Added => Detached
-                    action.data.Row.RejectChanges();
+                case ActionState.ADDED:
+                    RedoStack.Push(ActionState.DELETED, action.data, action.objects);
+                    if (action.data.RowState == DataRowState.Added)
+                        action.data.RejectChanges();
+                    else action.data.Delete();
                     break;
-                case 2:
-                    //Phục hồi trên dòng củ modifed=>unchage
-                    action.data.Row.RejectChanges();
-                    action.data.Row.AcceptChanges();
+                case ActionState.MODIFIED:
+                    RedoStack.Push(ActionState.MODIFIED, action.data, action.data.ItemArray);
+                    action.data.ItemArray = action.objects.ToArray();
                     break;
-                case 3:
-                    action.data.Row.RejectChanges();
-                    action.data.Row.AcceptChanges();
-                    break;
-                case 4:
-                    //4 Phục hồi khi xóa dòng vừa thêm
-                    //khôi phục lại dữ liệu cho dòng bị xóa
-                    action.data.Row.ItemArray = action.objects.ToArray();
-                    DS_SV.SINHVIEN.Rows.Add(action.data.Row);
-                    break;
-                case 5:
-                    // Phục hồi từ delete=> modified
-                    //phục hồi 
-                    action.data.Row.RejectChanges();
-                    //đưa dữ liệu trở lại
-                    action.data.Row.ItemArray = action.objects.ToArray();
+                case ActionState.DELETED:
+                    RedoStack.Push(ActionState.ADDED, action.data, action.objects);
+                    //xóa trên dòng củ
+                    if (action.data.RowState == DataRowState.Deleted)
+                    {
+                        action.data.RejectChanges();
+                        action.data.ItemArray = action.objects.ToArray();
+                    }
+                    else
+                    {
+                        //xóa trên dòng mới
+                        action.data.ItemArray = action.objects.ToArray();
+                        DS_SV.SINHVIEN.Rows.Add(action.data);
+                    }
                     break;
             }
+            if (bdsSinhVien.Count == 0) btnHieuChinh.Enabled = btnXoa.Enabled = false;
         }
 
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -357,8 +346,10 @@ namespace THITRACNGHIEM
 
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            hidePanelEdit(false);
             vitri = bdsSinhVien.Position;
+            previousData = ((DataRowView)bdsSinhVien.Current).Row.ItemArray;
+            HidePanelEdit(false);
+
             btnThem.Enabled = btnXoa.Enabled  = btnHieuChinh.Enabled =
                 btnPhucHoi.Enabled = btnReload.Enabled=btnThoat.Enabled= false;
             txtMalop.Enabled = txtMasv.Enabled = false;
@@ -378,9 +369,56 @@ namespace THITRACNGHIEM
         private void btnHuy_Click(object sender, EventArgs e)
         {
             bdsSinhVien.CancelEdit();
-            hidePanelEdit(true);
-            myStack.TriggerEvent();
+            HidePanelEdit(true);
+            UndoStack.TriggerEvent();
             btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
+        }
+
+        private void btnRedo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (RedoStack.getSize() == 0) return;
+            action = RedoStack.Pop();
+            try
+            {
+                switch (action.action)
+                {
+                    case ActionState.ADDED:
+                        UndoStack.Push(ActionState.DELETED, action.data, action.objects);
+                        if (action.data.RowState == DataRowState.Added)
+                        {
+                            action.data.RejectChanges();
+                        }
+                        else
+                            action.data.Delete();
+                        break;
+                    case ActionState.MODIFIED:
+                        UndoStack.Push(ActionState.MODIFIED, action.data, action.data.ItemArray);
+                        action.data.ItemArray = action.objects.ToArray();
+                        break;
+                    case ActionState.DELETED:
+                        UndoStack.Push(ActionState.ADDED, action.data, action.data.ItemArray);
+                        //xóa trên dòng củ
+                        if (action.data.RowState == DataRowState.Deleted)
+                        {
+                            action.data.RejectChanges();
+                            action.data.ItemArray = action.objects.ToArray();
+                        }
+                        else
+                        {
+                            //xóa trên dòng mới
+                            action.data.ItemArray = action.objects.ToArray();
+                            DS_SV.SINHVIEN.Rows.Add(action.data);
+                        }
+                        break;
+                }
+                //trường hợp phục hồi dẫn tới không còn dòng nào nữa
+                if (bdsSinhVien.Count == 0)
+                    btnHieuChinh.Enabled = btnXoa.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi phục hồi\n" + ex.Message);
+            }
         }
     }
 }
