@@ -59,5 +59,15 @@ namespace THITRACNGHIEM.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _9_98501_transparent_red_circle_slash_png_red_close_icon {
+            get {
+                object obj = ResourceManager.GetObject("9-98501_transparent-red-circle-slash-png-red-close-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
