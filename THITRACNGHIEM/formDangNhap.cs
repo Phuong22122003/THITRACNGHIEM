@@ -58,6 +58,8 @@ namespace WindowsFormsApp1
                 Program.passwordDN =  Program.password = inputMK.Text;
                 if (Program.KetNoi(true) == 1)
                 {
+                    try
+                    {
                     SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinGV " + Program.mlogin);
                     if (reader.Read())
                     {
@@ -67,6 +69,11 @@ namespace WindowsFormsApp1
                     }
                     else
                         MessageBox.Show("Tài khoảng chưa được đăng ký!");
+
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
                 }
             }
             else
