@@ -4,6 +4,10 @@
 
     partial class DS_THI
     {
+        partial class SP_PHUCHOICAUHOITHIDataTable
+        {
+        }
+
         partial class SP_LAYLICHTHIDataTable
         {
         }
