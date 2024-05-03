@@ -318,6 +318,7 @@
             this.bar3.OptionsBar.DrawDragBorder = false;
             this.bar3.OptionsBar.UseWholeRow = true;
             this.bar3.Text = "Status bar";
+            this.bar3.Visible = false;
             // 
             // barDockControlTop
             // 
@@ -559,8 +560,6 @@
             this.colPASSWORD.MinWidth = 25;
             this.colPASSWORD.Name = "colPASSWORD";
             this.colPASSWORD.OptionsColumn.AllowEdit = false;
-            this.colPASSWORD.Visible = true;
-            this.colPASSWORD.VisibleIndex = 6;
             this.colPASSWORD.Width = 94;
             // 
             // contextMenuStrip1
@@ -611,11 +610,12 @@
             // txtDiaChi
             // 
             this.txtDiaChi.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "DIACHI", true));
-            this.txtDiaChi.Location = new System.Drawing.Point(64, 374);
+            this.txtDiaChi.Location = new System.Drawing.Point(83, 374);
             this.txtDiaChi.MenuManager = this.barManager1;
             this.txtDiaChi.Name = "txtDiaChi";
             this.txtDiaChi.Size = new System.Drawing.Size(444, 22);
             this.txtDiaChi.TabIndex = 20;
+            this.txtDiaChi.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtNgaySinh
             // 
@@ -630,6 +630,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.txtNgaySinh.Size = new System.Drawing.Size(125, 22);
             this.txtNgaySinh.TabIndex = 19;
+            this.txtNgaySinh.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtPassword
             // 
@@ -639,6 +640,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(125, 22);
             this.txtPassword.TabIndex = 18;
+            this.txtPassword.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtMalop
             // 
@@ -649,6 +651,7 @@
             this.txtMalop.Name = "txtMalop";
             this.txtMalop.Size = new System.Drawing.Size(125, 22);
             this.txtMalop.TabIndex = 17;
+            this.txtMalop.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtTen
             // 
@@ -658,6 +661,7 @@
             this.txtTen.Name = "txtTen";
             this.txtTen.Size = new System.Drawing.Size(125, 22);
             this.txtTen.TabIndex = 16;
+            this.txtTen.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtHo
             // 
@@ -667,6 +671,7 @@
             this.txtHo.Name = "txtHo";
             this.txtHo.Size = new System.Drawing.Size(125, 22);
             this.txtHo.TabIndex = 15;
+            this.txtHo.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtMasv
             // 
@@ -676,6 +681,7 @@
             this.txtMasv.Name = "txtMasv";
             this.txtMasv.Size = new System.Drawing.Size(125, 22);
             this.txtMasv.TabIndex = 14;
+            this.txtMasv.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // btnHuy
             // 
