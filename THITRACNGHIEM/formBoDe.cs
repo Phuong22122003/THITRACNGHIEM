@@ -16,19 +16,27 @@ namespace THITRACNGHIEM
 {
     public partial class formBoDe : Form
     {
+        private int index;
+        private int vitri;
+        private bool HasChange;
+        private ActionState currentAction;
         private DataRow currentDataRow;
         Object[] previousData;
         private MyStack UndoStack;
         private MyStack RedoStack;
         private String mamh;
-        private int index;
-        private int vitri;
         private Action action;
         private SqlCommand cmd;
         private SqlParameter parameter;
         public formBoDe()
         {
             InitializeComponent();
+            bdsBoDe.PositionChanged += PositionChange;
+        }
+
+        private void PositionChange(object sender,EventArgs e)
+        {
+            Console.WriteLine("Position change  " + bdsBoDe.Position) ;
         }
 
         private void formBoDe_Load(object sender, EventArgs e)
@@ -36,12 +44,6 @@ namespace THITRACNGHIEM
             this.MONHOCTableAdapter.Connection.ConnectionString = Program.connstr;
             this.MONHOCTableAdapter.Fill(this.DS_BODE.MONHOC);
             this.DS_BODE.EnforceConstraints = false;
-            this.HidePanelEdit(true);
-            this.cmbMonHoc_SelectedIndexChanged(this, EventArgs.Empty);
-            this.SetComboboxValue();
-            //Khởi tạo 
-            cmd = new SqlCommand();
-            cmd.Connection = Program.conn;
             //stack
             this.UndoStack = new MyStack();
             this.UndoStack.StackChange += UndoStackChange;
@@ -50,8 +52,19 @@ namespace THITRACNGHIEM
             this.RedoStack = new MyStack();
             this.RedoStack.StackChange += RedoStackChange;
             this.RedoStack.TriggerEvent();
+            //
+            this.HidePanelEdit(true);
+            this.cmbMonHoc_SelectedIndexChanged(this, EventArgs.Empty);
+            this.SetComboboxValue();
+            //Khởi tạo 
+            cmd = new SqlCommand();
+            cmd.Connection = Program.conn;
         }
         //Hàm bổ trợ
+        private void ValueChanged(object sender, EventArgs e)
+        {
+            HasChange = true;
+        }
         private void SetComboboxValue()
         {
             //cmbTrinhdo
@@ -97,6 +110,7 @@ namespace THITRACNGHIEM
 
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            currentAction = ActionState.ADDED;
             //Lưu lại vị trí
             this.vitri = bdsBoDe.Position;
             //Hiện ra panel để edit
@@ -110,8 +124,7 @@ namespace THITRACNGHIEM
             //Lúc thêm thì không cho các hành động khác trừ nút xong và hủy
             this.btnThem.Enabled = btnXoa.Enabled =btnGhi.Enabled= btnHieuChinh.Enabled=btnReload.Enabled = btnThoat.Enabled = btnPhucHoi.Enabled=false;
             this.cmbMonHoc.Enabled = false;
-
-            speCauHoi.Value = 9999;                    
+              
         }
 
         private void btnXong_Click(object sender, EventArgs e)
@@ -179,34 +192,28 @@ namespace THITRACNGHIEM
             //thêm filed
             currentDataRow["TRINHDO"] = cmbTrinhDo.SelectedValue.ToString();
             currentDataRow["DAP_AN"] = cmbDapAn.SelectedItem.ToString();
-            currentDataRow["CAUHOI"] = speCauHoi.Value;
             try
             {
                 //Xác nhận dòng đó đã edit xong
                bdsBoDe.EndEdit();
 
-                // trường hợp không sửa gì
-                if (currentDataRow.RowState == DataRowState.Unchanged)
-                {
-                    HidePanelEdit(true);
-                    btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = true;
-                    return;
-                }
-                 //1Thêm một dòng mới
-                if (currentDataRow.RowState == DataRowState.Detached|| currentDataRow.RowState == DataRowState.Added)
+                HidePanelEdit(true);
+                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = true;
+                String[] keyValue = Array.ConvertAll(currentDataRow.ItemArray.Skip(1).ToArray(), x => x.ToString().Trim());
+                String key = String.Join(", ", keyValue);
+                //1Thêm một dòng mới
+                if (currentAction == ActionState.ADDED)
                 {
                     ((DataRowView)bdsBoDe.Current).Row["ISUSED"] = true;
-                    UndoStack.Push(ActionState.ADDED, currentDataRow,currentDataRow.ItemArray);//lưu lại tham chiếu tới dòng đó
-                   // DS_BODE.BODE.Rows.Add(currentDataRow);//added
+                    UndoStack.Push(ActionState.ADDED, key,currentDataRow.ItemArray);
                 }
                 //2 sửa
-                else 
+                else if (HasChange)
                 {
-                    UndoStack.Push(ActionState.MODIFIED,  currentDataRow,previousData);
+                    UndoStack.Push(ActionState.MODIFIED, key,previousData);
                 }
+                else return;//khong sua gi
                 RedoStack.Clear();
-                HidePanelEdit(true);
-                btnHieuChinh.Enabled = btnXoa.Enabled = btnThem.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -215,7 +222,6 @@ namespace THITRACNGHIEM
             finally
             {
                 currentDataRow = null;
-              //  UndoStackChange();//Gọi để kiểm tra các nút thoát, reload,thoát,lưu
             }
         }
 
@@ -238,13 +244,15 @@ namespace THITRACNGHIEM
                 MessageBox.Show("Ghi câu hỏi thất bại\n" + ex.Message);
                 bdsBoDe.Position = vitri;
             }
-
-             
-            
         }
 
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            int check = Program.ExecuteScalar("SELECT dbo.UDF_KIEMTRA_CH_DATHI (" + ((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString() + ")");
+            if (check == 1) btnXong.Enabled = false;
+            
+            currentAction = ActionState.MODIFIED;
+            HasChange = false;
             vitri = bdsBoDe.Position;
             previousData = ((DataRowView)bdsBoDe.Current).Row.ItemArray;
             //gán giá trị lại cho combobox
@@ -255,8 +263,6 @@ namespace THITRACNGHIEM
             this.btnThem.Enabled = this.btnXoa.Enabled =  this.btnHieuChinh.Enabled =
                  this.btnPhucHoi.Enabled = this.btnReload.Enabled = btnGhi.Enabled=this.btnThoat.Enabled = false;
         }
-
-      
 
         private void cmbMonHoc_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -276,6 +282,8 @@ namespace THITRACNGHIEM
                 if(bdsBoDe.Count == 0)
                     btnHieuChinh.Enabled = btnXoa.Enabled=false;
                 else btnHieuChinh.Enabled = btnXoa.Enabled = true;
+                //UndoStack.Clear();
+                //RedoStack.Clear();
             }
         }
 
@@ -297,9 +305,21 @@ namespace THITRACNGHIEM
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            int check = Program.ExecuteScalar("SELECT dbo.UDF_KIEMTRA_SO_CH(" + ((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString() + ")");
+            if (check == 1)
+            {
+                MessageBox.Show("Câu hỏi đã thi, không thể xóa");
+                return;
+            }
+            if(check == 2)
+            {
+                MessageBox.Show("Không thể xóa vì số câu hỏi không đủ để thi");
+                return;
+            }
+
             currentDataRow = ((DataRowView)bdsBoDe.Current).Row;
 
-            UndoStack.Push(ActionState.DELETED, currentDataRow, currentDataRow.ItemArray);
+            UndoStack.Push(ActionState.DELETED,currentDataRow.ItemArray);
             RedoStack.Clear();
             bdsBoDe.RemoveCurrent();
             //trường hợp phục hồi dẫn tới không còn dòng nào nữa
@@ -327,7 +347,8 @@ namespace THITRACNGHIEM
             this.bdsBoDe.Position = vitri;
             btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
             //Kiểm tra thử cho reload, ghi, thoát,chuyển môn ko
-         //   UndoStackChange();
+            //   UndoStackChange();
+            btnXong.Enabled = true;
         }
 
         private void checkGV_BD_CheckedChanged(object sender, EventArgs e)
@@ -349,44 +370,56 @@ namespace THITRACNGHIEM
                 bdsBoDe.RemoveFilter();
             }
         }
+        private String calKey(Object[] objects)
+        {
+            String[] keyValue = Array.ConvertAll(objects.ToArray(), x => x.ToString().Trim());
+            String keyRow = String.Join(", ", keyValue);
+            return keyRow;
+        }
+        private DataRow findByData(String key)
+        {
+            foreach ( DataRow item in DS_BODE.BODE.Rows)
+            {
+                if (item.RowState!=DataRowState.Deleted)
+                {
+                    String[] keyValue = Array.ConvertAll(item.ItemArray.Skip(1).ToArray(), x => x.ToString().Trim());
+                    String keyRow = String.Join(", ", keyValue);
+                    if(keyRow == key)
+                        return item;
+                }
+            }
+            return null;
+        }
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (UndoStack.getSize() == 0) return;
             action = UndoStack.Pop();
+            DataRow data = findByData(action.key);
             try
             {
                 switch (action.action)
                 {
                     case ActionState.ADDED:
-                        RedoStack.Push(ActionState.DELETED, action.data, action.objects);
-                        if (action.data.RowState == DataRowState.Added)
-                            action.data.RejectChanges();
-                        else action.data.Delete();
+
+                        RedoStack.Push(ActionState.DELETED, action.objects);
+                        if (data.RowState == DataRowState.Added)
+                            data.RejectChanges();
+                        else data.Delete();
                         
                         break;
                     case ActionState.MODIFIED:
-                        RedoStack.Push(ActionState.MODIFIED, action.data, action.data.ItemArray);
-                        action.data.ItemArray = action.objects.ToArray();
+                        RedoStack.Push(ActionState.MODIFIED, calKey(action.objects.Skip(1).ToArray()),data.ItemArray);
+                        data.ItemArray = action.objects.ToArray();
                         break;
                     case ActionState.DELETED:
-                        RedoStack.Push(ActionState.ADDED, action.data, action.objects);
-                        //xóa trên dòng củ
-                        if (action.data.RowState == DataRowState.Deleted)
-                        {
-                            action.data.RejectChanges();
-                            action.data.ItemArray = action.objects.ToArray();
-                        }
-                        else
-                        {
-                            //xóa trên dòng mới
-                            action.data.ItemArray = action.objects.ToArray();
-                            DS_BODE.BODE.Rows.Add(action.data);
-                        }
+                        RedoStack.Push(ActionState.ADDED, calKey(action.objects.Skip(1).ToArray()), action.objects);
+                        DS_BODE.BODE.Rows.Add(action.objects);
                         break;
                 }
                 //trường hợp phục hồi dẫn tới không còn dòng nào nữa
                 if (bdsBoDe.Count == 0)
                     btnHieuChinh.Enabled = btnXoa.Enabled = false;
+                else btnHieuChinh.Enabled = btnXoa.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -397,36 +430,26 @@ namespace THITRACNGHIEM
         {
             if (RedoStack.getSize() == 0) return;
             action = RedoStack.Pop();
+            DataRow data = findByData(action.key);
             try
             {
                 switch (action.action)
                 {
                     case ActionState.ADDED:
-                        UndoStack.Push(ActionState.DELETED, action.data, action.objects);
-                        if(action.data.RowState == DataRowState.Added) {
-                            action.data.RejectChanges();
+                        UndoStack.Push(ActionState.DELETED, action.objects);
+                        if(data.RowState == DataRowState.Added) {
+                            data.RejectChanges();
                         }
                         else 
-                            action.data.Delete();
+                            data.Delete();
                         break;
                     case ActionState.MODIFIED:
-                        UndoStack.Push(ActionState.MODIFIED, action.data, action.data.ItemArray);
-                        action.data.ItemArray = action.objects.ToArray();
+                        UndoStack.Push(ActionState.MODIFIED, calKey(action.objects.Skip(1).ToArray()), data.ItemArray);
+                        data.ItemArray = action.objects.ToArray();
                         break;
                     case ActionState.DELETED:
-                        UndoStack.Push(ActionState.ADDED, action.data, action.data.ItemArray);
-                        //xóa trên dòng củ
-                        if (action.data.RowState == DataRowState.Deleted)
-                        {
-                            action.data.RejectChanges();
-                            action.data.ItemArray = action.objects.ToArray();
-                        }
-                        else
-                        {
-                            //xóa trên dòng mới
-                            action.data.ItemArray = action.objects.ToArray();
-                            DS_BODE.BODE.Rows.Add(action.data);
-                        }
+                        UndoStack.Push(ActionState.ADDED,calKey(action.objects.Skip(1).ToArray()), action.objects);
+                        DS_BODE.BODE.Rows.Add(action.objects);
                         break;
                 }
                 //trường hợp phục hồi dẫn tới không còn dòng nào nữa
