@@ -58,16 +58,18 @@
             this.txtB = new DevExpress.XtraEditors.TextEdit();
             this.txtA = new DevExpress.XtraEditors.TextEdit();
             this.txtNoiDung = new DevExpress.XtraEditors.TextEdit();
-            this.bdsCauHoi = new System.Windows.Forms.BindingSource(this.components);
-            this.DS_THI = new THITRACNGHIEM.DS_THI();
             this.lvLuaChon = new System.Windows.Forms.ListView();
             this.colCau = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colC = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bdsCauHoi = new System.Windows.Forms.BindingSource(this.components);
+            this.DS_THI = new THITRACNGHIEM.DS_THI();
             this.SP_LAYCAUHOITHITableAdapter = new THITRACNGHIEM.DS_THITableAdapters.SP_LAYCAUHOITHITableAdapter();
             this.tableAdapterManager = new THITRACNGHIEM.DS_THITableAdapters.TableAdapterManager();
+            this.bdsPhucHoiCauHoi = new System.Windows.Forms.BindingSource(this.components);
+            this.SP_PHUCHOICAUHOITHITableAdapter = new THITRACNGHIEM.DS_THITableAdapters.SP_PHUCHOICAUHOITHITableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.panelThongtin)).BeginInit();
             this.panelThongtin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ngaySinh.Properties)).BeginInit();
@@ -83,6 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsCauHoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS_THI)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsPhucHoiCauHoi)).BeginInit();
             this.SuspendLayout();
             // 
             // panelThongtin
@@ -114,7 +117,7 @@
             this.button1.TabIndex = 13;
             this.button1.Text = "Nộp bài";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.btnNopBai_Click);
             // 
             // lblConLai
             // 
@@ -233,7 +236,7 @@
             this.panelDieuHuong.Controls.Add(this.btnNext);
             this.panelDieuHuong.Controls.Add(this.btnPrevious);
             this.panelDieuHuong.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelDieuHuong.Location = new System.Drawing.Point(0, 742);
+            this.panelDieuHuong.Location = new System.Drawing.Point(0, 763);
             this.panelDieuHuong.Name = "panelDieuHuong";
             this.panelDieuHuong.Size = new System.Drawing.Size(1924, 100);
             this.panelDieuHuong.TabIndex = 1;
@@ -274,7 +277,7 @@
             this.panelCauHoi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCauHoi.Location = new System.Drawing.Point(0, 124);
             this.panelCauHoi.Name = "panelCauHoi";
-            this.panelCauHoi.Size = new System.Drawing.Size(1924, 618);
+            this.panelCauHoi.Size = new System.Drawing.Size(1924, 639);
             this.panelCauHoi.TabIndex = 3;
             // 
             // radioD
@@ -379,16 +382,6 @@
             this.txtNoiDung.Size = new System.Drawing.Size(1306, 22);
             this.txtNoiDung.TabIndex = 1;
             // 
-            // bdsCauHoi
-            // 
-            this.bdsCauHoi.DataMember = "SP_LAYCAUHOITHI";
-            this.bdsCauHoi.DataSource = this.DS_THI;
-            // 
-            // DS_THI
-            // 
-            this.DS_THI.DataSetName = "DS_THI";
-            this.DS_THI.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // lvLuaChon
             // 
             this.lvLuaChon.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -402,7 +395,7 @@
             this.lvLuaChon.HideSelection = false;
             this.lvLuaChon.Location = new System.Drawing.Point(1616, 124);
             this.lvLuaChon.Name = "lvLuaChon";
-            this.lvLuaChon.Size = new System.Drawing.Size(308, 618);
+            this.lvLuaChon.Size = new System.Drawing.Size(308, 639);
             this.lvLuaChon.TabIndex = 4;
             this.lvLuaChon.UseCompatibleStateImageBehavior = false;
             this.lvLuaChon.View = System.Windows.Forms.View.Details;
@@ -427,6 +420,16 @@
             // 
             this.colD.Text = "D";
             // 
+            // bdsCauHoi
+            // 
+            this.bdsCauHoi.DataMember = "SP_LAYCAUHOITHI";
+            this.bdsCauHoi.DataSource = this.DS_THI;
+            // 
+            // DS_THI
+            // 
+            this.DS_THI.DataSetName = "DS_THI";
+            this.DS_THI.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // SP_LAYCAUHOITHITableAdapter
             // 
             this.SP_LAYCAUHOITHITableAdapter.ClearBeforeFill = true;
@@ -437,12 +440,21 @@
             this.tableAdapterManager.Connection = null;
             this.tableAdapterManager.UpdateOrder = THITRACNGHIEM.DS_THITableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
+            // bdsPhucHoiCauHoi
+            // 
+            this.bdsPhucHoiCauHoi.DataMember = "SP_PHUCHOICAUHOITHI";
+            this.bdsPhucHoiCauHoi.DataSource = this.DS_THI;
+            // 
+            // SP_PHUCHOICAUHOITHITableAdapter
+            // 
+            this.SP_PHUCHOICAUHOITHITableAdapter.ClearBeforeFill = true;
+            // 
             // Thi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1924, 842);
+            this.ClientSize = new System.Drawing.Size(1924, 863);
             this.Controls.Add(this.lvLuaChon);
             this.Controls.Add(this.panelCauHoi);
             this.Controls.Add(this.panelDieuHuong);
@@ -466,6 +478,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsCauHoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS_THI)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsPhucHoiCauHoi)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -511,5 +524,7 @@
         private System.Windows.Forms.RadioButton radioB;
         private System.Windows.Forms.RadioButton radioA;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.BindingSource bdsPhucHoiCauHoi;
+        private DS_THITableAdapters.SP_PHUCHOICAUHOITHITableAdapter SP_PHUCHOICAUHOITHITableAdapter;
     }
 }

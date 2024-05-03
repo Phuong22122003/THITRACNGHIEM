@@ -7,78 +7,173 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Timer = System.Windows.Forms.Timer;
 
 namespace THITRACNGHIEM
 {
     public partial class Thi : Form
     {
-        private CTBTs ctbt;
-        private String mamh;
-        private Timer timer;
+        //==============Properties================//
+
         private int IDBD;
         private int ID_CTDK;
         private int lan;
+        private int totalTime;
         private int remainingTime;
+        private String mamh;
+        private CTBTs ctbt;
+        private Timer timer;
+        private Thread thread;
+
         public Thi()
         {
             InitializeComponent();
-        }    
-        public Thi(int ID_CTDK,String mamh,int lan,int remainingTime)
+        }
+
+        public Thi(int IDBD,String mamh, int remainingTime,int totalTime)//Phuc hoi
         {
-            this.ID_CTDK = ID_CTDK;
-            this.mamh = mamh;
-            this.lan = lan;
-            this.remainingTime = remainingTime*60;
+            this.totalTime = totalTime;
+            this.IDBD =IDBD; this.mamh = mamh;
+            this.remainingTime = remainingTime * 60;
 
             InitializeComponent();
 
-            LoadDeThi();
+            showInfo();
 
-            RandomDapAn();
-
+            LoadDeThiDaThi();
             
-            KhoiTaoDiem();
-
-            NopBai();//Khởi tạo chi tiết bài thi
-
+            SetCTBT();
+            
             labelSoCau.Text = (1 + bdsCauHoi.Position).ToString();
-
-           bdsCauHoi.PositionChanged += PositionChanged;
-           lvLuaChon.SelectedIndexChanged += a;
+            bdsCauHoi.PositionChanged += PositionChanged;
+            lvLuaChon.SelectedIndexChanged += listViewIndexChanged;
 
             ShowLVLuaChon();
-                
-            PositionChanged(null, null);
 
+            PositionChanged(null, null);
             timer = new Timer();
 
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
 
+            UpdateChange();
+            timer.Start();
+        }
+        public Thi(int ID_CTDK, String mamh, int lan, int remainingTime, int totalTime)
+        {
+            this.totalTime = totalTime;
+            this.ID_CTDK = ID_CTDK;
+            this.mamh = mamh;
+            this.lan = lan;
+            this.remainingTime = remainingTime * 60;
+
+            InitializeComponent();
+
+            showInfo();
+
+            LoadDeThiMoi();
+
+            RandomDapAn();
+
+            KhoiTaoDiem();
+
+            //NopBai();//Khởi tạo chi tiết bài thi
+
+            labelSoCau.Text = (1 + bdsCauHoi.Position).ToString();
+            bdsCauHoi.PositionChanged += PositionChanged;
+            lvLuaChon.SelectedIndexChanged += listViewIndexChanged;
+
+            ShowLVLuaChon();
+
+            PositionChanged(null, null);
+
+            timer = new Timer();
+            timer.Interval = 980;
+            timer.Tick += Timer_Tick;
+            UpdateChange();
             timer.Start();
         }
 
 
-        private void LoadDeThi()
+        private void LoadDeThiMoi()
         {
             try
             {
                 this.SP_LAYCAUHOITHITableAdapter.Connection.ConnectionString = Program.connstr;
                 this.SP_LAYCAUHOITHITableAdapter.Fill(this.DS_THI.SP_LAYCAUHOITHI, ID_CTDK);
-                if (this.bdsCauHoi.Count == 0) this.Close();
             }
             catch (System.Exception ex)
             {
                 throw ex;
             }
         }
-
+        private void LoadDeThiDaThi()
+        {
+            try
+            {
+                this.SP_LAYCAUHOITHITableAdapter.Connection.ConnectionString = Program.connstr;
+                this.DS_THI.EnforceConstraints = false;
+                this.SP_PHUCHOICAUHOITHITableAdapter.Fill(this.DS_THI.SP_PHUCHOICAUHOITHI, this.IDBD, this.mamh);
+               // if (this.bdsCauHoi.Count == 0) this.Close();
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
         //====================Hàm tự viết=======================================//
-        
+
+        private void showInfo()
+        {
+            txtMaSV.Text = Program.username;
+            txtHoTen.Text = Program.mHoten;
+            txtThoiGian.Text = this.totalTime.ToString();
+            txtConLai.Text = this.remainingTime.ToString();
+        }
+        private void SetCTBT()
+        {
+            int thuTu = 1;
+
+            //Khởi tạo ctbt
+            ctbt = new CTBTs(bdsCauHoi.Count);
+
+            // Khởi tạo mảng chứa các đáp án
+            Dictionary<int,char> answers = new Dictionary<int,char>();
+            CTBT ct;
+            foreach (DataRow dt in DS_THI.SP_PHUCHOICAUHOITHI.Rows)
+            {
+                answers.Add(int.Parse(dt["THUTU_A"].ToString()), 'A');
+                answers.Add(int.Parse(dt["THUTU_B"].ToString()), 'B');
+                answers.Add(int.Parse(dt["THUTU_C"].ToString()), 'C');
+                answers.Add(int.Parse(dt["THUTU_D"].ToString()), 'D');
+                ct = new CTBT();
+                ct.DapAn_Thutu.Add(answers[1]);
+                ct.DapAn_Thutu.Add(answers[2]);
+                ct.DapAn_Thutu.Add(answers[3]);
+                ct.DapAn_Thutu.Add(answers[4]);
+                ct.CauHoi = (int)dt["CAUHOI"];
+                ct.ThuTu = thuTu;
+                Console.WriteLine(dt["DAP_AN"]);
+                ct.Dap_An = (char)dt["DAP_AN"].ToString()[0];
+                ct.LuaChonSV = (char)dt["LUACHONSV"].ToString()[0];
+                thuTu++;
+                ctbt.addLuaChon(ct);
+               // Object[] row = { dt["CAUHOI"], dt["NOIDUNG"], dt["DAP_AN_A"], dt["DAP_AN_B"], dt["DAP_AN_C"], dt["DAP_AN_D"], dt["DAP_AN"] };
+                bdsCauHoi.AddNew();
+                DataRow row = ((DataRowView)bdsCauHoi.Current).Row;
+                row["NOIDUNG"] = dt["NOIDUNG"];
+                row["A"] = dt["DAP_AN_A"];
+                row["B"] = dt["DAP_AN_B"];
+                row["C"] = dt["DAP_AN_C"];
+                row["D"] = dt["DAP_AN_D"];
+                answers.Clear();
+            }
+        }
         //1 Tạo đáp án ngẫu nhiên
         private void RandomDapAn()
         {
@@ -94,7 +189,7 @@ namespace THITRACNGHIEM
             CTBT ct;
             foreach (DataRow dt in DS_THI.SP_LAYCAUHOITHI.Rows)
             {
-                
+
                 ct = new CTBT();
 
                 // sắp xếp thứ tự theo ngẫu nhiên
@@ -115,50 +210,88 @@ namespace THITRACNGHIEM
         //2.Khởi tạo dòng điểm trong BANGDIEM
         private void KhoiTaoDiem()
         {
-            String strLenh = "exec SP_KHOITAOBD @masv,@mamh,@lan";
-            SqlCommand cmd = new SqlCommand(strLenh, Program.conn);
-            cmd.Parameters.Add("@masv", SqlDbType.NVarChar);
-            cmd.Parameters["@masv"].Value = Program.username;
-            cmd.Parameters.Add("@mamh", SqlDbType.NVarChar);
-            cmd.Parameters["@mamh"].Value = mamh;
-            cmd.Parameters.Add("@lan", SqlDbType.Int);
-            cmd.Parameters["@lan"].Value = lan;
+            DataTable dt = new DataTable();
+            layCTBTs(dt);
+            SqlParameter param = new SqlParameter();
+            param.SqlDbType = SqlDbType.Structured;
+            param.TypeName = "dbo.TYPE_CTBT";
+            param.Value = dt;
+            param.ParameterName = "@CTBAITHI";
+            SqlCommand cmd = new SqlCommand("SP_KHOITAOBD", Program.conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(param);
+            cmd.Parameters.AddWithValue("@masv", Program.username);
+            cmd.Parameters.AddWithValue("@mamh", this.mamh);
+            cmd.Parameters.AddWithValue("@lan", this.lan);
+            cmd.Parameters.AddWithValue("@thoiGianConLai", this.totalTime);
             try
             {
-                if (Program.conn.State == ConnectionState.Closed)
-                    Program.conn.Open();
-                IDBD = (Int32)cmd.ExecuteScalar();//lấy IDBD sau khi ghi điểm 
+                IDBD=(int)cmd.ExecuteScalar();
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Khởi tạo điểm thất bại" + ex.Message);
                 throw ex;
             }
+            //String strLenh = "exec SP_KHOITAOBD " + Program.username + ", " + mamh + ", " + lan+","+totalTime;
+           
+            //IDBD = Program.ExecuteScalar(strLenh);//lấy IDBD sau khi ghi điểm
+            //if(IDBD == -1)
+            //{
+            //    throw new Exception("Lỗi khởi tạo điểm thi!");
+            //}
+         
         }
-        private float NopBai()
+        private float layCTBTs(DataTable returnDataTable)
         {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("CAUHOI", typeof(int));
-            dt.Columns.Add("IDBD", typeof(int));
-            dt.Columns.Add("THUTU", typeof(int));
-            dt.Columns.Add("LUACHONSV", typeof(char));
-            dt.Columns.Add("A", typeof(int));
-            dt.Columns.Add("B", typeof(int));
-            dt.Columns.Add("C", typeof(int));
-            dt.Columns.Add("D", typeof(int));
+            //returnDataTable= new DataTable();
+            returnDataTable.Columns.Add("CAUHOI", typeof(int));
+            returnDataTable.Columns.Add("IDBD", typeof(int));
+            returnDataTable.Columns.Add("THUTU", typeof(int));
+            returnDataTable.Columns.Add("LUACHONSV", typeof(char));
+            returnDataTable.Columns.Add("A", typeof(int));
+            returnDataTable.Columns.Add("B", typeof(int));
+            returnDataTable.Columns.Add("C", typeof(int));
+            returnDataTable.Columns.Add("D", typeof(int));
             int soCauDung = 0;
             float diem;
             foreach (CTBT ct in ctbt.getList())
             {
                 if (ct.LuaChonSV != '\0')
-                    dt.Rows.Add(ct.CauHoi, IDBD, ct.ThuTu, ct.LuaChonSV, ct.DapAn_Thutu.IndexOf('A'), ct.DapAn_Thutu.IndexOf('B'), ct.DapAn_Thutu.IndexOf('C'), ct.DapAn_Thutu.IndexOf('D'));
+                    returnDataTable.Rows.Add(ct.CauHoi, IDBD, ct.ThuTu, ct.LuaChonSV, ct.DapAn_Thutu.IndexOf('A') + 1, ct.DapAn_Thutu.IndexOf('B') + 1, ct.DapAn_Thutu.IndexOf('C') + 1, ct.DapAn_Thutu.IndexOf('D') + 1);
                 else
-                    dt.Rows.Add(ct.CauHoi, IDBD, ct.ThuTu, null, ct.DapAn_Thutu.IndexOf('A'), ct.DapAn_Thutu.IndexOf('B'), ct.DapAn_Thutu.IndexOf('C'), ct.DapAn_Thutu.IndexOf('D'));
-                Console.WriteLine(ct.CauHoi);
+                    returnDataTable.Rows.Add(ct.CauHoi, IDBD, ct.ThuTu, null, ct.DapAn_Thutu.IndexOf('A') + 1, ct.DapAn_Thutu.IndexOf('B') + 1, ct.DapAn_Thutu.IndexOf('C') + 1, ct.DapAn_Thutu.IndexOf('D') + 1);
                 if (ct.LuaChonSV != '\0' && ct.DapAn_Thutu[ct.LuaChonSV - 'A'] == ct.Dap_An) soCauDung++;
             }
             diem = (float)soCauDung / ctbt.getList().Count;
-            diem = (float)Math.Round(diem, 2);
-
+            diem = (float)Math.Round(diem, 2) * 10;
+            return diem;
+        }
+        private float NopBai()
+        {
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("CAUHOI", typeof(int));
+            //dt.Columns.Add("IDBD", typeof(int));
+            //dt.Columns.Add("THUTU", typeof(int));
+            //dt.Columns.Add("LUACHONSV", typeof(char));
+            //dt.Columns.Add("A", typeof(int));
+            //dt.Columns.Add("B", typeof(int));
+            //dt.Columns.Add("C", typeof(int));
+            //dt.Columns.Add("D", typeof(int));
+            //int soCauDung = 0;
+            //float diem;
+            //foreach (CTBT ct in ctbt.getList())
+            //{
+            //    if (ct.LuaChonSV != '\0')
+            //        dt.Rows.Add(ct.CauHoi, IDBD, ct.ThuTu, ct.LuaChonSV, ct.DapAn_Thutu.IndexOf('A')+1, ct.DapAn_Thutu.IndexOf('B')+1, ct.DapAn_Thutu.IndexOf('C')+1, ct.DapAn_Thutu.IndexOf('D') + 1);
+            //    else
+            //        dt.Rows.Add(ct.CauHoi, IDBD, ct.ThuTu, null, ct.DapAn_Thutu.IndexOf('A') + 1, ct.DapAn_Thutu.IndexOf('B') + 1, ct.DapAn_Thutu.IndexOf('C') + 1, ct.DapAn_Thutu.IndexOf('D') + 1);
+            //    if (ct.LuaChonSV != '\0' && ct.DapAn_Thutu[ct.LuaChonSV - 'A'] == ct.Dap_An) soCauDung++;
+            //}
+            //diem = (float)soCauDung / ctbt.getList().Count;
+            //diem = (float)Math.Round(diem, 2) *10;
+            DataTable dt = new DataTable();
+            float diem = layCTBTs(dt);
             SqlParameter param = new SqlParameter();
             param.SqlDbType = SqlDbType.Structured;
             param.TypeName = "dbo.TYPE_CTBT";
@@ -175,32 +308,17 @@ namespace THITRACNGHIEM
             catch (Exception ex)
             {
                 MessageBox.Show("Nộp bài thất bại" + ex.Message);
+                throw ex;
             }
-            return 0;
         }
-    
 
-        private void GhiDiem(float diem) 
+
+        private void GhiDiem(float diem)
         {
-            String strLenh = "UPDATE BANGDIEM SET DIEM = @DIEM WHERE IDBD = @IDBD";
-            SqlCommand cmd = new SqlCommand(strLenh, Program.conn);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Add("@DIEM", SqlDbType.Float);
-            cmd.Parameters["@DIEM"].Value = diem;   
-            cmd.Parameters.Add("@IDBD", SqlDbType.Int);
-            cmd.Parameters["@IDBD"].Value = IDBD;
-            try
-            {
-                if (Program.conn.State == ConnectionState.Closed)
-                {
-                    Program.conn.Open();
-                }
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi ghi điểm" + ex.Message);
-            }
+
+            String strLenh = "UPDATE BANGDIEM SET DIEM = "+diem + ", TGCONLAI =0 WHERE IDBD = "+IDBD;
+            int check =  Program.ExecSqlNonQuery(strLenh);
+            if (check != 0) MessageBox.Show("Lỗi ghi điểm thi");
         }
 
         private void PositionChanged(object sender, EventArgs e)
@@ -236,25 +354,34 @@ namespace THITRACNGHIEM
         {
             ListViewItem item;
 
-
-            for(int  i = 0;i<bdsCauHoi.Count;i++)
+            DataRow dt;
+            for (int i = 0; i < bdsCauHoi.Count; i++)
             {
-                item = new ListViewItem("Câu "+(i+1).ToString());
-            // Thêm các cột A, B, C, D vào ListViewItem
+                item = new ListViewItem("Câu " + (i + 1).ToString());
+                // Thêm các cột A, B, C, D vào ListViewItem
                 item.SubItems.Add("");
                 item.SubItems.Add("");
                 item.SubItems.Add("");
                 item.SubItems.Add("");
                 lvLuaChon.Items.Add(item);
+                if (DS_THI.SP_PHUCHOICAUHOITHI.Rows.Count == 0) continue;
+                dt =DS_THI.SP_PHUCHOICAUHOITHI.Rows[i];
+                if (dt["LUACHONSV"].ToString() =="A") item.SubItems[1].Text = "✔️";
+                else if (dt["LUACHONSV"].ToString() =="B") item.SubItems[2].Text = "✔️";
+                else if (dt["LUACHONSV"].ToString() == "C") item.SubItems[3].Text = "✔️";
+                else if (dt["LUACHONSV"].ToString() =="D") item.SubItems[4].Text= "✔️";
             }
         }
-       // ======================Xử lý sự kiện====================//
-       //1 Nôp bài
-        private void button1_Click(object sender, EventArgs e)
+        // ======================Xử lý sự kiện====================//
+        //1 Nôp bài
+        private void btnNopBai_Click(object sender, EventArgs e)
         {
+            remainingTime = 0;
+            thread.Join();
+            timer.Stop();
             float diem = NopBai();
             GhiDiem(diem);
-            MessageBox.Show("Nộp thành công\n" + "            Điểm: "+ diem);
+            MessageBox.Show("Nộp thành công\n" + "            Điểm: " + diem);
             this.Close();
         }
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -310,18 +437,71 @@ namespace THITRACNGHIEM
 
             if (remainingTime <= 0)
             {
-                timer.Stop();
-                button1_Click(null, null);
+                //timer.Stop();
+                btnNopBai_Click(null, null);
             }
         }
-        private void a(object sender, EventArgs e)
+        private void listViewIndexChanged(object sender, EventArgs e)
         {
-            if(lvLuaChon.SelectedItems.Count > 0)
+            if (lvLuaChon.SelectedItems.Count > 0)
             {
                 ListViewItem selectedRow = lvLuaChon.SelectedItems[0];
                 bdsCauHoi.Position = selectedRow.Index;
                 labelSoCau.Text = (1 + selectedRow.Index).ToString();
             }
         }
+
+        //==============Update======================
+        private void UpdateChange()
+        {
+            thread  = new Thread(() => { updateCTBT(); });
+            thread.Start();
+            thread.IsBackground = true;
+        }
+        private void updateCTBT()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("CAUHOI", typeof(int));
+            dt.Columns.Add("IDBD", typeof(int));
+            dt.Columns.Add("THUTU", typeof(int));
+            dt.Columns.Add("LUACHONSV", typeof(char));
+            dt.Columns.Add("A", typeof(int));
+            dt.Columns.Add("B", typeof(int));
+            dt.Columns.Add("C", typeof(int));
+            dt.Columns.Add("D", typeof(int));
+            SqlParameter param = new SqlParameter();
+            param.SqlDbType = SqlDbType.Structured;
+            param.TypeName = "dbo.TYPE_CTBT";
+            param.ParameterName = "@CTBAITHI";
+            SqlCommand cmd = new SqlCommand("SP_LUU_CTBT", Program.conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(param);
+            while (this.remainingTime > 0)
+            {   
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+                if (this.remainingTime % 60 != 0) continue;
+                String strLenh = "UPDATE BANGDIEM SET TGCONLAI = "+this.remainingTime+"WHERE IDBD = " + IDBD;
+                int check = Program.ExecSqlNonQuery(strLenh);
+                if (check != 0) MessageBox.Show("Lỗi ghi điểm thi");
+                foreach (CTBT ct in ctbt.getList())
+                {
+                    if (ct.LuaChonSV != '\0')
+                        dt.Rows.Add(ct.CauHoi, IDBD,null, ct.LuaChonSV,null,null,null,null);
+                }
+                param.Value = dt;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    dt.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Update thất bại" + ex.Message);
+                }
+            }
+        
+        }
+
     }
 }
