@@ -18,14 +18,26 @@ namespace THITRACNGHIEM
         private ActionState _action;
         private Object[] _objects;
         private DataRow _data;
-
-
-
-        public Action(ActionState aciton, DataRow data = null,Object[] objects =null)
+        private String _key;
+        private Object[] _previousObjects;
+        public Action(ActionState action, Object[] objects = null, Object[] previousObjects = null)
         {
-            this._action = aciton;
+            this._action = action;
+            this._objects = objects;
+        }
+
+        public Action(ActionState action, DataRow data = null,Object[] objects =null)
+        {
+            this._action = action;
             this._data = data;
             this._objects = objects;
+        }
+        public Action(ActionState action,String key=null, Object[] objects=null, DataRow data = null)
+        {
+            this._action = action;
+            this._key = key;
+            this._objects = objects;
+            this._data = data;
         }
         public ActionState getAction()
         {
@@ -38,6 +50,10 @@ namespace THITRACNGHIEM
 
         public DataRow data {
             get { return _data; }
+        }
+        public String key
+        {
+            get { return _key; }
         }
         public Object[] objects { 
             get { return _objects; }
@@ -55,17 +71,22 @@ namespace THITRACNGHIEM
         public MyStack() {
             TriggerEvent();
         }
-
-        public void Push(ActionState action, DataRow data)
+        public void Push(ActionState action, Object[] objects = null)
         {
-            stack.Push(new Action(action, data));
+            stack.Push(new Action(action, objects));
             TriggerEvent();
         }
-        public void Push(ActionState action, DataRow data,Object[] objects)
+        public void Push(ActionState action, DataRow data=null,Object[] objects=null)
         {
                 stack.Push(new Action(action, data,objects));
                 TriggerEvent();
         }
+        public void Push(ActionState action, String key=null, Object[] objects=null, DataRow data=null)
+        {
+            stack.Push(new Action(action, key,objects,data));
+            TriggerEvent();
+        }
+
         public Action Pop()
         {
             Action tmp = stack.Pop();
@@ -78,6 +99,7 @@ namespace THITRACNGHIEM
         }
         public void Clear()
         {
+            if(stack.Count == 0) return;
             stack.Clear();
             TriggerEvent();
         }
