@@ -50,11 +50,9 @@
             this.colTHOIGIAN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSOCAUTHI = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTRINHDO = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTHOIGIANCONLAI = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelThongTinThi = new DevExpress.XtraEditors.PanelControl();
-            this.btnThoat = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnThi = new System.Windows.Forms.Button();
-            this.txtTrinhDo = new DevExpress.XtraEditors.TextEdit();
+            this.speThoiGianConLai = new DevExpress.XtraEditors.SpinEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnXemChiTiet = new DevExpress.XtraBars.BarButtonItem();
@@ -66,6 +64,10 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.btnThoat = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnThi = new System.Windows.Forms.Button();
+            this.txtTrinhDo = new DevExpress.XtraEditors.TextEdit();
             this.speSoCau = new DevExpress.XtraEditors.SpinEdit();
             this.speThoiLuong = new DevExpress.XtraEditors.SpinEdit();
             this.deNgayThi = new DevExpress.XtraEditors.DateEdit();
@@ -73,8 +75,9 @@
             this.txtTenMH = new DevExpress.XtraEditors.TextEdit();
             this.txtMaMH = new DevExpress.XtraEditors.TextEdit();
             this.label1 = new System.Windows.Forms.Label();
-            this.tspThoiGianConLai = new DevExpress.XtraEditors.TimeSpanEdit();
+            this.tspBatDauSau = new DevExpress.XtraEditors.TimeSpanEdit();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.lblThoiGianConLai = new System.Windows.Forms.Label();
             mAMHLabel = new System.Windows.Forms.Label();
             tENMHLabel = new System.Windows.Forms.Label();
             lANLabel = new System.Windows.Forms.Label();
@@ -88,8 +91,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelThongTinThi)).BeginInit();
             this.panelThongTinThi.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTrinhDo.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speThoiGianConLai.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTrinhDo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speSoCau.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speThoiLuong.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deNgayThi.Properties)).BeginInit();
@@ -97,7 +101,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.speLanThi.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTenMH.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaMH.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tspThoiGianConLai.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tspBatDauSau.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // mAMHLabel
@@ -112,7 +116,7 @@
             // tENMHLabel
             // 
             tENMHLabel.AutoSize = true;
-            tENMHLabel.Location = new System.Drawing.Point(42, 240);
+            tENMHLabel.Location = new System.Drawing.Point(42, 269);
             tENMHLabel.Name = "tENMHLabel";
             tENMHLabel.Size = new System.Drawing.Size(95, 16);
             tENMHLabel.TabIndex = 3;
@@ -121,7 +125,7 @@
             // lANLabel
             // 
             lANLabel.AutoSize = true;
-            lANLabel.Location = new System.Drawing.Point(701, 354);
+            lANLabel.Location = new System.Drawing.Point(701, 370);
             lANLabel.Name = "lANLabel";
             lANLabel.Size = new System.Drawing.Size(58, 16);
             lANLabel.TabIndex = 5;
@@ -139,7 +143,7 @@
             // tHOIGIANLabel
             // 
             tHOIGIANLabel.AutoSize = true;
-            tHOIGIANLabel.Location = new System.Drawing.Point(675, 243);
+            tHOIGIANLabel.Location = new System.Drawing.Point(675, 230);
             tHOIGIANLabel.Name = "tHOIGIANLabel";
             tHOIGIANLabel.Size = new System.Drawing.Size(85, 16);
             tHOIGIANLabel.TabIndex = 9;
@@ -157,7 +161,7 @@
             // tRINHDOLabel
             // 
             tRINHDOLabel.AutoSize = true;
-            tRINHDOLabel.Location = new System.Drawing.Point(63, 354);
+            tRINHDOLabel.Location = new System.Drawing.Point(63, 370);
             tRINHDOLabel.Name = "tRINHDOLabel";
             tRINHDOLabel.Size = new System.Drawing.Size(70, 16);
             tRINHDOLabel.TabIndex = 13;
@@ -190,7 +194,7 @@
             this.gcLichThi.Location = new System.Drawing.Point(0, 51);
             this.gcLichThi.MainView = this.gridView1;
             this.gcLichThi.Name = "gcLichThi";
-            this.gcLichThi.Size = new System.Drawing.Size(813, 770);
+            this.gcLichThi.Size = new System.Drawing.Size(813, 791);
             this.gcLichThi.TabIndex = 2;
             this.gcLichThi.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -204,7 +208,8 @@
             this.colNGAYTHI,
             this.colTHOIGIAN,
             this.colSOCAUTHI,
-            this.colTRINHDO});
+            this.colTRINHDO,
+            this.colTHOIGIANCONLAI});
             this.gridView1.GridControl = this.gcLichThi;
             this.gridView1.Name = "gridView1";
             // 
@@ -279,8 +284,20 @@
             this.colTRINHDO.VisibleIndex = 6;
             this.colTRINHDO.Width = 172;
             // 
+            // colTHOIGIANCONLAI
+            // 
+            this.colTHOIGIANCONLAI.Caption = "Thời gian còn lại";
+            this.colTHOIGIANCONLAI.FieldName = "THOIGIANCONLAI";
+            this.colTHOIGIANCONLAI.MinWidth = 25;
+            this.colTHOIGIANCONLAI.Name = "colTHOIGIANCONLAI";
+            this.colTHOIGIANCONLAI.Visible = true;
+            this.colTHOIGIANCONLAI.VisibleIndex = 7;
+            this.colTHOIGIANCONLAI.Width = 94;
+            // 
             // panelThongTinThi
             // 
+            this.panelThongTinThi.Controls.Add(this.lblThoiGianConLai);
+            this.panelThongTinThi.Controls.Add(this.speThoiGianConLai);
             this.panelThongTinThi.Controls.Add(this.btnThoat);
             this.panelThongTinThi.Controls.Add(this.label2);
             this.panelThongTinThi.Controls.Add(this.btnThi);
@@ -299,52 +316,28 @@
             this.panelThongTinThi.Controls.Add(mAMHLabel);
             this.panelThongTinThi.Controls.Add(this.txtMaMH);
             this.panelThongTinThi.Controls.Add(this.label1);
-            this.panelThongTinThi.Controls.Add(this.tspThoiGianConLai);
+            this.panelThongTinThi.Controls.Add(this.tspBatDauSau);
             this.panelThongTinThi.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelThongTinThi.Location = new System.Drawing.Point(813, 51);
             this.panelThongTinThi.Name = "panelThongTinThi";
-            this.panelThongTinThi.Size = new System.Drawing.Size(1111, 770);
+            this.panelThongTinThi.Size = new System.Drawing.Size(1111, 791);
             this.panelThongTinThi.TabIndex = 3;
             // 
-            // btnThoat
+            // speThoiGianConLai
             // 
-            this.btnThoat.Location = new System.Drawing.Point(947, 21);
-            this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(75, 47);
-            this.btnThoat.TabIndex = 18;
-            this.btnThoat.Text = "Thoát";
-            this.btnThoat.UseVisualStyleBackColor = true;
-            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(7, 454);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 14);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "THỜI GIAN CÒN LẠI:";
-            // 
-            // btnThi
-            // 
-            this.btnThi.Location = new System.Drawing.Point(498, 597);
-            this.btnThi.Name = "btnThi";
-            this.btnThi.Size = new System.Drawing.Size(104, 41);
-            this.btnThi.TabIndex = 15;
-            this.btnThi.Text = "Thi";
-            this.btnThi.UseVisualStyleBackColor = true;
-            this.btnThi.Click += new System.EventHandler(this.btnThi_Click);
-            // 
-            // txtTrinhDo
-            // 
-            this.txtTrinhDo.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsLichThi, "TRINHDO", true));
-            this.txtTrinhDo.Enabled = false;
-            this.txtTrinhDo.Location = new System.Drawing.Point(261, 348);
-            this.txtTrinhDo.MenuManager = this.barManager1;
-            this.txtTrinhDo.Name = "txtTrinhDo";
-            this.txtTrinhDo.Size = new System.Drawing.Size(287, 22);
-            this.txtTrinhDo.TabIndex = 14;
+            this.speThoiGianConLai.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsLichThi, "THOIGIANCONLAI", true));
+            this.speThoiGianConLai.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.speThoiGianConLai.Location = new System.Drawing.Point(846, 296);
+            this.speThoiGianConLai.MenuManager = this.barManager1;
+            this.speThoiGianConLai.Name = "speThoiGianConLai";
+            this.speThoiGianConLai.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.speThoiGianConLai.Size = new System.Drawing.Size(125, 24);
+            this.speThoiGianConLai.TabIndex = 20;
             // 
             // barManager1
             // 
@@ -393,6 +386,7 @@
             this.barButtonItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
             this.barButtonItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
             this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
             // 
             // barButtonItem2
             // 
@@ -437,7 +431,7 @@
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 821);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 842);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Size = new System.Drawing.Size(1924, 20);
             // 
@@ -447,7 +441,7 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 51);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 770);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 791);
             // 
             // barDockControlRight
             // 
@@ -455,7 +449,48 @@
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControlRight.Location = new System.Drawing.Point(1924, 51);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 770);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 791);
+            // 
+            // btnThoat
+            // 
+            this.btnThoat.Location = new System.Drawing.Point(947, 21);
+            this.btnThoat.Name = "btnThoat";
+            this.btnThoat.Size = new System.Drawing.Size(75, 47);
+            this.btnThoat.TabIndex = 18;
+            this.btnThoat.Text = "Thoát";
+            this.btnThoat.UseVisualStyleBackColor = true;
+            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(41, 454);
+            this.label2.Name = "label2";
+            this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label2.Size = new System.Drawing.Size(89, 14);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "BẮT ĐẦU SAU:";
+            // 
+            // btnThi
+            // 
+            this.btnThi.Location = new System.Drawing.Point(498, 597);
+            this.btnThi.Name = "btnThi";
+            this.btnThi.Size = new System.Drawing.Size(104, 41);
+            this.btnThi.TabIndex = 15;
+            this.btnThi.Text = "Thi";
+            this.btnThi.UseVisualStyleBackColor = true;
+            this.btnThi.Click += new System.EventHandler(this.btnThi_Click);
+            // 
+            // txtTrinhDo
+            // 
+            this.txtTrinhDo.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsLichThi, "TRINHDO", true));
+            this.txtTrinhDo.Enabled = false;
+            this.txtTrinhDo.Location = new System.Drawing.Point(261, 364);
+            this.txtTrinhDo.MenuManager = this.barManager1;
+            this.txtTrinhDo.Name = "txtTrinhDo";
+            this.txtTrinhDo.Size = new System.Drawing.Size(287, 22);
+            this.txtTrinhDo.TabIndex = 14;
             // 
             // speSoCau
             // 
@@ -483,7 +518,7 @@
             0,
             0});
             this.speThoiLuong.Enabled = false;
-            this.speThoiLuong.Location = new System.Drawing.Point(846, 238);
+            this.speThoiLuong.Location = new System.Drawing.Point(846, 225);
             this.speThoiLuong.MenuManager = this.barManager1;
             this.speThoiLuong.Name = "speThoiLuong";
             this.speThoiLuong.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -515,7 +550,7 @@
             0,
             0});
             this.speLanThi.Enabled = false;
-            this.speLanThi.Location = new System.Drawing.Point(846, 346);
+            this.speLanThi.Location = new System.Drawing.Point(846, 362);
             this.speLanThi.MenuManager = this.barManager1;
             this.speLanThi.Name = "speLanThi";
             this.speLanThi.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -527,7 +562,7 @@
             // 
             this.txtTenMH.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsLichThi, "TENMH", true));
             this.txtTenMH.Enabled = false;
-            this.txtTenMH.Location = new System.Drawing.Point(261, 237);
+            this.txtTenMH.Location = new System.Drawing.Point(261, 266);
             this.txtTenMH.MenuManager = this.barManager1;
             this.txtTenMH.Name = "txtTenMH";
             this.txtTenMH.Size = new System.Drawing.Size(287, 22);
@@ -546,41 +581,50 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(226, 64);
+            this.label1.Location = new System.Drawing.Point(450, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "THÔNG TIN THI";
             // 
-            // tspThoiGianConLai
+            // tspBatDauSau
             // 
-            this.tspThoiGianConLai.EditValue = null;
-            this.tspThoiGianConLai.Enabled = false;
-            this.tspThoiGianConLai.Location = new System.Drawing.Point(261, 451);
-            this.tspThoiGianConLai.MenuManager = this.barManager1;
-            this.tspThoiGianConLai.Name = "tspThoiGianConLai";
-            this.tspThoiGianConLai.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.tspBatDauSau.EditValue = null;
+            this.tspBatDauSau.Enabled = false;
+            this.tspBatDauSau.Location = new System.Drawing.Point(261, 451);
+            this.tspBatDauSau.MenuManager = this.barManager1;
+            this.tspBatDauSau.Name = "tspBatDauSau";
+            this.tspBatDauSau.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.tspThoiGianConLai.Properties.DisplayFormat.FormatString = "d";
-            this.tspThoiGianConLai.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.tspThoiGianConLai.Properties.EditFormat.FormatString = "d";
-            this.tspThoiGianConLai.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.tspThoiGianConLai.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.DateTimeMaskManager));
-            this.tspThoiGianConLai.Properties.MaskSettings.Set("mask", "d");
-            this.tspThoiGianConLai.Size = new System.Drawing.Size(287, 22);
-            this.tspThoiGianConLai.TabIndex = 17;
+            this.tspBatDauSau.Properties.DisplayFormat.FormatString = "d";
+            this.tspBatDauSau.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.tspBatDauSau.Properties.EditFormat.FormatString = "d";
+            this.tspBatDauSau.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.tspBatDauSau.Properties.MaskSettings.Set("MaskManagerType", typeof(DevExpress.Data.Mask.DateTimeMaskManager));
+            this.tspBatDauSau.Properties.MaskSettings.Set("mask", "d");
+            this.tspBatDauSau.Size = new System.Drawing.Size(287, 22);
+            this.tspBatDauSau.TabIndex = 17;
             // 
             // timer
             // 
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.allowBtnThi);
             // 
+            // lblThoiGianConLai
+            // 
+            this.lblThoiGianConLai.AutoSize = true;
+            this.lblThoiGianConLai.Location = new System.Drawing.Point(661, 300);
+            this.lblThoiGianConLai.Name = "lblThoiGianConLai";
+            this.lblThoiGianConLai.Size = new System.Drawing.Size(124, 16);
+            this.lblThoiGianConLai.TabIndex = 21;
+            this.lblThoiGianConLai.Text = "THỜI GIAN CÒN LẠI:";
+            // 
             // formLichThi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1924, 841);
+            this.ClientSize = new System.Drawing.Size(1924, 862);
             this.Controls.Add(this.gcLichThi);
             this.Controls.Add(this.panelThongTinThi);
             this.Controls.Add(this.barDockControlLeft);
@@ -597,8 +641,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelThongTinThi)).EndInit();
             this.panelThongTinThi.ResumeLayout(false);
             this.panelThongTinThi.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTrinhDo.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speThoiGianConLai.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTrinhDo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.speSoCau.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.speThoiLuong.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deNgayThi.Properties.CalendarTimeProperties)).EndInit();
@@ -606,7 +651,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.speLanThi.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTenMH.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaMH.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tspThoiGianConLai.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tspBatDauSau.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -649,8 +694,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnThi;
         private System.Windows.Forms.Timer timer;
-        private DevExpress.XtraEditors.TimeSpanEdit tspThoiGianConLai;
+        private DevExpress.XtraEditors.TimeSpanEdit tspBatDauSau;
         private DevExpress.XtraBars.BarButtonItem btnXemChiTiet;
         private System.Windows.Forms.Button btnThoat;
+        private DevExpress.XtraGrid.Columns.GridColumn colTHOIGIANCONLAI;
+        private DevExpress.XtraEditors.SpinEdit speThoiGianConLai;
+        private System.Windows.Forms.Label lblThoiGianConLai;
     }
 }

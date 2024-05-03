@@ -28,36 +28,47 @@ namespace THITRACNGHIEM
         {
             panelThongTinThi.Visible = false;
             panelThongTinThi.Dock = DockStyle.None;
+                bdsLichThi.PositionChanged += PositionChange;
             try
             {
                 this.SP_LAYLICHTHITableAdapter.Connection.ConnectionString = Program.connstr;
                 this.SP_LAYLICHTHITableAdapter.Fill(this.dS_THI.SP_LAYLICHTHI, Program.username);
+                if(bdsLichThi.Count<0)
+                    btnXemChiTiet.Enabled = false;
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("Lỗi tải lich thi" + ex.Message);
             }
         }
-
         private void allowBtnThi(object sender, EventArgs e)
         {
             now = DateTime.Now;
-            tspThoiGianConLai.TimeSpan = deNgayThi.DateTime - now;
-            if (tspThoiGianConLai.TimeSpan <= TimeSpan.Zero)
+            tspBatDauSau.TimeSpan = deNgayThi.DateTime - now;
+            if (tspBatDauSau.TimeSpan <= TimeSpan.Zero)
             {
                 btnThi.Enabled = true;
-                tspThoiGianConLai.TimeSpan = TimeSpan.Zero;
+                tspBatDauSau.TimeSpan = TimeSpan.Zero;
                 timer.Stop();
             }
         }
+        private void PositionChange(object sender, EventArgs e)
+        {
+            if (bdsLichThi.Count == 0) return;
+            if ((int)((DataRowView)bdsLichThi.Current).Row["THOIGIANCONLAI"] == 0) {
+                speThoiGianConLai.Value = speThoiLuong.Value; 
+                btnThi.Text = "Thi";
+            }
+            else btnThi.Text = "Tiếp tục";
 
+        }
         private void btnXemChiTiet_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             btnThi.Enabled = false;
             panelThongTinThi.Visible = true;
             panelThongTinThi.Dock = DockStyle.Right;
+            PositionChange(null, null);
             timer.Start();
-            btnXemChiTiet.Enabled = false;
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
@@ -78,15 +89,27 @@ namespace THITRACNGHIEM
             }
             else
             {
+                   Thi thi=null;
                 try
                 {
                     int ID_CTDK = (int)((DataRowView)bdsLichThi.Current)["ID_CTDK"];
-                    Thi thi = new Thi(ID_CTDK,txtMaMH.Text, (int)speLanThi.Value,(int)speThoiLuong.Value);
+                    if (btnThi.Text.Equals("Thi"))
+                        thi = new Thi(ID_CTDK,txtMaMH.Text, (int)speLanThi.Value,(int)speThoiLuong.Value,(int)speThoiLuong.Value);
+                    else
+                    { 
+                        thi = new Thi((int)((DataRowView)bdsLichThi.Current)["IDBD"],txtMaMH.Text,(int)speThoiGianConLai.Value, (int)speThoiLuong.Value);
+                    }
+                    thi.MdiParent = this.parent;
                     thi.Show();
-                    btnThi.Enabled = false;
+                    //btnThi.Enabled = false;
+                    this.Close();
                 }
                 catch (Exception ex){
                     MessageBox.Show("Lỗi load đề\n" + ex);
+                    if (thi != null)
+                    {
+                        thi.Close();
+                    }
                 }
             }
         }
@@ -94,6 +117,22 @@ namespace THITRACNGHIEM
         private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             this.Close();
+        }
+
+        public void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            //panelThongTinThi.Visible = false;
+            //panelThongTinThi.Dock = DockStyle.None;
+            try
+            {
+              //  this.SP_LAYLICHTHITableAdapter.Connection.ConnectionString = Program.connstr;
+                this.SP_LAYLICHTHITableAdapter.Fill(this.dS_THI.SP_LAYLICHTHI, Program.username);
+                btnThi.Enabled = true;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Lỗi tải lich thi" + ex.Message);
+            }
         }
     }
 }
