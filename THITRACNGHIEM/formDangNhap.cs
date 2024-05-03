@@ -54,25 +54,32 @@ namespace WindowsFormsApp1
             Program.servername = cmbCoSo.SelectedValue.ToString();
             if (radioGiaoVien.Checked == true)
             {
-                Program.mloginDN =Program.mlogin = inputTK.Text;
-                Program.passwordDN =  Program.password = inputMK.Text;
+                Program.mlogin = inputTK.Text;
+                Program.password = inputMK.Text;
                 if (Program.KetNoi(true) == 1)
                 {
                     try
                     {
-                    SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinGV " + Program.mlogin);
-                    if (reader.Read())
-                    {
-                        Program.username = reader[0].ToString();
-                        Program.mHoten = reader[1].ToString();
-                        Program.mGroup = reader[2].ToString();
-                    }
-                    else
-                        MessageBox.Show("Tài khoảng chưa được đăng ký!");
+                        SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinGV " + Program.mlogin);
+                        if (reader.Read())
+                        {
+                            Program.username = reader[0].ToString();
+                            Program.mHoten = reader[1].ToString();
+                            Program.mGroup = reader[2].ToString();
+                            Program.mloginDN = Program.mlogin;
+                            Program.passwordDN = Program.password;
+                            this.parentForm.showInfo(Program.mHoten,Program.mGroup);           
+                        }
+                        else
+                        {
+                            MessageBox.Show("Tài khoảng chưa được đăng ký!");
+                            Program.mlogin = "";
+                            Program.password = "";
+                        }
 
                     }catch(Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                            MessageBox.Show(ex.ToString());
                     }
                 }
             }
@@ -82,28 +89,23 @@ namespace WindowsFormsApp1
                     Program.password = Program.svpassword;
                     if (Program.KetNoi(true) == 1)
                     {
-                        Program.username = Program.mlogin = inputTK.Text;
-                        Program.password = inputMK.Text;
-                        Program.mGroup = "SINH VIÊN";
-                        SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinSV " + Program.mlogin + ", " +Program.password);
-                            try
-                            {
-                                if(reader.Read()) 
-                                        Program.mHoten = reader[0].ToString();
-                                else
-                                {
-                                    MessageBox.Show("Bạn xem lại user name và password.\n ");
-                                }
+                        SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinSV " + inputTK.Text + ", " + inputMK.Text);
 
-                            }
-                            catch (Exception ex)
-                            {
-
-                                MessageBox.Show(ex.Message);
-                            }    
+                        if(reader.Read())
+                        {
+                            Program.mHoten = reader[0].ToString();
+                            Program.mlogin = inputTK.Text;
+                            Program.password = inputMK.Text;
+                            Program.mGroup = "SINH VIÊN";
+                            Program.username = Program.mlogin;
+                            this.parentForm.showInfo(Program.mHoten,Program.mGroup);           
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bạn xem lại user name và password.\n ");
+                        }
                     }
-                }
-                    this.parentForm.showInfo(Program.mHoten,Program.mGroup);           
+             }
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
