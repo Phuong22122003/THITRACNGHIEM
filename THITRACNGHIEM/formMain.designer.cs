@@ -41,6 +41,7 @@
             this.btnXemLichThi = new DevExpress.XtraBars.BarButtonItem();
             this.btnQuanLyCauHoi = new DevExpress.XtraBars.BarButtonItem();
             this.btnQuanLySinhVien = new DevExpress.XtraBars.BarButtonItem();
+            this.btnXemDanhSachDk = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -51,13 +52,12 @@
             this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.btnXemDanhSachDk = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
             // 
-            this.ribbon.EmptyAreaImageOptions.ImagePadding = new System.Windows.Forms.Padding(68, 67, 68, 67);
+            this.ribbon.EmptyAreaImageOptions.ImagePadding = new System.Windows.Forms.Padding(85, 84, 85, 84);
             this.ribbon.ExpandCollapseItem.Id = 0;
             this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbon.ExpandCollapseItem,
@@ -75,10 +75,10 @@
             this.btnQuanLySinhVien,
             this.btnXemDanhSachDk});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.ribbon.Margin = new System.Windows.Forms.Padding(8, 9, 8, 9);
             this.ribbon.MaxItemId = 16;
             this.ribbon.Name = "ribbon";
-            this.ribbon.OptionsMenuMinWidth = 742;
+            this.ribbon.OptionsMenuMinWidth = 927;
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
             this.ribbonPage2,
@@ -115,6 +115,7 @@
             this.btnTaoTaiKhoang.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnTaoTaiKhoang.ImageOptions.LargeImage")));
             this.btnTaoTaiKhoang.Name = "btnTaoTaiKhoang";
             this.btnTaoTaiKhoang.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btnTaoTaiKhoang.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnTaoTaiKhoang_ItemClick);
             // 
             // barStaticItem1
             // 
@@ -172,6 +173,13 @@
             this.btnQuanLySinhVien.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnQuanLySinhVien.ImageOptions.Image")));
             this.btnQuanLySinhVien.Name = "btnQuanLySinhVien";
             this.btnQuanLySinhVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnQuanLySinhVien_ItemClick);
+            // 
+            // btnXemDanhSachDk
+            // 
+            this.btnXemDanhSachDk.Caption = "Xem danh sách đăng ký";
+            this.btnXemDanhSachDk.Id = 15;
+            this.btnXemDanhSachDk.Name = "btnXemDanhSachDk";
+            this.btnXemDanhSachDk.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXemDanhSachDk_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -239,17 +247,10 @@
             this.ribbonStatusBar.ItemLinks.Add(this.userName);
             this.ribbonStatusBar.ItemLinks.Add(this.group);
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 732);
-            this.ribbonStatusBar.Margin = new System.Windows.Forms.Padding(5);
+            this.ribbonStatusBar.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbon;
             this.ribbonStatusBar.Size = new System.Drawing.Size(1114, 30);
-            // 
-            // btnXemDanhSachDk
-            // 
-            this.btnXemDanhSachDk.Caption = "Xem danh sách đăng ký";
-            this.btnXemDanhSachDk.Id = 15;
-            this.btnXemDanhSachDk.Name = "btnXemDanhSachDk";
-            this.btnXemDanhSachDk.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXemDanhSachDk_ItemClick);
             // 
             // formMain
             // 

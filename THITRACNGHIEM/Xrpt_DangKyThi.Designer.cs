@@ -1,4 +1,6 @@
-﻿namespace THITRACNGHIEM
+﻿using DevExpress.DataAccess.ConnectionParameters;
+
+namespace THITRACNGHIEM
 {
     partial class Xrpt_DangKyThi
     {
@@ -41,7 +43,10 @@
             this.pageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.lblReportHeader = new DevExpress.XtraReports.UI.XRLabel();
-            this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
+             this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
+            // MsSqlConnectionParameters sqlConParams = new MsSqlConnectionParameters(Data.servername, Data.database, Data.mlogin, Data.password, MsSqlAuthorizationType.SqlServer);
+            //MsSqlConnectionParameters sqlConParams = new MsSqlConnectionParameters("PHUONG\\MSSQLSERVER01", Data.database,"A","1", MsSqlAuthorizationType.SqlServer);
+            //this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(sqlConParams);
             this.Title = new DevExpress.XtraReports.UI.XRControlStyle();
             this.GroupCaption1 = new DevExpress.XtraReports.UI.XRControlStyle();
             this.GroupData1 = new DevExpress.XtraReports.UI.XRControlStyle();
@@ -123,12 +128,13 @@
             // 
             // sqlDataSource1
             // 
-            this.sqlDataSource1.ConnectionName = "THITRACNGHIEM.Properties.Settings.connection";
+          this.sqlDataSource1.ConnectionName = "THITRACNGHIEM.Properties.Settings.connection";
+          //this.sqlDataSource1.ConnectionName = "Settings.connection";
             this.sqlDataSource1.Name = "sqlDataSource1";
             storedProcQuery1.Name = "SP_XEMDANHSACHDK_SONGSONG";
             queryParameter1.Name = "@TUNGAY";
             queryParameter1.Type = typeof(DevExpress.DataAccess.Expression);
-            queryParameter1.Value = new DevExpress.DataAccess.Expression("\'5/4/2024\'", typeof(string));
+           queryParameter1.Value = new DevExpress.DataAccess.Expression("\'5/4/2024\'", typeof(string));
             queryParameter2.Name = "@DENNGAY";
             queryParameter2.Type = typeof(DevExpress.DataAccess.Expression);
             queryParameter2.Value = new DevExpress.DataAccess.Expression("\'7/4/2024\'", typeof(string));

@@ -81,18 +81,23 @@ namespace WindowsFormsApp1
         private void btnXemLichThi_ItemClick(object sender, ItemClickEventArgs e)
         {
             Form frm = this.CheckExist(typeof(formLichThi));
-            if (frm != null) frm.Activate();
+            if (frm != null) {
+                frm.Activate();
+                formLichThi current = (formLichThi) frm;
+                current.btnReloadClick(null, null);
+                
+            }
             else
             {
                 try
                 {
-                     formLichThi f = new formLichThi(this);
+                    formLichThi f = new formLichThi(this);
 
                     f.MdiParent = this;
                     f.Show();
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Lỗi tải lịch thi" + ex.Message);
                 }
@@ -151,6 +156,28 @@ namespace WindowsFormsApp1
 
                 f.MdiParent = this;
                 f.Show();
+            }
+        }
+
+        private void btnTaoTaiKhoang_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            // Có lỗi thì không mở form nữa
+            Form frm = this.CheckExist(typeof(formTaoTK));
+            if (frm != null) frm.Activate();
+            else
+            {
+                try
+                {
+                    formTaoTK f = new formTaoTK();
+
+                    f.MdiParent = this;
+                    f.Show();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi " + ex.Message);
+                }
             }
         }
     }

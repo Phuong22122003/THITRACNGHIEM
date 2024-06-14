@@ -9,12 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using THITRACNGHIEM;
 
 namespace WindowsFormsApp1
 {
     public partial class formDangNhap : Form
     {
-        
         public formDangNhap(formMain parent)
         {
             this.parentForm = parent;   
@@ -23,88 +23,86 @@ namespace WindowsFormsApp1
 
         private void formDangNhap_Load(object sender, EventArgs e)
         {
-            DataTable tmp = new DataTable();
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = Program.connstr_publisher;
-           conn.Open();
-            String statement = "SELECT * FROM V_DS_PHANMANH";
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement, conn);
-            try
+            DataTable danhSachCoso = Data.ExecuteStatementByPublisherConnection("SELECT * FROM V_DS_PHANMANH");
+            if(danhSachCoso == null)
             {
-                sqlDataAdapter.Fill(tmp);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi không thể đăng nhập lúc này!\n" + ex.Message);
+                btnDangNhap.Enabled = false;
                 return;
             }
-            finally 
-            {
-                conn.Close(); 
-            }
-            Program.bds_dspm.DataSource = tmp;
-            this.cmbCoSo.DataSource = Program.bds_dspm;
+            Data.bds_dspm.DataSource = danhSachCoso;
+            this.cmbCoSo.DataSource = Data.bds_dspm;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
-            Program.bds_dspm.DataSource = tmp;
+            Data.bds_dspm.DataSource = danhSachCoso;
         }
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            Program.servername = cmbCoSo.SelectedValue.ToString();
+            Data.servername = cmbCoSo.SelectedValue.ToString();
+            //Trường hợp là giảng viên
             if (radioGiaoVien.Checked == true)
             {
-                Program.mlogin = inputTK.Text;
-                Program.password = inputMK.Text;
-                if (Program.KetNoi(true) == 1)
+                Data.mlogin = inputTK.Text;
+                Data.password = inputMK.Text;
+                if (Data.ConnectToServerWhenLogin() != 1) return;
+                //Kết nối thành công
+                try
                 {
-                    try
+                    SqlDataReader reader = Data.ExecSqlDataReader("exec SP_LayThongTinGV " + Data.mlogin,Data.ServerConnection);
+                    //Kết nối thành công và lấy dữ liệu
+                    if (reader.Read())
                     {
-                        SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinGV " + Program.mlogin);
-                        if (reader.Read())
-                        {
-                            Program.username = reader[0].ToString();
-                            Program.mHoten = reader[1].ToString();
-                            Program.mGroup = reader[2].ToString();
-                            Program.mloginDN = Program.mlogin;
-                            Program.passwordDN = Program.password;
-                            this.parentForm.showInfo(Program.mHoten,Program.mGroup);           
-                        }
-                        else
-                        {
-                            MessageBox.Show("Tài khoảng chưa được đăng ký!");
-                            Program.mlogin = "";
-                            Program.password = "";
-                        }
-
-                    }catch(Exception ex)
-                    {
-                            MessageBox.Show(ex.ToString());
+                        Data.username = reader[0].ToString();
+                        Data.mHoten = reader[1].ToString();
+                        Data.mGroup = reader[2].ToString();
+                        Data.mloginDN = Data.mlogin;
+                        Data.passwordDN = Data.password;
+                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);           
                     }
+                    // Kết nối vào cơ sở dữ liệu nhưng chưa đăng ký tài khoảng
+                    else
+                    {
+                        MessageBox.Show("Tài khoảng chưa được đăng ký!");
+                        Data.mlogin = "";
+                        Data.password = "";
+                    }
+
+                }catch(Exception ex)
+                {
+                        MessageBox.Show(ex.ToString());
                 }
+                
             }
+            //trường hợp là sinh viên
             else
                 {
-                    Program.mlogin = Program.svlogin;
-                    Program.password = Program.svpassword;
-                    if (Program.KetNoi(true) == 1)
-                    {
-                        SqlDataReader reader = Program.ExecSqlDataReader("exec SP_LayThongTinSV " + inputTK.Text + ", " + inputMK.Text);
+                    Data.mlogin = Data.svlogin;
+                    Data.password = Data.svpassword;
+                    if (Data.ConnectToServerWhenLogin() != 1) return;
+                    
+                    SqlDataReader reader = Data.ExecSqlDataReader("exec SP_LayThongTinSV " + inputTK.Text + ", " + inputMK.Text,Data.ServerConnection);
+                try
+                {
 
-                        if(reader.Read())
-                        {
-                            Program.mHoten = reader[0].ToString();
-                            Program.mlogin = inputTK.Text;
-                            Program.password = inputMK.Text;
-                            Program.mGroup = "SINH VIÊN";
-                            Program.username = Program.mlogin;
-                            this.parentForm.showInfo(Program.mHoten,Program.mGroup);           
-                        }
-                        else
-                        {
-                            MessageBox.Show("Bạn xem lại user name và password.\n ");
-                        }
+                    if(reader.Read())
+                    {
+                        Data.mHoten = reader[0].ToString();
+                        Data.mlogin = inputTK.Text;
+                        Data.password = inputMK.Text;
+                        Data.mGroup = "SINH VIÊN";
+                        Data.username = Data.mlogin;
+                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);           
                     }
+                    else
+                    {
+                        MessageBox.Show("Bạn xem lại user name và password.\n ");
+                    }
+                    
+                }
+                catch
+                {
+
+                }
              }
         }
 

@@ -52,11 +52,12 @@
             this.colTRINHDO = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTHOIGIANCONLAI = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelThongTinThi = new DevExpress.XtraEditors.PanelControl();
+            this.lblThoiGianConLai = new System.Windows.Forms.Label();
             this.speThoiGianConLai = new DevExpress.XtraEditors.SpinEdit();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnXemChiTiet = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.btnReload = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.bar3 = new DevExpress.XtraBars.Bar();
@@ -77,7 +78,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tspBatDauSau = new DevExpress.XtraEditors.TimeSpanEdit();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.lblThoiGianConLai = new System.Windows.Forms.Label();
             mAMHLabel = new System.Windows.Forms.Label();
             tENMHLabel = new System.Windows.Forms.Label();
             lANLabel = new System.Windows.Forms.Label();
@@ -323,6 +323,15 @@
             this.panelThongTinThi.Size = new System.Drawing.Size(1111, 791);
             this.panelThongTinThi.TabIndex = 3;
             // 
+            // lblThoiGianConLai
+            // 
+            this.lblThoiGianConLai.AutoSize = true;
+            this.lblThoiGianConLai.Location = new System.Drawing.Point(661, 300);
+            this.lblThoiGianConLai.Name = "lblThoiGianConLai";
+            this.lblThoiGianConLai.Size = new System.Drawing.Size(124, 16);
+            this.lblThoiGianConLai.TabIndex = 21;
+            this.lblThoiGianConLai.Text = "THỜI GIAN CÒN LẠI:";
+            // 
             // speThoiGianConLai
             // 
             this.speThoiGianConLai.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsLichThi, "THOIGIANCONLAI", true));
@@ -331,6 +340,7 @@
             0,
             0,
             0});
+            this.speThoiGianConLai.Enabled = false;
             this.speThoiGianConLai.Location = new System.Drawing.Point(846, 296);
             this.speThoiGianConLai.MenuManager = this.barManager1;
             this.speThoiGianConLai.Name = "speThoiGianConLai";
@@ -351,7 +361,7 @@
             this.barManager1.DockControls.Add(this.barDockControlRight);
             this.barManager1.Form = this;
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.barButtonItem1,
+            this.btnReload,
             this.barButtonItem2,
             this.btnXemChiTiet});
             this.barManager1.MainMenu = this.bar2;
@@ -366,7 +376,7 @@
             this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
             this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnXemChiTiet, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnReload, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar1.Text = "Tools";
             // 
@@ -379,14 +389,14 @@
             this.btnXemChiTiet.Name = "btnXemChiTiet";
             this.btnXemChiTiet.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXemChiTiet_ItemClick);
             // 
-            // barButtonItem1
+            // btnReload
             // 
-            this.barButtonItem1.Caption = "Reload";
-            this.barButtonItem1.Id = 0;
-            this.barButtonItem1.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
-            this.barButtonItem1.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            this.btnReload.Caption = "Reload";
+            this.btnReload.Id = 0;
+            this.btnReload.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnReload.ImageOptions.Image")));
+            this.btnReload.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnReload.ImageOptions.LargeImage")));
+            this.btnReload.Name = "btnReload";
+            this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReloadClick);
             // 
             // barButtonItem2
             // 
@@ -610,15 +620,6 @@
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.allowBtnThi);
             // 
-            // lblThoiGianConLai
-            // 
-            this.lblThoiGianConLai.AutoSize = true;
-            this.lblThoiGianConLai.Location = new System.Drawing.Point(661, 300);
-            this.lblThoiGianConLai.Name = "lblThoiGianConLai";
-            this.lblThoiGianConLai.Size = new System.Drawing.Size(124, 16);
-            this.lblThoiGianConLai.TabIndex = 21;
-            this.lblThoiGianConLai.Text = "THỜI GIAN CÒN LẠI:";
-            // 
             // formLichThi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -676,7 +677,7 @@
         private DevExpress.XtraEditors.TextEdit txtTrinhDo;
         private DevExpress.XtraBars.BarManager barManager1;
         private DevExpress.XtraBars.Bar bar1;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem btnReload;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.Bar bar2;
         private DevExpress.XtraBars.Bar bar3;

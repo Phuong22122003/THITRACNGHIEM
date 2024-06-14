@@ -23,7 +23,7 @@ namespace THITRACNGHIEM
 
         private void formTaoTK_Load(object sender, EventArgs e)
         {
-            dt = Program.ExecSqlDataTable("EXEC SP_LAYDANHSACHGV");
+            dt = Data.ExecuteStatementByServerConnection("EXEC SP_LAYDANHSACHGV");
             dt.PrimaryKey = new DataColumn[] { dt.Columns["MAGV"] };
             cmbHoVaTen.DataSource = dt;
             cmbHoVaTen.DisplayMember = "HOVATEN";
@@ -33,9 +33,15 @@ namespace THITRACNGHIEM
             DataTable dt1 = new DataTable();
             dt1.Columns.Add("TENNHOM");
             dt1.Columns.Add("NHOM");
-            dt1.Rows.Add("TRƯỜNG", "TRUONG");
-            dt1.Rows.Add("CƠ SỞ", "COSO");
-            dt1.Rows.Add("GIẢNG VIÊN", "GIANGVIEN");
+            if (Data.username.Contains("TRUONG"))
+            {
+                dt1.Rows.Add("TRƯỜNG", "TRUONG");
+            }
+            else
+            {
+                dt1.Rows.Add("CƠ SỞ", "COSO");
+                dt1.Rows.Add("GIẢNG VIÊN", "GIANGVIEN");
+            }
             cmbNhom.DataSource = dt1;
             cmbNhom.DisplayMember = "TENNHOM";
             cmbNhom.ValueMember = "NHOM";
@@ -54,7 +60,7 @@ namespace THITRACNGHIEM
         }
         private void getLoginNameAndGroup(String username)
         {
-            SqlDataReader dr = Program.ExecSqlDataReader("EXEC SP_LAYLGNAME_VA_NHOM " + username);
+            SqlDataReader dr = Data.ExecSqlDataReader("EXEC SP_LAYLGNAME_VA_NHOM " + username,Data.ServerConnection);
             String nhom;
             if (dr.Read())
             { 
@@ -64,9 +70,9 @@ namespace THITRACNGHIEM
                 txtTK.Enabled = cmbNhom.Enabled =  txtMK.Enabled = false;
                 btnTaoTK.Enabled = false;
                 btnDoiMK.Enabled = true;
-                if(!txtMaGV.Text.Trim().Equals(Program.username.Trim())) 
-                    if (Program.mGroup.Equals("TRUONG") && nhom.Equals("TRUONG")) btnXoaTK.Enabled = true;
-                    else if(Program.mGroup.Equals("COSO") &&( nhom.Equals("COSO")||nhom.Equals("GIANGVIEN"))) btnXoaTK.Enabled = true;
+                if(!txtMaGV.Text.Trim().Equals(Data.username.Trim())) 
+                    if (Data.mGroup.Equals("TRUONG") && nhom.Equals("TRUONG")) btnXoaTK.Enabled = true;
+                    else if(Data.mGroup.Equals("COSO") &&( nhom.Equals("COSO")||nhom.Equals("GIANGVIEN"))) btnXoaTK.Enabled = true;
                     else btnXoaTK.Enabled = false;
                 else btnDoiMK.Enabled = false;
             }
@@ -108,10 +114,10 @@ namespace THITRACNGHIEM
                 return;
             }
             ClearAllMesages();
-            int check = Program.ExecSqlNonQuery("EXEC SP_TAOLOGIN " + txtTK.Text + ", " + txtMK.Text + ", " + txtMaGV.Text + ", " + cmbNhom.SelectedValue.ToString());
+            int check = Data.ExecSqlNonQuery("EXEC SP_TAOLOGIN " + txtTK.Text + ", " + txtMK.Text + ", " + txtMaGV.Text + ", " + cmbNhom.SelectedValue.ToString(),Data.ServerConnection);
             if (check != 0)
             {
-                lblMessage.Text = "Tạo thất bại";
+                lblMessage.Text = "Tạo thất bại";//chu y
                 return;
             }
             else lblMessage.Text = "Tạo thành công";
@@ -136,7 +142,7 @@ namespace THITRACNGHIEM
                 return;
             }
             ClearAllMesages() ; 
-           int check =  Program.ExecSqlNonQuery("EXEC sp_password NULL,  '" + txtMK.Text  + "', '"+txtTK.Text+"'");
+           int check =  Data.ExecSqlNonQuery("EXEC sp_password NULL,  '" + txtMK.Text + "', '" + txtTK.Text + "'", Data.ServerConnection);
             
             if(check != 0)
             {
@@ -152,7 +158,7 @@ namespace THITRACNGHIEM
 
         private void btnXoaTK_Click(object sender, EventArgs e)
         {
-            int check = Program.ExecSqlNonQuery("Exec SP_XOALOGIN " + txtTK.Text + "," + txtMaGV.Text + "," + cmbNhom.SelectedValue.ToString());
+            int check = Data.ExecSqlNonQuery("Exec SP_XOALOGIN " + txtTK.Text + "," + txtMaGV.Text + "," + cmbNhom.SelectedValue.ToString(), Data.ServerConnection);
             if (check != 0)
             {
                 lblMessage.Text = "Xóa thất bại";

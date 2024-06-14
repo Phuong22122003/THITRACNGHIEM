@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,15 +40,20 @@ namespace THITRACNGHIEM
             li[thuTu].LuaChonSV = LuaChonSV;
         }
     }
+    /// <summary>
+    /// Dùng cho lưu chi tiết bài thi
+    /// </summary>
     internal class CTBT
     {
         private int _CauHoi;
         private char _LuaChonSV;
         private int _ThuTu;
-        private List<char> _DapAn_ThuTu;
+        private Dictionary<String,int> _DapAn_ThuTu;
+        private Dictionary<int, String> _ThuTu_DapAn;
         private char _dap_an;
         public CTBT() { 
-            _DapAn_ThuTu = new List<char>(4);
+            _ThuTu_DapAn = new Dictionary<int, String>();
+            _DapAn_ThuTu = new Dictionary<String, int>();
             _LuaChonSV = '\0';
         }
         public CTBT(int cauHoi, char luaChonSV, int thuTu)
@@ -55,7 +61,7 @@ namespace THITRACNGHIEM
             _CauHoi = cauHoi;
             _LuaChonSV = luaChonSV;
             _ThuTu = thuTu;
-            _DapAn_ThuTu = new List<char>(4);
+            _DapAn_ThuTu = new Dictionary<String, int>();
         }
         public char LuaChonSV
         {
@@ -86,10 +92,29 @@ namespace THITRACNGHIEM
             {
                 _CauHoi = value;
             }
-        }   
-        public List<char> DapAn_Thutu
+        }
+
+        /// <summary>
+        /// Trả về từ điển với khóa là đáp án còn value là thứ tự của đáp án đó trong ctbt.
+        /// Dùng mục đích lưu thứ tự xuống database
+        /// </summary>
+        public Dictionary<String, int>DapAn_Thutu
         {
             get { return _DapAn_ThuTu; }
+        }
+
+        /// <summary>
+        /// trả về từ điển chứa khóa là thứ tự và value là đáp án.
+        /// Ví dụ ThuTu_DapAn[1] = A.
+        /// Dùng để lưu đáp án thực sự cho vị trí đó.
+        ///  ví dụ:
+        ///   + hiển thị:    A B C D
+        ///   + đáp án:     B D A C
+        ///   Khi đó ta có vị trí 1 là B bằng cách lấy ThuTu_DapAn[1] = A.
+        /// </summary>
+        public Dictionary<int, String> ThuTu_DapAn
+        {
+            get { return _ThuTu_DapAn; }
         }
     }
 }

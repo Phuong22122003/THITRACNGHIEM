@@ -26,17 +26,6 @@ namespace THITRACNGHIEM.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PHUONG\\MSSQLSERVER01;Initial Catalog=TN_CSDLPT;User ID=gv;Password=12" +
-            "3456789")]
-        public string connectionSV {
-            get {
-                return ((string)(this["connectionSV"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-3KF7N80A\\SERVER1;Initial Catalog=TN_CSDLPT;User ID=sa;Password" +
             "=123456789;TrustServerCertificate=True")]
         public string TN_CSDLPTConnectionString {
@@ -48,10 +37,32 @@ namespace THITRACNGHIEM.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PHUONG;Initial Catalog=TN_CSDLPT;User ID=sa;Password=123456789")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PHUONG\\MSSQLSERVER01;Initial Catalog=TN_CSDLPT;User ID=sa;Password=12" +
+            "3456789")]
         public string connection {
             get {
                 return ((string)(this["connection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PHUONG;Initial Catalog=TN_CSDLPT;Integrated Security=True")]
+        public string TN_CSDLPTConnectionString1 {
+            get {
+                return ((string)(this["TN_CSDLPTConnectionString1"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=PHUONG\\MSSQLSERVER01;Initial Catalog=TN_CSDLPT;User ID=SA;Password=12" +
+            "3456789")]
+        public string connectionSV {
+            get {
+                return ((string)(this["connectionSV"]));
             }
         }
     }

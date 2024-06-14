@@ -39,8 +39,6 @@
             this.lblMaLop = new System.Windows.Forms.Label();
             this.txtHoTen = new System.Windows.Forms.TextBox();
             this.lblHoTen = new System.Windows.Forms.Label();
-            this.ngaySinh = new DevExpress.XtraEditors.DateEdit();
-            this.lblNgaySinh = new System.Windows.Forms.Label();
             this.txtMaSV = new System.Windows.Forms.TextBox();
             this.lblMaSV = new System.Windows.Forms.Label();
             this.panelDieuHuong = new DevExpress.XtraEditors.PanelControl();
@@ -53,39 +51,37 @@
             this.radioA = new System.Windows.Forms.RadioButton();
             this.labelSoCau = new System.Windows.Forms.Label();
             this.labelCau = new System.Windows.Forms.Label();
-            this.txtD = new DevExpress.XtraEditors.TextEdit();
-            this.txtC = new DevExpress.XtraEditors.TextEdit();
-            this.txtB = new DevExpress.XtraEditors.TextEdit();
-            this.txtA = new DevExpress.XtraEditors.TextEdit();
-            this.txtNoiDung = new DevExpress.XtraEditors.TextEdit();
+            this.bdsCauHoi = new System.Windows.Forms.BindingSource(this.components);
+            this.DS_THI = new THITRACNGHIEM.DS_THI();
             this.lvLuaChon = new System.Windows.Forms.ListView();
             this.colCau = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colC = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.bdsCauHoi = new System.Windows.Forms.BindingSource(this.components);
-            this.DS_THI = new THITRACNGHIEM.DS_THI();
             this.SP_LAYCAUHOITHITableAdapter = new THITRACNGHIEM.DS_THITableAdapters.SP_LAYCAUHOITHITableAdapter();
             this.tableAdapterManager = new THITRACNGHIEM.DS_THITableAdapters.TableAdapterManager();
             this.bdsPhucHoiCauHoi = new System.Windows.Forms.BindingSource(this.components);
             this.SP_PHUCHOICAUHOITHITableAdapter = new THITRACNGHIEM.DS_THITableAdapters.SP_PHUCHOICAUHOITHITableAdapter();
+            this.txtNoiDung = new DevExpress.XtraEditors.MemoEdit();
+            this.txtA = new DevExpress.XtraEditors.MemoEdit();
+            this.txtB = new DevExpress.XtraEditors.MemoEdit();
+            this.txtC = new DevExpress.XtraEditors.MemoEdit();
+            this.txtD = new DevExpress.XtraEditors.MemoEdit();
             ((System.ComponentModel.ISupportInitialize)(this.panelThongtin)).BeginInit();
             this.panelThongtin.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ngaySinh.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ngaySinh.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelDieuHuong)).BeginInit();
             this.panelDieuHuong.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelCauHoi)).BeginInit();
             this.panelCauHoi.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsCauHoi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS_THI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsPhucHoiCauHoi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panelThongtin
@@ -99,8 +95,6 @@
             this.panelThongtin.Controls.Add(this.lblMaLop);
             this.panelThongtin.Controls.Add(this.txtHoTen);
             this.panelThongtin.Controls.Add(this.lblHoTen);
-            this.panelThongtin.Controls.Add(this.ngaySinh);
-            this.panelThongtin.Controls.Add(this.lblNgaySinh);
             this.panelThongtin.Controls.Add(this.txtMaSV);
             this.panelThongtin.Controls.Add(this.lblMaSV);
             this.panelThongtin.Dock = System.Windows.Forms.DockStyle.Top;
@@ -159,7 +153,7 @@
             // 
             this.txtLop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLop.Enabled = false;
-            this.txtLop.Location = new System.Drawing.Point(676, 73);
+            this.txtLop.Location = new System.Drawing.Point(239, 83);
             this.txtLop.Name = "txtLop";
             this.txtLop.Size = new System.Drawing.Size(178, 23);
             this.txtLop.TabIndex = 8;
@@ -167,7 +161,7 @@
             // lblMaLop
             // 
             this.lblMaLop.AutoSize = true;
-            this.lblMaLop.Location = new System.Drawing.Point(535, 76);
+            this.lblMaLop.Location = new System.Drawing.Point(98, 86);
             this.lblMaLop.Name = "lblMaLop";
             this.lblMaLop.Size = new System.Drawing.Size(27, 16);
             this.lblMaLop.TabIndex = 7;
@@ -190,28 +184,6 @@
             this.lblHoTen.Size = new System.Drawing.Size(66, 16);
             this.lblHoTen.TabIndex = 5;
             this.lblHoTen.Text = "Họ và tên:";
-            // 
-            // ngaySinh
-            // 
-            this.ngaySinh.EditValue = null;
-            this.ngaySinh.Enabled = false;
-            this.ngaySinh.Location = new System.Drawing.Point(238, 70);
-            this.ngaySinh.Name = "ngaySinh";
-            this.ngaySinh.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.ngaySinh.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.ngaySinh.Size = new System.Drawing.Size(178, 22);
-            this.ngaySinh.TabIndex = 4;
-            // 
-            // lblNgaySinh
-            // 
-            this.lblNgaySinh.AutoSize = true;
-            this.lblNgaySinh.Location = new System.Drawing.Point(93, 70);
-            this.lblNgaySinh.Name = "lblNgaySinh";
-            this.lblNgaySinh.Size = new System.Drawing.Size(69, 16);
-            this.lblNgaySinh.TabIndex = 3;
-            this.lblNgaySinh.Text = "Ngày Sinh:";
             // 
             // txtMaSV
             // 
@@ -269,11 +241,11 @@
             this.panelCauHoi.Controls.Add(this.radioA);
             this.panelCauHoi.Controls.Add(this.labelSoCau);
             this.panelCauHoi.Controls.Add(this.labelCau);
-            this.panelCauHoi.Controls.Add(this.txtD);
-            this.panelCauHoi.Controls.Add(this.txtC);
-            this.panelCauHoi.Controls.Add(this.txtB);
-            this.panelCauHoi.Controls.Add(this.txtA);
             this.panelCauHoi.Controls.Add(this.txtNoiDung);
+            this.panelCauHoi.Controls.Add(this.txtA);
+            this.panelCauHoi.Controls.Add(this.txtB);
+            this.panelCauHoi.Controls.Add(this.txtC);
+            this.panelCauHoi.Controls.Add(this.txtD);
             this.panelCauHoi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCauHoi.Location = new System.Drawing.Point(0, 124);
             this.panelCauHoi.Name = "panelCauHoi";
@@ -346,41 +318,15 @@
             this.labelCau.TabIndex = 10;
             this.labelCau.Text = "Câu";
             // 
-            // txtD
+            // bdsCauHoi
             // 
-            this.txtD.Location = new System.Drawing.Point(304, 558);
-            this.txtD.Name = "txtD";
-            this.txtD.Size = new System.Drawing.Size(1288, 22);
-            this.txtD.TabIndex = 9;
+            this.bdsCauHoi.DataMember = "SP_LAYCAUHOITHI";
+            this.bdsCauHoi.DataSource = this.DS_THI;
             // 
-            // txtC
+            // DS_THI
             // 
-            this.txtC.Location = new System.Drawing.Point(304, 467);
-            this.txtC.Name = "txtC";
-            this.txtC.Size = new System.Drawing.Size(1288, 22);
-            this.txtC.TabIndex = 7;
-            // 
-            // txtB
-            // 
-            this.txtB.Location = new System.Drawing.Point(304, 379);
-            this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(1306, 22);
-            this.txtB.TabIndex = 5;
-            // 
-            // txtA
-            // 
-            this.txtA.Location = new System.Drawing.Point(304, 298);
-            this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(1306, 22);
-            this.txtA.TabIndex = 3;
-            // 
-            // txtNoiDung
-            // 
-            this.txtNoiDung.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsCauHoi, "NOIDUNG", true));
-            this.txtNoiDung.Location = new System.Drawing.Point(304, 176);
-            this.txtNoiDung.Name = "txtNoiDung";
-            this.txtNoiDung.Size = new System.Drawing.Size(1306, 22);
-            this.txtNoiDung.TabIndex = 1;
+            this.DS_THI.DataSetName = "DS_THI";
+            this.DS_THI.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // lvLuaChon
             // 
@@ -391,6 +337,7 @@
             this.colC,
             this.colD});
             this.lvLuaChon.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lvLuaChon.Enabled = false;
             this.lvLuaChon.GridLines = true;
             this.lvLuaChon.HideSelection = false;
             this.lvLuaChon.Location = new System.Drawing.Point(1616, 124);
@@ -420,16 +367,6 @@
             // 
             this.colD.Text = "D";
             // 
-            // bdsCauHoi
-            // 
-            this.bdsCauHoi.DataMember = "SP_LAYCAUHOITHI";
-            this.bdsCauHoi.DataSource = this.DS_THI;
-            // 
-            // DS_THI
-            // 
-            this.DS_THI.DataSetName = "DS_THI";
-            this.DS_THI.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // SP_LAYCAUHOITHITableAdapter
             // 
             this.SP_LAYCAUHOITHITableAdapter.ClearBeforeFill = true;
@@ -449,6 +386,42 @@
             // 
             this.SP_PHUCHOICAUHOITHITableAdapter.ClearBeforeFill = true;
             // 
+            // txtNoiDung
+            // 
+            this.txtNoiDung.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsCauHoi, "NOIDUNG", true));
+            this.txtNoiDung.Location = new System.Drawing.Point(304, 176);
+            this.txtNoiDung.Name = "txtNoiDung";
+            this.txtNoiDung.Size = new System.Drawing.Size(1254, 50);
+            this.txtNoiDung.TabIndex = 1;
+            // 
+            // txtA
+            // 
+            this.txtA.Location = new System.Drawing.Point(304, 289);
+            this.txtA.Name = "txtA";
+            this.txtA.Size = new System.Drawing.Size(1254, 40);
+            this.txtA.TabIndex = 3;
+            // 
+            // txtB
+            // 
+            this.txtB.Location = new System.Drawing.Point(304, 379);
+            this.txtB.Name = "txtB";
+            this.txtB.Size = new System.Drawing.Size(1254, 40);
+            this.txtB.TabIndex = 5;
+            // 
+            // txtC
+            // 
+            this.txtC.Location = new System.Drawing.Point(304, 467);
+            this.txtC.Name = "txtC";
+            this.txtC.Size = new System.Drawing.Size(1254, 40);
+            this.txtC.TabIndex = 7;
+            // 
+            // txtD
+            // 
+            this.txtD.Location = new System.Drawing.Point(304, 558);
+            this.txtD.Name = "txtD";
+            this.txtD.Size = new System.Drawing.Size(1254, 40);
+            this.txtD.TabIndex = 9;
+            // 
             // Thi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -464,21 +437,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelThongtin)).EndInit();
             this.panelThongtin.ResumeLayout(false);
             this.panelThongtin.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ngaySinh.Properties.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ngaySinh.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelDieuHuong)).EndInit();
             this.panelDieuHuong.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelCauHoi)).EndInit();
             this.panelCauHoi.ResumeLayout(false);
             this.panelCauHoi.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsCauHoi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS_THI)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsPhucHoiCauHoi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,8 +461,6 @@
         private DevExpress.XtraEditors.PanelControl panelCauHoi;
         private System.Windows.Forms.Label lblMaSV;
         private System.Windows.Forms.TextBox txtMaSV;
-        private DevExpress.XtraEditors.DateEdit ngaySinh;
-        private System.Windows.Forms.Label lblNgaySinh;
         private System.Windows.Forms.TextBox txtHoTen;
         private System.Windows.Forms.Label lblHoTen;
         private System.Windows.Forms.TextBox txtLop;
@@ -510,11 +479,6 @@
         private System.Windows.Forms.BindingSource bdsCauHoi;
         private DS_THITableAdapters.SP_LAYCAUHOITHITableAdapter SP_LAYCAUHOITHITableAdapter;
         private DS_THITableAdapters.TableAdapterManager tableAdapterManager;
-        private DevExpress.XtraEditors.TextEdit txtD;
-        private DevExpress.XtraEditors.TextEdit txtC;
-        private DevExpress.XtraEditors.TextEdit txtB;
-        private DevExpress.XtraEditors.TextEdit txtA;
-        private DevExpress.XtraEditors.TextEdit txtNoiDung;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Label labelSoCau;
@@ -526,5 +490,10 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.BindingSource bdsPhucHoiCauHoi;
         private DS_THITableAdapters.SP_PHUCHOICAUHOITHITableAdapter SP_PHUCHOICAUHOITHITableAdapter;
+        private DevExpress.XtraEditors.MemoEdit txtNoiDung;
+        private DevExpress.XtraEditors.MemoEdit txtA;
+        private DevExpress.XtraEditors.MemoEdit txtB;
+        private DevExpress.XtraEditors.MemoEdit txtC;
+        private DevExpress.XtraEditors.MemoEdit txtD;
     }
 }

@@ -15,8 +15,10 @@ namespace WindowsFormsApp1
         /// The main entry point for the application.
         /// </summary>
         public static SqlConnection conn = new SqlConnection();// kết nối về bằng tài khoảng đã đăng nhập
+        public static SqlConnection connTraCuu = new SqlConnection();
         public static String connstr;
         public static String connstr_publisher = "Data Source=PHUONG;Initial Catalog=TN_CSDLPT;Integrated Security=True";
+        public static String servernameTraCuu = "PHUONG\\MSSQLSERVER03";
 
         public static SqlDataReader myReader;
         public static String servername = "";
@@ -58,7 +60,24 @@ namespace WindowsFormsApp1
 
             catch (Exception e)
             {
-                if(showError)MessageBox.Show("Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n " + e.Message, "", MessageBoxButtons.OK);
+                if(showError)MessageBox.Show("             Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n           " + e.Message, "", MessageBoxButtons.OK);
+                return 0;
+            }
+        }
+        public static int KetNoiSiteTraCuu()
+        {
+            if (connTraCuu.State == ConnectionState.Open) connTraCuu.Close();
+                connTraCuu.ConnectionString = "Data Source=" + Program.servernameTraCuu + ";Initial Catalog=" +
+                Program.database + ";User ID=" +
+                Program.remotelogin + ";password=" + Program.remotepassword;
+            try
+            {
+                connTraCuu.Open();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối site tra cứu\n" + ex.Message);
                 return 0;
             }
         }
@@ -98,7 +117,29 @@ namespace WindowsFormsApp1
             }
 
         }
-
+        public static int ExecuteScalar(String strlenh, SqlConnection connection = null)
+        {
+            SqlCommand Sqlcmd;
+            SqlConnection conn;
+            if (connection == null) conn = Program.conn;
+            else conn = connection;
+                Sqlcmd = new SqlCommand(strlenh, conn);
+            Sqlcmd.CommandType = CommandType.Text;
+            Sqlcmd.CommandTimeout = 600;// 10 phut 
+            int result = 0;
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            try
+            {
+                result =(int)Sqlcmd.ExecuteScalar();
+                return result;
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                conn.Close();
+                return -1; // trang thai lỗi gởi từ RAISERROR trong SQL Server qua
+            }
+        }
         public static int ExecSqlNonQuery(String strlenh)
         {
             SqlCommand Sqlcmd = new SqlCommand(strlenh, conn);
@@ -107,7 +148,7 @@ namespace WindowsFormsApp1
             if (conn.State == ConnectionState.Closed) conn.Open();
             try
             {
-                Sqlcmd.ExecuteNonQuery(); conn.Close();
+                Sqlcmd.ExecuteNonQuery();
                 return 0;
             }
             catch (SqlException ex)
@@ -119,14 +160,16 @@ namespace WindowsFormsApp1
                 return ex.State; // trang thai lỗi gởi từ RAISERROR trong SQL Server qua
             }
         }
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            frmChinh = new formMain();
+            Data.ConnectToRetrievalSite();
+            Data.ConnectToPublisher();
+           frmChinh = new formMain();
             Application.Run(frmChinh);
-            Application.Run(new THITRACNGHIEM.frmSinhVien());
         }
     }
 }

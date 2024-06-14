@@ -86,11 +86,11 @@
             this.btnXong = new System.Windows.Forms.Button();
             this.cmbTrinhDo = new System.Windows.Forms.ComboBox();
             this.cmbDapAn = new System.Windows.Forms.ComboBox();
-            this.txtD = new DevExpress.XtraEditors.TextEdit();
-            this.txtC = new DevExpress.XtraEditors.TextEdit();
-            this.txtB = new DevExpress.XtraEditors.TextEdit();
-            this.txtA = new DevExpress.XtraEditors.TextEdit();
-            this.txtNoiDung = new DevExpress.XtraEditors.TextEdit();
+            this.txtNoiDung = new DevExpress.XtraEditors.MemoEdit();
+            this.txtA = new DevExpress.XtraEditors.MemoEdit();
+            this.txtB = new DevExpress.XtraEditors.MemoEdit();
+            this.txtC = new DevExpress.XtraEditors.MemoEdit();
+            this.txtD = new DevExpress.XtraEditors.MemoEdit();
             nOIDUNGLabel = new System.Windows.Forms.Label();
             aLabel = new System.Windows.Forms.Label();
             bLabel = new System.Windows.Forms.Label();
@@ -109,17 +109,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelEditCauHoi)).BeginInit();
             this.panelEditCauHoi.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // nOIDUNGLabel
             // 
             nOIDUNGLabel.AutoSize = true;
-            nOIDUNGLabel.Location = new System.Drawing.Point(346, 55);
+            nOIDUNGLabel.Location = new System.Drawing.Point(346, 50);
             nOIDUNGLabel.Name = "nOIDUNGLabel";
             nOIDUNGLabel.Size = new System.Drawing.Size(65, 16);
             nOIDUNGLabel.TabIndex = 4;
@@ -128,7 +128,7 @@
             // aLabel
             // 
             aLabel.AutoSize = true;
-            aLabel.Location = new System.Drawing.Point(417, 137);
+            aLabel.Location = new System.Drawing.Point(417, 163);
             aLabel.Name = "aLabel";
             aLabel.Size = new System.Drawing.Size(20, 16);
             aLabel.TabIndex = 6;
@@ -137,7 +137,7 @@
             // bLabel
             // 
             bLabel.AutoSize = true;
-            bLabel.Location = new System.Drawing.Point(418, 189);
+            bLabel.Location = new System.Drawing.Point(418, 224);
             bLabel.Name = "bLabel";
             bLabel.Size = new System.Drawing.Size(19, 16);
             bLabel.TabIndex = 8;
@@ -146,7 +146,7 @@
             // cLabel
             // 
             cLabel.AutoSize = true;
-            cLabel.Location = new System.Drawing.Point(417, 249);
+            cLabel.Location = new System.Drawing.Point(417, 282);
             cLabel.Name = "cLabel";
             cLabel.Size = new System.Drawing.Size(20, 16);
             cLabel.TabIndex = 10;
@@ -155,7 +155,7 @@
             // dLabel
             // 
             dLabel.AutoSize = true;
-            dLabel.Location = new System.Drawing.Point(417, 302);
+            dLabel.Location = new System.Drawing.Point(417, 337);
             dLabel.Name = "dLabel";
             dLabel.Size = new System.Drawing.Size(20, 16);
             dLabel.TabIndex = 12;
@@ -164,7 +164,7 @@
             // dAP_ANLabel
             // 
             dAP_ANLabel.AutoSize = true;
-            dAP_ANLabel.Location = new System.Drawing.Point(356, 375);
+            dAP_ANLabel.Location = new System.Drawing.Point(356, 401);
             dAP_ANLabel.Name = "dAP_ANLabel";
             dAP_ANLabel.Size = new System.Drawing.Size(55, 16);
             dAP_ANLabel.TabIndex = 14;
@@ -173,7 +173,7 @@
             // tRINHDOLabel
             // 
             tRINHDOLabel.AutoSize = true;
-            tRINHDOLabel.Location = new System.Drawing.Point(955, 371);
+            tRINHDOLabel.Location = new System.Drawing.Point(955, 397);
             tRINHDOLabel.Name = "tRINHDOLabel";
             tRINHDOLabel.Size = new System.Drawing.Size(65, 16);
             tRINHDOLabel.TabIndex = 15;
@@ -610,24 +610,24 @@
             this.panelEditCauHoi.Controls.Add(dAP_ANLabel);
             this.panelEditCauHoi.Controls.Add(this.cmbDapAn);
             this.panelEditCauHoi.Controls.Add(dLabel);
-            this.panelEditCauHoi.Controls.Add(this.txtD);
             this.panelEditCauHoi.Controls.Add(cLabel);
-            this.panelEditCauHoi.Controls.Add(this.txtC);
             this.panelEditCauHoi.Controls.Add(bLabel);
-            this.panelEditCauHoi.Controls.Add(this.txtB);
             this.panelEditCauHoi.Controls.Add(aLabel);
-            this.panelEditCauHoi.Controls.Add(this.txtA);
             this.panelEditCauHoi.Controls.Add(nOIDUNGLabel);
             this.panelEditCauHoi.Controls.Add(this.txtNoiDung);
+            this.panelEditCauHoi.Controls.Add(this.txtA);
+            this.panelEditCauHoi.Controls.Add(this.txtB);
+            this.panelEditCauHoi.Controls.Add(this.txtC);
+            this.panelEditCauHoi.Controls.Add(this.txtD);
             this.panelEditCauHoi.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelEditCauHoi.Location = new System.Drawing.Point(0, 566);
+            this.panelEditCauHoi.Location = new System.Drawing.Point(0, 517);
             this.panelEditCauHoi.Name = "panelEditCauHoi";
-            this.panelEditCauHoi.Size = new System.Drawing.Size(1807, 469);
+            this.panelEditCauHoi.Size = new System.Drawing.Size(1807, 518);
             this.panelEditCauHoi.TabIndex = 10;
             // 
             // btnHuy
             // 
-            this.btnHuy.Location = new System.Drawing.Point(920, 415);
+            this.btnHuy.Location = new System.Drawing.Point(920, 441);
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new System.Drawing.Size(75, 33);
             this.btnHuy.TabIndex = 18;
@@ -637,7 +637,7 @@
             // 
             // btnXong
             // 
-            this.btnXong.Location = new System.Drawing.Point(720, 416);
+            this.btnXong.Location = new System.Drawing.Point(720, 442);
             this.btnXong.Name = "btnXong";
             this.btnXong.Size = new System.Drawing.Size(75, 33);
             this.btnXong.TabIndex = 17;
@@ -648,7 +648,7 @@
             // cmbTrinhDo
             // 
             this.cmbTrinhDo.FormattingEnabled = true;
-            this.cmbTrinhDo.Location = new System.Drawing.Point(1075, 364);
+            this.cmbTrinhDo.Location = new System.Drawing.Point(1075, 390);
             this.cmbTrinhDo.Name = "cmbTrinhDo";
             this.cmbTrinhDo.Size = new System.Drawing.Size(305, 24);
             this.cmbTrinhDo.TabIndex = 16;
@@ -657,41 +657,21 @@
             // cmbDapAn
             // 
             this.cmbDapAn.FormattingEnabled = true;
-            this.cmbDapAn.Location = new System.Drawing.Point(452, 367);
+            this.cmbDapAn.Location = new System.Drawing.Point(452, 393);
             this.cmbDapAn.Name = "cmbDapAn";
             this.cmbDapAn.Size = new System.Drawing.Size(121, 24);
             this.cmbDapAn.TabIndex = 15;
             this.cmbDapAn.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
             // 
-            // txtD
+            // txtNoiDung
             // 
-            this.txtD.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "D", true));
-            this.txtD.Location = new System.Drawing.Point(452, 295);
-            this.txtD.MenuManager = this.barManager1;
-            this.txtD.Name = "txtD";
-            this.txtD.Size = new System.Drawing.Size(948, 22);
-            this.txtD.TabIndex = 13;
-            this.txtD.EditValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // txtC
-            // 
-            this.txtC.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "C", true));
-            this.txtC.Location = new System.Drawing.Point(454, 245);
-            this.txtC.MenuManager = this.barManager1;
-            this.txtC.Name = "txtC";
-            this.txtC.Size = new System.Drawing.Size(946, 22);
-            this.txtC.TabIndex = 11;
-            this.txtC.EditValueChanged += new System.EventHandler(this.ValueChanged);
-            // 
-            // txtB
-            // 
-            this.txtB.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "B", true));
-            this.txtB.Location = new System.Drawing.Point(454, 186);
-            this.txtB.MenuManager = this.barManager1;
-            this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(948, 22);
-            this.txtB.TabIndex = 9;
-            this.txtB.EditValueChanged += new System.EventHandler(this.ValueChanged);
+            this.txtNoiDung.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "NOIDUNG", true));
+            this.txtNoiDung.Location = new System.Drawing.Point(452, 27);
+            this.txtNoiDung.MenuManager = this.barManager1;
+            this.txtNoiDung.Name = "txtNoiDung";
+            this.txtNoiDung.Size = new System.Drawing.Size(948, 62);
+            this.txtNoiDung.TabIndex = 5;
+            this.txtNoiDung.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtA
             // 
@@ -699,19 +679,39 @@
             this.txtA.Location = new System.Drawing.Point(452, 133);
             this.txtA.MenuManager = this.barManager1;
             this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(948, 22);
+            this.txtA.Size = new System.Drawing.Size(948, 49);
             this.txtA.TabIndex = 7;
             this.txtA.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
-            // txtNoiDung
+            // txtB
             // 
-            this.txtNoiDung.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "NOIDUNG", true));
-            this.txtNoiDung.Location = new System.Drawing.Point(452, 52);
-            this.txtNoiDung.MenuManager = this.barManager1;
-            this.txtNoiDung.Name = "txtNoiDung";
-            this.txtNoiDung.Size = new System.Drawing.Size(948, 22);
-            this.txtNoiDung.TabIndex = 5;
-            this.txtNoiDung.EditValueChanged += new System.EventHandler(this.ValueChanged);
+            this.txtB.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "B", true));
+            this.txtB.Location = new System.Drawing.Point(454, 210);
+            this.txtB.MenuManager = this.barManager1;
+            this.txtB.Name = "txtB";
+            this.txtB.Size = new System.Drawing.Size(948, 40);
+            this.txtB.TabIndex = 9;
+            this.txtB.EditValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // txtC
+            // 
+            this.txtC.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "C", true));
+            this.txtC.Location = new System.Drawing.Point(454, 268);
+            this.txtC.MenuManager = this.barManager1;
+            this.txtC.Name = "txtC";
+            this.txtC.Size = new System.Drawing.Size(946, 40);
+            this.txtC.TabIndex = 11;
+            this.txtC.EditValueChanged += new System.EventHandler(this.ValueChanged);
+            // 
+            // txtD
+            // 
+            this.txtD.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "D", true));
+            this.txtD.Location = new System.Drawing.Point(452, 325);
+            this.txtD.MenuManager = this.barManager1;
+            this.txtD.Name = "txtD";
+            this.txtD.Size = new System.Drawing.Size(948, 40);
+            this.txtD.TabIndex = 13;
+            this.txtD.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // formBoDe
             // 
@@ -746,11 +746,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelEditCauHoi)).EndInit();
             this.panelEditCauHoi.ResumeLayout(false);
             this.panelEditCauHoi.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtC.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtD.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -800,17 +800,17 @@
         private DevExpress.XtraGrid.Columns.GridColumn colDAP_AN;
         private DevExpress.XtraGrid.Columns.GridColumn colMAGV;
         private DevExpress.XtraEditors.PanelControl panelEditCauHoi;
-        private DevExpress.XtraEditors.TextEdit txtB;
-        private DevExpress.XtraEditors.TextEdit txtA;
-        private DevExpress.XtraEditors.TextEdit txtNoiDung;
         private System.Windows.Forms.Button btnHuy;
         private System.Windows.Forms.Button btnXong;
         private System.Windows.Forms.ComboBox cmbTrinhDo;
         private System.Windows.Forms.ComboBox cmbDapAn;
-        private DevExpress.XtraEditors.TextEdit txtD;
-        private DevExpress.XtraEditors.TextEdit txtC;
         private DevExpress.XtraGrid.Columns.GridColumn colTD;
         private DevExpress.XtraGrid.Columns.GridColumn colISUED;
         private DevExpress.XtraBars.BarButtonItem btnRedo;
+        private DevExpress.XtraEditors.MemoEdit txtNoiDung;
+        private DevExpress.XtraEditors.MemoEdit txtA;
+        private DevExpress.XtraEditors.MemoEdit txtB;
+        private DevExpress.XtraEditors.MemoEdit txtC;
+        private DevExpress.XtraEditors.MemoEdit txtD;
     }
 }

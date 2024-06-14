@@ -60,7 +60,7 @@ namespace THITRACNGHIEM
             this.cmbCoSo.DataSource = Program.bds_dspm;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
-            this.cmbCoSo.SelectedIndex = Program.mChinhanh;
+            this.cmbCoSo.SelectedIndex = Program.mCoSo;
 
             if (Program.mGroup == "TRUONG")
             {

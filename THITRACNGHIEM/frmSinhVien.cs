@@ -25,7 +25,12 @@ namespace THITRACNGHIEM
         private MyStack RedoStack;
         private Action action;
         private DataRow currentDataRow;
+        private String currentClassId;
         Object[] previousData;
+        Dictionary<String, MyStack> listOfUndoStack = new Dictionary<String, MyStack>();
+        Dictionary<String, MyStack> listOfRedoStack = new Dictionary<String, MyStack>();
+        Dictionary<String, int> listOfIndex = new Dictionary<String, int>();
+        
         public frmSinhVien()
         {
             InitializeComponent();
@@ -34,35 +39,39 @@ namespace THITRACNGHIEM
         //Load cơ sở dữ liệu
         private void frmSinhVien_Load(object sender, EventArgs e)
         {
-           
-           this.LOPTableAdapter.Connection.ConnectionString = Program.connstr;
+            try
+            {
+           this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.LOPTableAdapter.Fill(this.DS_SV.LOP);
            
-            this.SINHVIENTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.SINHVIENTableAdapter.Fill(this.DS_SV.SINHVIEN);
-           
-            this.BANGDIEMTableAdapter.Connection.ConnectionString = Program.connstr;
+
+            this.BANGDIEMTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.BANGDIEMTableAdapter.Fill(this.DS_SV.BANGDIEM);
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải danh sách lớp\n" + ex.Message);
+                btnThem.Enabled = btnXoa.Enabled =
+                    btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnRedo.Enabled = false;
+                return;
+            }
+
             //Load cơ sở
-            this.cmbCoSo.DataSource = Program.bds_dspm.DataSource;
+            this.cmbCoSo.DataSource = Data.bds_dspm.DataSource;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
-            this.cmbCoSo.SelectedIndex = Program.mCoSo;
+            this.cmbCoSo.SelectedIndex = Data.mCoSo;
             this.CheckRole();
             //Thêm sự kiện để xử lý
             this.cmbCoSo.SelectedIndexChanged += cmbSelected_IndexChanged;
             this.gcSinhVien.MouseClick += showCMS;
             this.bdsLop.PositionChanged += positionOfGcLopChange;
-            // xử lý khi stack thay đổi
-            this.UndoStack =  new MyStack();
-            this.UndoStack.StackChange += UndoStackChange;
-            this.UndoStack.TriggerEvent();
-            this.RedoStack = new MyStack();
-            this.RedoStack.StackChange += RedoStackChange;
-            this.RedoStack.TriggerEvent();
-            //Kết nối về site tra cứu
-            Program.KetNoiSiteTraCuu();
+
+            //gọi để khởi tạo stack
+            positionOfGcLopChange(null,null);
         }
 
         //Hàm tự thêm
@@ -71,24 +80,60 @@ namespace THITRACNGHIEM
             HasChange = true;
         }
         //Check lớp đó có sinh viên không
-        private void positionOfGcLopChange(object sender,EventArgs e)
+        private void positionOfGcLopChange(object sender, EventArgs e)
         {
+            if (Data.mGroup.Equals("TRUONG")) return;
             if (bdsSinhVien.Count == 0) btnHieuChinh.Enabled = btnXoa.Enabled = false;
             else btnHieuChinh.Enabled = btnXoa.Enabled = true;
-            UndoStack.Clear();
-            RedoStack.Clear();
-            IndexOfStack = 0;
+            //UndoStack.Clear();
+            //RedoStack.Clear();
+            //IndexOfStack = 0;
+            // xử lý khi stack thay đổi
+            currentClassId = ((DataRowView)bdsLop.Current).Row["MALOP"].ToString();
+            if (listOfIndex.TryGetValue(currentClassId, out int currentIndex))
+            {
+                IndexOfStack = currentIndex;
+            }
+            else {
+                IndexOfStack = 0;
+                listOfIndex.Add(currentClassId,0);
+            }
+            if (listOfUndoStack.TryGetValue(currentClassId,out MyStack currentUndoStack))
+            {
+                this.UndoStack = currentUndoStack;
+                this.UndoStack.TriggerEvent();
+            }
+            else
+            {
+                this.UndoStack = new MyStack();
+                listOfUndoStack.Add(currentClassId,UndoStack);
+                this.UndoStack.StackChange += UndoStackChange;
+                this.UndoStack.TriggerEvent();
+            }
+            if (listOfRedoStack.TryGetValue(currentClassId, out MyStack currentRedoStack))
+            {
+                this.RedoStack = currentRedoStack;
+                this.RedoStack.TriggerEvent();
+            }
+            else
+            {
+
+                this.RedoStack = new MyStack();
+                listOfRedoStack.Add(currentClassId, RedoStack);
+                this.RedoStack.StackChange += RedoStackChange;
+                this.RedoStack.TriggerEvent();
+            }
         }
         //Kiểm tra quyền
         private void CheckRole()
         {
-            if (Program.mGroup.Equals("TRUONG"))
+            if (Data.mGroup.Equals("TRUONG"))
             {
                 this.cmbCoSo.Enabled = true;
                 btnThem.Enabled=btnHieuChinh.Enabled=
                        btnXoa.Enabled= btnGhi.Enabled =btnPhucHoi.Enabled=false;  
             }
-            else if (Program.mGroup.Equals("COSO"))
+            else if (Data.mGroup.Equals("COSO"))
             {
                 this.cmbCoSo.Enabled =btnPhucHoi.Enabled=btnRedo.Enabled =btnGhi.Enabled= false;
                 btnThem.Enabled=btnHieuChinh.Enabled=btnXoa.Enabled=btnThoat.Enabled=true;
@@ -101,28 +146,26 @@ namespace THITRACNGHIEM
         }
         private void cmbSelected_IndexChanged(object sender,EventArgs e) 
         {
-            Program.servername = cmbCoSo.SelectedValue.ToString();
-            if (cmbCoSo.SelectedIndex != Program.mCoSo)
+            Data.servername = cmbCoSo.SelectedValue.ToString();
+            if (cmbCoSo.SelectedIndex != Data.mCoSo)
             {
-                Program.mlogin = Program.remotelogin;
-                Program.password = Program.remotepassword;
+                Data.mlogin = Data.remotelogin;
+                Data.password = Data.remotepassword;
             }
             else
             {
-                Program.mlogin = Program.mloginDN;
-                Program.password = Program.passwordDN;
+                Data.mlogin = Data.mloginDN;
+                Data.password = Data.passwordDN;
             }
-            if (Program.KetNoi(true) == 0)
+
+            //kết nối thất bại
+            if (Data.ConnectToServerWhenLogin() == 0) return;
             {
-                MessageBox.Show("Lỗi kết nối về cơ sở", "", MessageBoxButtons.OK);
-            }
-            else
-            {
-                this.LOPTableAdapter.Connection.ConnectionString = Program.connstr;
+                this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.LOPTableAdapter.Fill(this.DS_SV.LOP);
-                this.SINHVIENTableAdapter.Connection.ConnectionString = Program.connstr;
-                this.SINHVIENTableAdapter.Fill(this.DS_SV.SINHVIEN);         
-                this.BANGDIEMTableAdapter.Connection.ConnectionString = Program.connstr;
+                this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.SINHVIENTableAdapter.Fill(this.DS_SV.SINHVIEN);
+                this.BANGDIEMTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.BANGDIEMTableAdapter.Fill(this.DS_SV.BANGDIEM);
                 UndoStack.Clear();
                 RedoStack.Clear();
@@ -202,7 +245,7 @@ namespace THITRACNGHIEM
                 }
 
                 //sqlcmd.Parameters["@masv"].Value = txtMasv.Text.Trim();
-                int check = Program.ExecuteScalar("select dbo.checkExistsMasv(" + txtMasv.Text + ")",Program.connTraCuu);
+                int check = Data.ExecuteScalar("select dbo.checkExistsMasv(" + txtMasv.Text + ")",Data.InformationRetrievalSite);
                if(check == 1)
                 {
                     MessageBox.Show("Mã sinh viên đã tồn tại");
@@ -257,6 +300,7 @@ namespace THITRACNGHIEM
                 else btnXoa.Enabled = btnHieuChinh.Enabled = true;
                 btnThem.Enabled= true;
                 IndexOfStack = this.UndoStack.getSize();
+                listOfIndex[currentClassId] = IndexOfStack;
                 UndoStack.TriggerEvent();
             }
             catch(Exception ex)
@@ -320,8 +364,8 @@ namespace THITRACNGHIEM
 
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            Program.mlogin = Program.mloginDN;
-            Program.password = Program.passwordDN;
+            Data.mlogin = Data.mloginDN;
+            Data.password = Data.passwordDN;
             this.Close();
         }
 
