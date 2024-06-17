@@ -106,6 +106,22 @@ namespace THITRACNGHIEM
         /// </summary>
         public static String InformationRetrievalSiteConnectionString;
 
+        //====================Log out========================//
+        public static void clear()
+        {
+            servername = "";
+            username = "";
+            password = "";
+            mlogin = "";
+            mloginDN = "";
+            passwordDN = "";
+            mGroup = "";
+            mHoten = "";
+            mCoSo = 0;
+            if(ServerConnection!=null)
+            ServerConnection.Close();
+            
+        }
 
         //--------------------------------Connect------------------------------------------//
         /// <summary>
@@ -133,6 +149,7 @@ namespace THITRACNGHIEM
                     MessageBox.Show("Lỗi kết nối tới trang tra cứu\n" + ex.Message);
                 return 0;
             }
+            finally { Data.InformationRetrievalSite.Close();}
         }
         /// <summary>
         /// Kết nối tới site chủ. Nếu có lỗi thì sẽ ném lỗi đó ra.
@@ -152,6 +169,7 @@ namespace THITRACNGHIEM
                     MessageBox.Show("Lỗi kết nối tới cơ sở dữ liệu\n"+ex.Message);
                 throw ex;
             }
+            finally { Data.PublisherConnection.Close(); }
         }
 
         /// <summary>
@@ -161,9 +179,9 @@ namespace THITRACNGHIEM
         /// <returns>trả về 1 nếu thành công và trả về 0 nếu thất bại</returns>
         public static int ConnectToServerWhenLogin(bool enable_error = true)
         {
-            if (Data.ServerConnection != null && Data.ServerConnection.State == ConnectionState.Open)
+            if (Data.ServerConnection == null) Data.ServerConnection = new SqlConnection();
+            if (Data.ServerConnection.State == ConnectionState.Open)
                 Data.ServerConnection.Close();
-            else if (Data.ServerConnection == null) Data.ServerConnection = new SqlConnection();
             try
             {
                 Data.ServerConnectionString = "Data Source=" + Data.servername+ ";Initial Catalog=" +
