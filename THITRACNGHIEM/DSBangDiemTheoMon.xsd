@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSBangDiemTheoMon" targetNamespace="http://tempuri.org/DSBangDiemTheoMon.xsd" xmlns:mstns="http://tempuri.org/DSBangDiemTheoMon.xsd" xmlns="http://tempuri.org/DSBangDiemTheoMon.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="TN_CSDLPTConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="TN_CSDLPTConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.THITRACNGHIEM.Properties.Settings.GlobalReference.Default.TN_CSDLPTConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="LOPTableAdapter" GeneratorDataComponentClassName="LOPTableAdapter" Name="LOP" UserDataComponentName="LOPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="TN_CSDLPTConnectionString (Settings)" DbObjectName="TN_CSDLPT.dbo.LOP" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT MALOP, TENLOP, MAKH FROM dbo.LOP</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="MALOP" DataSetColumn="MALOP" />
+              <Mapping SourceColumn="TENLOP" DataSetColumn="TENLOP" />
+              <Mapping SourceColumn="MAKH" DataSetColumn="MAKH" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MONHOCTableAdapter" GeneratorDataComponentClassName="MONHOCTableAdapter" Name="MONHOC" UserDataComponentName="MONHOCTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="TN_CSDLPTConnectionString (Settings)" DbObjectName="TN_CSDLPT.dbo.MONHOC" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT MAMH, TENMH FROM dbo.MONHOC</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="MAMH" DataSetColumn="MAMH" />
+              <Mapping SourceColumn="TENMH" DataSetColumn="TENMH" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSBangDiemTheoMon" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DSBangDiemTheoMon" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DSBangDiemTheoMon">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LOP" msprop:Generator_RowEvHandlerName="LOPRowChangeEventHandler" msprop:Generator_RowDeletedName="LOPRowDeleted" msprop:Generator_RowDeletingName="LOPRowDeleting" msprop:Generator_RowEvArgName="LOPRowChangeEvent" msprop:Generator_TablePropName="LOP" msprop:Generator_RowChangedName="LOPRowChanged" msprop:Generator_UserTableName="LOP" msprop:Generator_RowChangingName="LOPRowChanging" msprop:Generator_RowClassName="LOPRow" msprop:Generator_TableClassName="LOPDataTable" msprop:Generator_TableVarName="tableLOP">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MALOP" msprop:Generator_ColumnPropNameInTable="MALOPColumn" msprop:Generator_ColumnPropNameInRow="MALOP" msprop:Generator_UserColumnName="MALOP" msprop:Generator_ColumnVarNameInTable="columnMALOP">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TENLOP" msprop:Generator_ColumnPropNameInTable="TENLOPColumn" msprop:Generator_ColumnPropNameInRow="TENLOP" msprop:Generator_UserColumnName="TENLOP" msprop:Generator_ColumnVarNameInTable="columnTENLOP">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MAKH" msprop:Generator_UserColumnName="MAKH" msprop:Generator_ColumnPropNameInTable="MAKHColumn" msprop:Generator_ColumnPropNameInRow="MAKH" msprop:Generator_ColumnVarNameInTable="columnMAKH">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MONHOC" msprop:Generator_RowEvHandlerName="MONHOCRowChangeEventHandler" msprop:Generator_RowDeletedName="MONHOCRowDeleted" msprop:Generator_RowDeletingName="MONHOCRowDeleting" msprop:Generator_RowEvArgName="MONHOCRowChangeEvent" msprop:Generator_TablePropName="MONHOC" msprop:Generator_RowChangedName="MONHOCRowChanged" msprop:Generator_UserTableName="MONHOC" msprop:Generator_RowChangingName="MONHOCRowChanging" msprop:Generator_RowClassName="MONHOCRow" msprop:Generator_TableClassName="MONHOCDataTable" msprop:Generator_TableVarName="tableMONHOC">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MAMH" msprop:Generator_ColumnPropNameInTable="MAMHColumn" msprop:Generator_ColumnPropNameInRow="MAMH" msprop:Generator_UserColumnName="MAMH" msprop:Generator_ColumnVarNameInTable="columnMAMH">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TENMH" msprop:Generator_ColumnPropNameInTable="TENMHColumn" msprop:Generator_ColumnPropNameInRow="TENMH" msprop:Generator_UserColumnName="TENMH" msprop:Generator_ColumnVarNameInTable="columnTENMH">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:LOP" />
+      <xs:field xpath="mstns:MALOP" />
+    </xs:unique>
+    <xs:unique name="MONHOC_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:MONHOC" />
+      <xs:field xpath="mstns:MAMH" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

@@ -64,9 +64,6 @@
             this.BODETableAdapter = new THITRACNGHIEM.DS_BODETableAdapters.BODETableAdapter();
             this.tableAdapterManager = new THITRACNGHIEM.DS_BODETableAdapters.TableAdapterManager();
             this.fillToolStrip = new System.Windows.Forms.ToolStrip();
-            this.mAMHToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.mAMHToolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.fillToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.gcBode = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colCAUHOI = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -104,7 +101,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdsMonHoc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS_BODE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsBoDe)).BeginInit();
-            this.fillToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gcBode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelEditCauHoi)).BeginInit();
@@ -422,45 +418,21 @@
             // fillToolStrip
             // 
             this.fillToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.fillToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mAMHToolStripLabel,
-            this.mAMHToolStripTextBox,
-            this.fillToolStripButton});
             this.fillToolStrip.Location = new System.Drawing.Point(0, 132);
             this.fillToolStrip.Name = "fillToolStrip";
-            this.fillToolStrip.Size = new System.Drawing.Size(1807, 27);
+            this.fillToolStrip.Size = new System.Drawing.Size(1807, 25);
             this.fillToolStrip.TabIndex = 9;
             this.fillToolStrip.Text = "fillToolStrip";
-            // 
-            // mAMHToolStripLabel
-            // 
-            this.mAMHToolStripLabel.Name = "mAMHToolStripLabel";
-            this.mAMHToolStripLabel.Size = new System.Drawing.Size(59, 24);
-            this.mAMHToolStripLabel.Text = "MAMH:";
-            // 
-            // mAMHToolStripTextBox
-            // 
-            this.mAMHToolStripTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.mAMHToolStripTextBox.Name = "mAMHToolStripTextBox";
-            this.mAMHToolStripTextBox.Size = new System.Drawing.Size(100, 27);
-            // 
-            // fillToolStripButton
-            // 
-            this.fillToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.fillToolStripButton.Name = "fillToolStripButton";
-            this.fillToolStripButton.Size = new System.Drawing.Size(32, 24);
-            this.fillToolStripButton.Text = "Fill";
-            this.fillToolStripButton.Click += new System.EventHandler(this.fillToolStripButton_Click);
             // 
             // gcBode
             // 
             this.gcBode.DataSource = this.bdsBoDe;
             this.gcBode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcBode.Location = new System.Drawing.Point(0, 159);
+            this.gcBode.Location = new System.Drawing.Point(0, 157);
             this.gcBode.MainView = this.gridView1;
             this.gcBode.MenuManager = this.barManager1;
             this.gcBode.Name = "gcBode";
-            this.gcBode.Size = new System.Drawing.Size(1807, 876);
+            this.gcBode.Size = new System.Drawing.Size(1807, 878);
             this.gcBode.TabIndex = 9;
             this.gcBode.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -739,8 +711,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdsMonHoc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS_BODE)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsBoDe)).EndInit();
-            this.fillToolStrip.ResumeLayout(false);
-            this.fillToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gcBode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelEditCauHoi)).EndInit();
@@ -781,9 +751,6 @@
         private System.Windows.Forms.BindingSource bdsMonHoc;
         private DS_BODETableAdapters.MONHOCTableAdapter MONHOCTableAdapter;
         private System.Windows.Forms.ToolStrip fillToolStrip;
-        private System.Windows.Forms.ToolStripLabel mAMHToolStripLabel;
-        private System.Windows.Forms.ToolStripTextBox mAMHToolStripTextBox;
-        private System.Windows.Forms.ToolStripButton fillToolStripButton;
         private System.Windows.Forms.BindingSource bdsBoDe;
         private DS_BODETableAdapters.BODETableAdapter BODETableAdapter;
         private DS_BODETableAdapters.TableAdapterManager tableAdapterManager;

@@ -43,10 +43,7 @@ namespace THITRACNGHIEM
             this.pageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.lblReportHeader = new DevExpress.XtraReports.UI.XRLabel();
-             this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
-            // MsSqlConnectionParameters sqlConParams = new MsSqlConnectionParameters(Data.servername, Data.database, Data.mlogin, Data.password, MsSqlAuthorizationType.SqlServer);
-            //MsSqlConnectionParameters sqlConParams = new MsSqlConnectionParameters("PHUONG\\MSSQLSERVER01", Data.database,"A","1", MsSqlAuthorizationType.SqlServer);
-            //this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(sqlConParams);
+            this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
             this.Title = new DevExpress.XtraReports.UI.XRControlStyle();
             this.GroupCaption1 = new DevExpress.XtraReports.UI.XRControlStyle();
             this.GroupData1 = new DevExpress.XtraReports.UI.XRControlStyle();
@@ -77,6 +74,8 @@ namespace THITRACNGHIEM
             this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrLabel2 = new DevExpress.XtraReports.UI.XRLabel();
             this.GroupFooter1 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.xrTableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.table3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -128,13 +127,12 @@ namespace THITRACNGHIEM
             // 
             // sqlDataSource1
             // 
-          this.sqlDataSource1.ConnectionName = "THITRACNGHIEM.Properties.Settings.connection";
-          //this.sqlDataSource1.ConnectionName = "Settings.connection";
+            this.sqlDataSource1.ConnectionName = "THITRACNGHIEM.Properties.Settings.connection";
             this.sqlDataSource1.Name = "sqlDataSource1";
             storedProcQuery1.Name = "SP_XEMDANHSACHDK_SONGSONG";
             queryParameter1.Name = "@TUNGAY";
             queryParameter1.Type = typeof(DevExpress.DataAccess.Expression);
-           queryParameter1.Value = new DevExpress.DataAccess.Expression("\'5/4/2024\'", typeof(string));
+            queryParameter1.Value = new DevExpress.DataAccess.Expression("\'5/4/2024\'", typeof(string));
             queryParameter2.Name = "@DENNGAY";
             queryParameter2.Type = typeof(DevExpress.DataAccess.Expression);
             queryParameter2.Value = new DevExpress.DataAccess.Expression("\'7/4/2024\'", typeof(string));
@@ -339,6 +337,7 @@ namespace THITRACNGHIEM
             this.tableRow3.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.tableCell7,
             this.tableCell8,
+            this.xrTableCell10,
             this.tableCell9,
             this.tableCell10,
             this.xrTableCell3,
@@ -353,7 +352,7 @@ namespace THITRACNGHIEM
             this.table3.OddStyleName = "DetailData3_Odd";
             this.table3.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow3});
-            this.table3.SizeF = new System.Drawing.SizeF(975.9999F, 22.5F);
+            this.table3.SizeF = new System.Drawing.SizeF(978F, 22.5F);
             // 
             // Detail
             // 
@@ -378,13 +377,14 @@ namespace THITRACNGHIEM
             this.xrTable1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
             this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(975.9999F, 25F);
+            this.xrTable1.SizeF = new System.Drawing.SizeF(978F, 25F);
             // 
             // xrTableRow1
             // 
             this.xrTableRow1.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell1,
             this.xrTableCell2,
+            this.xrTableCell9,
             this.xrTableCell5,
             this.xrTableCell6,
             this.xrTableCell7,
@@ -505,6 +505,33 @@ namespace THITRACNGHIEM
             this.GroupFooter1.HeightF = 23.23453F;
             this.GroupFooter1.Name = "GroupFooter1";
             // 
+            // xrTableCell9
+            // 
+            this.xrTableCell9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(203)))), ((int)(((byte)(228)))));
+            this.xrTableCell9.Font = new DevExpress.Drawing.DXFont("Arial", 9.75F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrTableCell9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.xrTableCell9.Multiline = true;
+            this.xrTableCell9.Name = "xrTableCell9";
+            this.xrTableCell9.StylePriority.UseBackColor = false;
+            this.xrTableCell9.StylePriority.UseFont = false;
+            this.xrTableCell9.StylePriority.UseForeColor = false;
+            this.xrTableCell9.StylePriority.UseTextAlignment = false;
+            this.xrTableCell9.Text = "LẦN THI";
+            this.xrTableCell9.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
+            this.xrTableCell9.Weight = 0.3511616630554199D;
+            // 
+            // xrTableCell10
+            // 
+            this.xrTableCell10.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[LAN]")});
+            this.xrTableCell10.Multiline = true;
+            this.xrTableCell10.Name = "xrTableCell10";
+            this.xrTableCell10.StyleName = "DetailData1";
+            this.xrTableCell10.StylePriority.UseTextAlignment = false;
+            this.xrTableCell10.Text = "xrTableCell10";
+            this.xrTableCell10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.xrTableCell10.Weight = 0.37726088633593319D;
+            // 
             // Xrpt_DangKyThi
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -579,5 +606,7 @@ namespace THITRACNGHIEM
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell8;
         private DevExpress.XtraReports.UI.XRLabel xrLabel2;
         private DevExpress.XtraReports.UI.GroupFooterBand GroupFooter1;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell10;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell9;
     }
 }

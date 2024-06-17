@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.ChartRangeControlClient.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,9 +16,16 @@ namespace THITRACNGHIEM
 {
     public partial class formMonHoc : Form
     {
+        
         private formMain ParentForm;
         private int vitri;
         private String mamh="";
+        private TrangThaiGhi trangThaiGhi;
+
+        //Lưu giá trị cũ trước khi edit để thực hiện việc hồi phục
+        private object[] oldRowItemArray;
+
+        private UndoManager undoManager;
         public formMonHoc()
         {
             InitializeComponent();
@@ -33,36 +41,29 @@ namespace THITRACNGHIEM
             }
         }
 
-        private void mONHOCBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.bdsMH.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.DSMonHoc);
-
-        }
-
         private void formMonHoc_Load(object sender, EventArgs e)
         {
             DSMonHoc.EnforceConstraints = false;
 
-            this.MONHOCTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.MONHOCTableAdapter.Fill(this.DSMonHoc.MONHOC);
 
-            this.BODETableAdapter.Connection.ConnectionString = Program.connstr;
+            this.BODETableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.BODETableAdapter.Fill(this.DSMonHoc.BODE);
 
-            this.BANGDIEMTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.BANGDIEMTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.BANGDIEMTableAdapter.Fill(this.DSMonHoc.BANGDIEM);
          
-            this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.GIAOVIEN_DANGKYTableAdapter.Fill(this.DSMonHoc.GIAOVIEN_DANGKY);
 
-            this.cmbCoSo.DataSource = Program.bds_dspm;
+            this.cmbCoSo.DataSource = Data.bds_dspm;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
-            this.cmbCoSo.SelectedIndex = Program.mCoSo;
+            this.cmbCoSo.SelectedIndex = Data.mCoSo;
 
-            if (Program.mGroup == "TRUONG")
+            
+            if (Data.mGroup == "TRUONG")
             {
                 cmbCoSo.Enabled = true;
                 btnGhi.Enabled = btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
@@ -73,6 +74,8 @@ namespace THITRACNGHIEM
                 btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
             }
             pcMonHoc.Enabled = false;
+
+            undoManager = new UndoManager(this.bdsMH);
         }
 
         private void bANGDIEMBindingSource_CurrentChanged(object sender, EventArgs e)
@@ -82,21 +85,24 @@ namespace THITRACNGHIEM
 
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            txtMAMH.Enabled = true;
             vitri = bdsMH.Position;
             pcMonHoc.Enabled = true;
             bdsMH.AddNew();
             btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
             btnGhi.Enabled = btnPhucHoi.Enabled = true;
             gcMonHoc.Enabled = false;
+            trangThaiGhi = TrangThaiGhi.them;
         }
 
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            bdsMH.CancelEdit();
-            if (btnThem.Enabled == false)
+            
+            if (pcMonHoc.Enabled == true)
             {
                 try
                 {
+                    bdsMH.CancelEdit();
                     this.MONHOCTableAdapter.Fill(this.DSMonHoc.MONHOC);
                 }
                 catch (Exception ex)
@@ -104,21 +110,35 @@ namespace THITRACNGHIEM
                     MessageBox.Show($"Không thể reload lại dữ liệu \n {ex}", "", MessageBoxButtons.OK);
                 }
                 bdsMH.Position = vitri;
+            } else
+            {
+                if (undoManager.Undo() == 0)
+                {
+                    MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                    MONHOCTableAdapter.Update(DSMonHoc.MONHOC);
+                }
             }
             gcMonHoc.Enabled = true;
             pcMonHoc.Enabled = false;
             btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
-            btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            btnGhi.Enabled = false;
+            if (undoManager.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
+            else btnPhucHoi.Enabled = true;
+            if (undoManager.GetReUndoStack().Count <= 0) btnTaiPhucHoi.Enabled = false;
+            else btnTaiPhucHoi.Enabled = true;
         }
 
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            mamh = txtMAMH.Text;
+            txtMAMH.Enabled = false;
+            DataRowView oldRow = (DataRowView)bdsMH.Current;
+            oldRowItemArray = oldRow.Row.ItemArray;
             vitri = bdsMH.Position;
             pcMonHoc.Enabled = true;
             btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
             btnGhi.Enabled = btnPhucHoi.Enabled = true;
             gcMonHoc.Enabled = false;
+            trangThaiGhi = TrangThaiGhi.hieuchinh;
         }
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -127,7 +147,7 @@ namespace THITRACNGHIEM
             {
                 this.MONHOCTableAdapter.Fill(this.DSMonHoc.MONHOC);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Không thể reload lại dữ liệu \n {ex}", "", MessageBoxButtons.OK);
             }
@@ -135,7 +155,6 @@ namespace THITRACNGHIEM
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            String mamh = "";
             if (bdsBangDiem.Count > 0)
             {
                 MessageBox.Show("Không thể xóa môn này vì đã tồn tại điểm", "", 
@@ -161,8 +180,15 @@ namespace THITRACNGHIEM
                 try
                 {
                     mamh = ((DataRowView)bdsMH[bdsMH.Position])["MAMH"].ToString();
+                    DataRowView deletedRow = (DataRowView)bdsMH.Current;
+                    object[] deletedRowArrayItem  = deletedRow.Row.ItemArray;
+                    undoManager.DeleteRecord(deletedRowArrayItem);
+                    if (undoManager.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
+                    else btnPhucHoi.Enabled = true;
+                    undoManager.ClearReUndoStack();
+                    btnTaiPhucHoi.Enabled =false;
                     bdsMH.RemoveCurrent();
-                    this.MONHOCTableAdapter.Connection.ConnectionString = Program.connstr;
+                    this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                     this.MONHOCTableAdapter.Update(this.DSMonHoc.MONHOC);
                 }
                 catch (Exception ex) 
@@ -192,18 +218,23 @@ namespace THITRACNGHIEM
                 return;
             }
 
-            if (txtMAMH.Text.Trim() != mamh.Trim())
+            for (int i = 0; i < gvMonHoc.RowCount; i++)
             {
-                try
+                if (i != gvMonHoc.FocusedRowHandle)
                 {
-                    SqlCommand command = new SqlCommand("EXECUTE SP_CheckMaMonHocTonTai @mamh = " + txtMAMH.Text, Program.conn);
-                    command.ExecuteNonQuery();
+                    string current = (String)gvMonHoc.GetRowCellValue(i, "TENMH");
+                    if (current.Trim().Equals(txtTENMH.Text.Trim(), StringComparison.OrdinalIgnoreCase)) {
+                        MessageBox.Show("Tên môn học bị trùng!", "", MessageBoxButtons.OK);
+                        txtTENMH.Focus();
+                        return;
+                    }
                 }
-                catch (SqlException ex)
+            }
+
+            if (trangThaiGhi == TrangThaiGhi.them)
+            {
+                if(Data.ExecSqlNonQueryByServerConnection($"EXECUTE SP_CheckMaMonHocTonTai @mamh = '{txtMAMH.Text}'") != 0)
                 {
-                    // Lấy thông điệp lỗi từ SqlException
-                    int errorState = ex.Number;
-                    MessageBox.Show($"Mã môn học đã tồn tại! \n{errorState}", "", MessageBoxButtons.OK);
                     return;
                 }
             }
@@ -212,17 +243,65 @@ namespace THITRACNGHIEM
             {
                 bdsMH.EndEdit();
                 bdsMH.ResetCurrentItem();
-                this.MONHOCTableAdapter.Connection.ConnectionString = Program.connstr;
+                DataRowView addedRow = (DataRowView)bdsMH.Current;
+                object[] addedRowArrayItem = addedRow.Row.ItemArray;
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.MONHOCTableAdapter.Update(this.DSMonHoc.MONHOC);
+                if (trangThaiGhi == TrangThaiGhi.them)
+                {
+                    undoManager.AddNewRecord(addedRowArrayItem);
+                }
+                else
+                {
+                    undoManager.EditRecord(oldRowItemArray, addedRowArrayItem);
+                }
+                if (undoManager.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
+                else btnPhucHoi.Enabled = true;
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Lỗi ghi nhân viên. \n" + ex.Message, "", MessageBoxButtons.OK);
                 return;
             }
+            undoManager.ClearReUndoStack();
+            btnTaiPhucHoi.Enabled = false;
             gcMonHoc.Enabled = true;
             btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
-            btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            btnGhi.Enabled = pcMonHoc.Enabled = false;
+        }
+
+        private void cmbCoSo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void undoBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (undoManager.GetUndoStack().Count <= 0)
+            {
+                MessageBox.Show("Không còn gì để undo", "", MessageBoxButtons.OK);
+                return; 
+            }
+            if(undoManager.Undo() == 0)
+            {
+                MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                MONHOCTableAdapter.Update(DSMonHoc.MONHOC);
+
+            }
+            
+        }
+
+        private void ReUnDo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (undoManager.ReUndo() == 0)
+            {
+                MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                MONHOCTableAdapter.Update(DSMonHoc.MONHOC);
+            }
+            if (undoManager.GetReUndoStack().Count <= 0) btnTaiPhucHoi.Enabled = false;
+            else btnTaiPhucHoi.Enabled = true;
+            if (undoManager.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
+            else btnPhucHoi.Enabled = true;
         }
     }
 }

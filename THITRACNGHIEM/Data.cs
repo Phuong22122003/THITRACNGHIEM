@@ -13,54 +13,115 @@ namespace THITRACNGHIEM
 {
     internal class Data
     {
+
+        public static formMain formChinh;
+        /// <summary>
+        /// Biến chứa tên server để tra cứu
+        /// </summary>
         public static String servernameTraCuu = "PHUONG\\MSSQLSERVER03";
 
         //dùng lưu trử thông tin người dùng
-        public static String servername = "";//tên server kết nối tới
-        public static String username = "";//mã
-        public static String mlogin = "";//tên đăng nhập
-        public static String password = "";//mật khẩu
+        /// <summary>
+        /// Tên server kết nối tới
+        /// </summary>
+        public static String servername = "";
+        /// <summary>
+        /// Mã người dùng
+        /// </summary>
+        public static String username = "";
+        /// <summary>
+        /// Tên đăng nhập của người dùng
+        /// </summary>
+        public static String mlogin = "";
+        /// <summary>
+        /// Mật khẩu của người dùng
+        /// </summary>
+        public static String password = "";
 
-        //pass và loginname của sinh viên
+        /// <summary>
+        /// Mật khẩu dùng cho kết nối tới cơ sở dữ liệu khi sinh viên khi đăng nhập
+        /// </summary>
         public static String svlogin = "SV";
+        /// <summary>
+        /// Password dùng cho kết nối cơ sở dữ liệu khi sinh viên khi đăng nhập
+        /// </summary>
         public static String svpassword = "123456789";
 
         //site tra cứu
+        /// <summary>
+        /// Tên database
+        /// </summary>
         public static String database = "TN_CSDLPT";
+        /// <summary>
+        /// Login name dùng cho tra cứu
+        /// </summary>
         public static String remotelogin = "sa";
+        /// <summary>
+        /// Login name dùng cho tra cứu
+        /// </summary>
         public static String remotepassword = "123456789";
+
 
         public static String mloginDN = "";
         public static String passwordDN = "";
+
+        /// <summary>
+        ///Nhóm của người dùng
+        /// </summary>
         public static String mGroup = "";
+        /// <summary>
+        /// Họ tên người dùng
+        /// </summary>
         public static String mHoten = "";
 
         public static int mCoSo = 0;
 
-        public static BindingSource bds_dspm = new BindingSource();  // giữ bdsPM khi đăng nhập
+        /// <summary>
+        /// giữ bdsPM khi đăng nhập
+        /// </summary>
+        public static BindingSource bds_dspm = new BindingSource();  
 
-        //Kết nối với site chủ để lấy thông tin về server khác
+        /// <summary>
+        /// Kết nối với site chủ để lấy tên của các server khác
+        /// </summary>
         public static SqlConnection PublisherConnection;
-        //Connection String của site chủ
+        /// <summary>
+        /// Connection String của site chủ
+        /// </summary>
         public static String PublisherConnectionString="Data Source=PHUONG;Initial Catalog=TN_CSDLPT;Integrated Security=True";
-        //Kết nối về site của người dùng
+        /// <summary>
+        /// Kết nối về site của người dùng
+        /// </summary>
         public static SqlConnection ServerConnection;
-        //ConnectionString của site người dùng
+        /// <summary>
+        /// ConnectionString của site người dùng
+        /// </summary>
         public static String ServerConnectionString;
-        //Kết nối về site tra cứu
+        /// <summary>
+        /// Kết nối về site tra cứu
+        /// </summary>
         public static SqlConnection InformationRetrievalSite;
-        //ConnectionString của site tra cứu
+        /// <summary>
+        /// ConnectionString của site tra cứu
+        /// </summary>
         public static String InformationRetrievalSiteConnectionString;
 
 
         //--------------------------------Connect------------------------------------------//
-
-        public static int ConnectToRetrievalSite()
+        /// <summary>
+        /// Dùng để kết nối tới trang tra cứu. 
+        /// Connection sẽ được lưu trong biến InformationRetrievalSite;
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <returns>
+        /// Trả về 1 nếu kết nối thành công ngược lại là 0
+        /// </returns>
+        public static int ConnectToRetrievalSite(bool enable_error = true)
         {
             if (Data.InformationRetrievalSite == null) Data.InformationRetrievalSite = new SqlConnection();
             else if (Data.InformationRetrievalSite.State == ConnectionState.Open) Data.InformationRetrievalSite.Close();
-            Data.InformationRetrievalSite.ConnectionString = "Data Source=" + Program.servernameTraCuu + ";Initial Catalog=" +Program.database + ";User ID=" +
-                                                                                                                                    Program.remotelogin + ";password=" + Program.remotepassword;
+            Data.InformationRetrievalSite.ConnectionString = "Data Source=" + Data.servernameTraCuu + ";Initial Catalog=" +Data.database + ";User ID=" +
+                                                                                                                                    Data.remotelogin + ";password=" + Data.remotepassword;
             try
             {
                 Data.InformationRetrievalSite.Open();
@@ -68,11 +129,17 @@ namespace THITRACNGHIEM
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối tới trang tra cứu\n" + ex.Message);
+                if (enable_error == true)
+                    MessageBox.Show("Lỗi kết nối tới trang tra cứu\n" + ex.Message);
                 return 0;
             }
         }
-        public static void ConnectToPublisher()
+        /// <summary>
+        /// Kết nối tới site chủ. Nếu có lỗi thì sẽ ném lỗi đó ra.
+        /// Dùng cho đăng nhập.
+        /// Có thông báo lỗi để tắt set enable_error = false;
+        /// </summary>
+        public static void ConnectToPublisher(bool enable_error = true)
         {
             if(Data.PublisherConnection == null) Data.PublisherConnection = new SqlConnection(Data.PublisherConnectionString);
             try
@@ -81,11 +148,18 @@ namespace THITRACNGHIEM
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối tới cơ sở dữ liệu\n"+ex.Message);
+                if(enable_error == true)
+                    MessageBox.Show("Lỗi kết nối tới cơ sở dữ liệu\n"+ex.Message);
                 throw ex;
             }
         }
-        public static int ConnectToServerWhenLogin()
+
+        /// <summary>
+        /// Dùng để kết nối tới site hiện tại người dùng chọn. 
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <returns>trả về 1 nếu thành công và trả về 0 nếu thất bại</returns>
+        public static int ConnectToServerWhenLogin(bool enable_error = true)
         {
             if (Data.ServerConnection != null && Data.ServerConnection.State == ConnectionState.Open)
                 Data.ServerConnection.Close();
@@ -102,19 +176,25 @@ namespace THITRACNGHIEM
 
             catch (Exception e)
             {
-                MessageBox.Show("             Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n           " + e.Message, "", MessageBoxButtons.OK);
+                if (enable_error == true)
+                    MessageBox.Show("             Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n           " + e.Message, "", MessageBoxButtons.OK);
                 return 0;
             }
         }
         //--------------------------------Execute------------------------------------------//
-        // Thực thi lệnh bằng connection đến publisher
-        public static DataTable ExecuteStatementByPublisherConnection(string statement)
+        /// <summary>
+        /// Thực thi lệnh bằng connection của publisher.
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <param name="statement">Câu lệnh sử dụng</param>
+        /// <returns>Kết quả là một DataTable.</returns>
+        public static DataTable ExecuteStatementByPublisherConnection(string statement, bool enable_error = true)
         {
             if(Data.PublisherConnection == null)
             {
                 try
                 {
-                Data.ConnectToPublisher();
+                    Data.ConnectToPublisher();
                 }
                 catch
                 {
@@ -131,13 +211,19 @@ namespace THITRACNGHIEM
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi! không thể thực thi lệnh\n" + ex.Message);
+                if (enable_error == true)
+                    MessageBox.Show("Lỗi! không thể thực thi lệnh\n" + ex.Message);
                 return null;
             }
             finally { Data.PublisherConnection.Close(); }
         }
-        //thực thi lệnh bằng connection đến server hiện tại
-        public static DataTable ExecuteStatementByServerConnection(String statement)
+        /// <summary>
+        /// thực thi lệnh bằng connection đến server hiện tại.
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <param name="statement">Câu lệnh để thực hiện</param>
+        /// <returns>Kết quả là môt DataTable</returns>
+        public static DataTable ExecuteStatementByServerConnection(String statement, bool enable_error = true)
         {
             if(Data.ServerConnection == null)
             {
@@ -160,7 +246,8 @@ namespace THITRACNGHIEM
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Lỗi! không thể thực thi lệnh\n" + ex.Message);
+                if (enable_error == true)
+                    MessageBox.Show("Lỗi! không thể thực thi lệnh\n" + ex.Message);
                 return null;
             }
             finally
@@ -168,7 +255,13 @@ namespace THITRACNGHIEM
                 Data.ServerConnection.Close();
             }
         }
-        public static DataTable ExecuteStatementByRetrievalSiteConnection(String statement)
+        /// <summary>
+        /// Kết nối tới site tra cứu.
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <param name="statement">Câu lệnh thực thi</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ExecuteStatementByRetrievalSiteConnection(String statement, bool enable_error = true)
         {
             if (Data.InformationRetrievalSite == null)
             {
@@ -191,7 +284,8 @@ namespace THITRACNGHIEM
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Lỗi! không thể thực thi lệnh\n" + ex.Message);
+                if(enable_error == true)
+                    MessageBox.Show("Lỗi! không thể thực thi lệnh\n" + ex.Message);
                 return null;
             }
             finally
@@ -201,7 +295,15 @@ namespace THITRACNGHIEM
         }
 
         //-----------------------excute chung----------------------------------//
-        public static DataTable ExecSqlDataTable(String cmd,SqlConnection connection)
+
+        /// <summary>
+        /// Thực hiện câu lệnh bằng kết nối tùy chọn.
+        /// Có thông báo lỗi. Để tắt set enable_error = false
+        /// </summary>
+        /// <param name="cmd">Câu lệnh</param>
+        /// <param name="connection">Kết nối</param>
+        /// <returns>DataTable</returns>
+        public static DataTable ExecSqlDataTable(String cmd,SqlConnection connection, bool enable_error = true)
         {
             DataTable dt = new DataTable();
             if (connection.State == ConnectionState.Closed) connection.Open();
@@ -213,12 +315,20 @@ namespace THITRACNGHIEM
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (enable_error == true)
+                    MessageBox.Show(ex.Message);
                 return null;
             }
             finally { connection.Close(); }
         }
-        public static int ExecuteScalar(String strlenh, SqlConnection connection)
+        /// <summary>
+        /// Thực hiện câu lệnh với connection tùy chọn.
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <param name="strlenh"></param>
+        /// <param name="connection"></param>
+        /// <returns>Giá trị là một số nguyên của kết quả thực hiện</returns>
+        public static int ExecuteScalar(String strlenh, SqlConnection connection, bool enable_error = true)
         {
             if (connection.State == ConnectionState.Closed) connection.Open();
             SqlCommand Sqlcmd =  new SqlCommand(strlenh, connection);
@@ -230,7 +340,8 @@ namespace THITRACNGHIEM
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (enable_error == true)
+                    MessageBox.Show(ex.Message);
                 return -1; // trang thai lỗi gởi từ RAISERROR trong SQL Server qua
             }
             finally
@@ -238,7 +349,14 @@ namespace THITRACNGHIEM
                 connection.Close();
             }
         }
-        public static SqlDataReader ExecSqlDataReader(String strLenh,SqlConnection connection)
+        /// <summary>
+        /// Thực hiện câu lệnh với kết nối tùy chọn.
+        /// Có thông báo lỗi. Để tắt set enable error = false
+        /// </summary>
+        /// <param name="strLenh"></param>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        public static SqlDataReader ExecSqlDataReader(String strLenh,SqlConnection connection, bool enable_error = true)
         {
             SqlDataReader myreader;
             SqlCommand sqlcmd = new SqlCommand(strLenh,connection);
@@ -252,7 +370,8 @@ namespace THITRACNGHIEM
             }
             catch (SqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if(enable_error == true)
+                 MessageBox.Show(ex.Message);
                 return null;
             }
             finally
@@ -260,7 +379,14 @@ namespace THITRACNGHIEM
                 //connection.Close();
             }
         }
-        public static int ExecSqlNonQuery(String strlenh,SqlConnection connection)
+        /// <summary>
+        /// Thực hiện câu lệnh với kết quả tùy chọn.
+        /// Có thông báo lỗi. Để tắt set enable_error = false
+        /// </summary>
+        /// <param name="strlenh"></param>
+        /// <param name="connection"></param>
+        /// <returns>Trả về 0 nếu thành công. Hoặc Trả về mã lỗi từ server</returns>
+        public static int ExecSqlNonQuery(String strlenh,SqlConnection connection, bool enable_error = true)
         {
             if(connection.State==ConnectionState.Closed) connection.Open();
             SqlCommand Sqlcmd = new SqlCommand(strlenh, connection);
@@ -274,12 +400,42 @@ namespace THITRACNGHIEM
             }
             catch (SqlException ex)
             {
+                if(enable_error == true)
                 MessageBox.Show(ex.Message);
                 return ex.State; // trang thai lỗi gởi từ RAISERROR trong SQL Server qua
             }
             finally
             {
                 connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Thực hiện bằng server connection.
+        /// Có thông báo lỗi. Để tắt set enable_error = false;
+        /// </summary>
+        /// <param name="strlenh"></param>
+        /// <returns></returns>
+        public static int ExecSqlNonQueryByServerConnection(String strlenh, bool enable_error = true)
+        {
+            SqlCommand Sqlcmd = new SqlCommand(strlenh, Data.ServerConnection);
+            Sqlcmd.CommandType = CommandType.Text;
+            Sqlcmd.CommandTimeout = 600;// 10 phut 
+            if (Data.ServerConnection.State == ConnectionState.Closed) Data.ServerConnection.Open();
+            try
+            {
+                Sqlcmd.ExecuteNonQuery();
+                return 0;
+            }
+            catch (SqlException ex)
+            {
+                if(enable_error == true)
+                    MessageBox.Show(ex.Message);
+                return ex.State; // trang thai lỗi gởi từ RAISERROR trong SQL Server qua
+            }
+            finally
+            {
+               Data.ServerConnection.Close();
             }
         }
     }

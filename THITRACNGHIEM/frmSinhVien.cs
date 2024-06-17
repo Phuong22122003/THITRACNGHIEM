@@ -167,6 +167,7 @@ namespace THITRACNGHIEM
                 this.SINHVIENTableAdapter.Fill(this.DS_SV.SINHVIEN);
                 this.BANGDIEMTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.BANGDIEMTableAdapter.Fill(this.DS_SV.BANGDIEM);
+                if(Data.mGroup.Equals("TRUONG")|| UndoStack == null ) return;
                 UndoStack.Clear();
                 RedoStack.Clear();
             }

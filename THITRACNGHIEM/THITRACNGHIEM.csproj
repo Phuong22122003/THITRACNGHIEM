@@ -73,6 +73,51 @@
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="CTBTs.cs" />
+    <Compile Include="DSBangDiemTheoMon.cs">
+      <DependentUpon>DSBangDiemTheoMon.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSBangDiemTheoMon.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSBangDiemTheoMon.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSChiTietBaiThi.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSChiTietBaiThi.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSChuanBiThi.cs">
+      <DependentUpon>DSChuanBiThi.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSChuanBiThi1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSChuanBiThi.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSKhoaLop.cs">
+      <DependentUpon>DSKhoaLop.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSKhoaLop1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSKhoaLop.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSMonHoc.cs">
+      <DependentUpon>DSMonHoc.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSMonHoc1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSMonHoc.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSNhapGiangVien.cs">
+      <DependentUpon>DSNhapGiangVien.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSNhapGiangVien.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSNhapGiangVien.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DS_BODE.cs">
       <DependentUpon>DS_BODE.xsd</DependentUpon>
     </Compile>
@@ -103,11 +148,47 @@
     <Compile Include="formBoDe.Designer.cs">
       <DependentUpon>formBoDe.cs</DependentUpon>
     </Compile>
+    <Compile Include="formChuanBiThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formChuanBiThi.designer.cs">
+      <DependentUpon>formChuanBiThi.cs</DependentUpon>
+    </Compile>
     <Compile Include="formLichThi.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="formLichThi.Designer.cs">
       <DependentUpon>formLichThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formMonHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formMonHoc.designer.cs">
+      <DependentUpon>formMonHoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formNhapGiaoVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formNhapGiaoVien.designer.cs">
+      <DependentUpon>formNhapGiaoVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formNhapKhoaLop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formNhapKhoaLop.designer.cs">
+      <DependentUpon>formNhapKhoaLop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formRptBangDiemTheoMonHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formRptBangDiemTheoMonHoc.designer.cs">
+      <DependentUpon>formRptBangDiemTheoMonHoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formRptChiTietBaiThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formRptChiTietBaiThi.designer.cs">
+      <DependentUpon>formRptChiTietBaiThi.cs</DependentUpon>
     </Compile>
     <Compile Include="formTaoTK.cs">
       <SubType>Form</SubType>
@@ -127,14 +208,6 @@
     <Compile Include="frmSinhVien.Designer.cs">
       <DependentUpon>frmSinhVien.cs</DependentUpon>
     </Compile>
-    <Compile Include="DSMonHoc.cs">
-      <DependentUpon>DSMonHoc.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DSMonHoc.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DSMonHoc.xsd</DependentUpon>
-    </Compile>
     <Compile Include="formDangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,12 +220,6 @@
     <Compile Include="formMain.designer.cs">
       <DependentUpon>formMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="formMonHoc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="formMonHoc.Designer.cs">
-      <DependentUpon>formMonHoc.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MyStack.cs" />
@@ -163,17 +230,48 @@
     <Compile Include="Thi.Designer.cs">
       <DependentUpon>Thi.cs</DependentUpon>
     </Compile>
+    <Compile Include="UndoService.cs" />
+    <Compile Include="xrpt_ChiTietBaiThi.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="xrpt_ChiTietBaiThi.designer.cs">
+      <DependentUpon>xrpt_ChiTietBaiThi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Xrpt_DangKyThi.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Xrpt_DangKyThi.Designer.cs">
       <DependentUpon>Xrpt_DangKyThi.cs</DependentUpon>
     </Compile>
+    <Compile Include="xrtp_PhieuBangDiemTheoMon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="xrtp_PhieuBangDiemTheoMon.designer.cs">
+      <DependentUpon>xrtp_PhieuBangDiemTheoMon.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="formBoDe.resx">
       <DependentUpon>formBoDe.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="formChuanBiThi.resx">
+      <DependentUpon>formChuanBiThi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="formLichThi.resx">
       <DependentUpon>formLichThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formMonHoc.resx">
+      <DependentUpon>formMonHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formNhapGiaoVien.resx">
+      <DependentUpon>formNhapGiaoVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formNhapKhoaLop.resx">
+      <DependentUpon>formNhapKhoaLop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formRptBangDiemTheoMonHoc.resx">
+      <DependentUpon>formRptBangDiemTheoMonHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formRptChiTietBaiThi.resx">
+      <DependentUpon>formRptChiTietBaiThi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formTaoTK.resx">
       <DependentUpon>formTaoTK.cs</DependentUpon>
@@ -190,9 +288,6 @@
     <EmbeddedResource Include="formMain.resx">
       <DependentUpon>formMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="formMonHoc.resx">
-      <DependentUpon>formMonHoc.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -207,10 +302,82 @@
     <EmbeddedResource Include="Thi.resx">
       <DependentUpon>Thi.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="xrpt_ChiTietBaiThi.resx">
+      <DependentUpon>xrpt_ChiTietBaiThi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Xrpt_DangKyThi.resx">
       <DependentUpon>Xrpt_DangKyThi.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="xrtp_PhieuBangDiemTheoMon.resx">
+      <DependentUpon>xrtp_PhieuBangDiemTheoMon.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="DSBangDiemTheoMon.xsc">
+      <DependentUpon>DSBangDiemTheoMon.xsd</DependentUpon>
+    </None>
+    <None Include="DSBangDiemTheoMon.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSBangDiemTheoMon.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DSBangDiemTheoMon.xss">
+      <DependentUpon>DSBangDiemTheoMon.xsd</DependentUpon>
+    </None>
+    <None Include="DSChiTietBaiThi.xsc">
+      <DependentUpon>DSChiTietBaiThi.xsd</DependentUpon>
+    </None>
+    <None Include="DSChiTietBaiThi.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSChiTietBaiThi.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DSChiTietBaiThi.xss">
+      <DependentUpon>DSChiTietBaiThi.xsd</DependentUpon>
+    </None>
+    <None Include="DSChuanBiThi.xsc">
+      <DependentUpon>DSChuanBiThi.xsd</DependentUpon>
+    </None>
+    <None Include="DSChuanBiThi.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSChuanBiThi1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DSChuanBiThi.xss">
+      <DependentUpon>DSChuanBiThi.xsd</DependentUpon>
+    </None>
+    <None Include="DSKhoaLop.xsc">
+      <DependentUpon>DSKhoaLop.xsd</DependentUpon>
+    </None>
+    <None Include="DSKhoaLop.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSKhoaLop1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DSKhoaLop.xss">
+      <DependentUpon>DSKhoaLop.xsd</DependentUpon>
+    </None>
+    <None Include="DSMonHoc.xsc">
+      <DependentUpon>DSMonHoc.xsd</DependentUpon>
+    </None>
+    <None Include="DSMonHoc.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSMonHoc1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DSMonHoc.xss">
+      <DependentUpon>DSMonHoc.xsd</DependentUpon>
+    </None>
+    <None Include="DSNhapGiangVien.xsc">
+      <DependentUpon>DSNhapGiangVien.xsd</DependentUpon>
+    </None>
+    <None Include="DSNhapGiangVien.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSNhapGiangVien.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DSNhapGiangVien.xss">
+      <DependentUpon>DSNhapGiangVien.xsd</DependentUpon>
+    </None>
     <None Include="DS_BODE.xsc">
       <DependentUpon>DS_BODE.xsd</DependentUpon>
     </None>
@@ -232,17 +399,6 @@
     </None>
     <None Include="DS_SV.xss">
       <DependentUpon>DS_SV.xsd</DependentUpon>
-    </None>
-    <None Include="DSMonHoc.xsc">
-      <DependentUpon>DSMonHoc.xsd</DependentUpon>
-    </None>
-    <None Include="DSMonHoc.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DSMonHoc.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DSMonHoc.xss">
-      <DependentUpon>DSMonHoc.xsd</DependentUpon>
     </None>
     <None Include="DS_THI.xsc">
       <DependentUpon>DS_THI.xsd</DependentUpon>

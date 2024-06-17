@@ -60,16 +60,6 @@ namespace THITRACNGHIEM
             listOfUndoStack = new Dictionary<String, MyStack>();
             listOfRedoStack = new Dictionary<String, MyStack>();
             listOfIndex = new Dictionary<string, int>();
-            //listOfIndex.Add(cmbMonHoc.SelectedValue.ToString(), 0);
-            //this.UndoStack = new MyStack();
-            //listOfUndoStack.Add(cmbMonHoc.SelectedValue.ToString(),UndoStack);
-            //this.UndoStack.StackChange += UndoStackChange;
-            //this.UndoStack.TriggerEvent();
-
-            //this.RedoStack = new MyStack();
-            //listOfRedoStack.Add(cmbMonHoc.SelectedValue.ToString(), RedoStack);
-            //this.RedoStack.StackChange += RedoStackChange;
-            //this.RedoStack.TriggerEvent();
 
             ///Ta ẩn panel-control của form nhập câu hỏi
             /// Gọi cmbMonHoc_SelectedIndexChanged để load câu hỏi
@@ -79,6 +69,11 @@ namespace THITRACNGHIEM
             this.cmbMonHoc_SelectedIndexChanged(null, null);
             this.SetComboboxValue();
 
+            if (Data.mGroup.Equals("TRUONG") || Data.mGroup.Equals("COSO"))
+            {
+                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled=btnGhi.Enabled = btnPhucHoi.Enabled = btnRedo.Enabled = false;
+                return;
+            }
 
             ///Nếu load mà môn đó không có câu nào thì sẽ không cho hiệu chỉnh và xóa.
             ///Nếu có câu hỏi phải kiểm tra câu đó có phải của giáo viên đó không và câu đó đã được thi hay chưa. 
@@ -101,8 +96,10 @@ namespace THITRACNGHIEM
         private void PositionChange(object sender, EventArgs e)
         {
             if (bdsBoDe.Position < 0) return;
+            if (Data.mGroup.Equals("TRUONG") || Data.mGroup.Equals("COSO")) return;
+
             if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-                || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+            || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
             {
                 btnHieuChinh.Enabled = false;
                 btnXoa.Enabled = false;
@@ -380,62 +377,64 @@ namespace THITRACNGHIEM
             {
                 this.BODETableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.BODETableAdapter.Fill(this.DS_BODE.BODE, mamh);
-                
-                if (listOfIndex.TryGetValue(mamh, out int currentIndex))
-                {
-                    index = currentIndex;
-                }
-                else 
-                {
-                    listOfIndex.Add(mamh, 0);
-                    index = 0;
-                }
-
-                if(listOfUndoStack.TryGetValue(mamh, out  MyStack currentUndoStack))
-                {
-                    UndoStack = currentUndoStack;
-                    this.UndoStack.TriggerEvent();
-                }
-                else
-                {
-                    this.UndoStack = new MyStack();
-                    listOfUndoStack.Add(mamh, UndoStack);
-                    this.UndoStack.StackChange += UndoStackChange;
-                    this.UndoStack.TriggerEvent();
-                }
-
-               if(listOfRedoStack.TryGetValue(mamh, out  MyStack currentRedoStack))
-                {
-                    RedoStack = currentRedoStack;
-                    this.RedoStack.TriggerEvent();
-                }
-                else
-                {
-                    this.RedoStack = new MyStack();
-                    listOfRedoStack.Add(mamh, RedoStack);
-                    this.RedoStack.StackChange += RedoStackChange;
-                    this.RedoStack.TriggerEvent();
-                }
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show("Lỗi tải câu hỏi\n"+ex.Message);
+                return;
             }
-            finally
+
+
+            if (Data.mGroup.Equals("TRUONG") || Data.mGroup.Equals("COSO"))
+                return;
+
+            if (listOfIndex.TryGetValue(mamh, out int currentIndex))
             {
-                if(bdsBoDe.Count == 0)
-                    btnHieuChinh.Enabled = btnXoa.Enabled=false;
-                else   if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-                    || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
-                {
-                    btnHieuChinh.Enabled = false;
-                    btnXoa.Enabled = false;
-                }
-                else btnHieuChinh.Enabled = btnXoa.Enabled = true;
-                if (Data.mGroup.Equals("TRUONG")) btnThem.Enabled = false;
-                //UndoStack.Clear();
-                //RedoStack.Clear();
+                index = currentIndex;
             }
+            else
+            {
+                listOfIndex.Add(mamh, 0);
+                index = 0;
+            }
+
+            if (listOfUndoStack.TryGetValue(mamh, out MyStack currentUndoStack))
+            {
+                UndoStack = currentUndoStack;
+                this.UndoStack.TriggerEvent();
+            }
+            else
+            {
+                this.UndoStack = new MyStack();
+                listOfUndoStack.Add(mamh, UndoStack);
+                this.UndoStack.StackChange += UndoStackChange;
+                this.UndoStack.TriggerEvent();
+            }
+
+            if (listOfRedoStack.TryGetValue(mamh, out MyStack currentRedoStack))
+            {
+                RedoStack = currentRedoStack;
+                this.RedoStack.TriggerEvent();
+            }
+            else
+            {
+                this.RedoStack = new MyStack();
+                listOfRedoStack.Add(mamh, RedoStack);
+                this.RedoStack.StackChange += RedoStackChange;
+                this.RedoStack.TriggerEvent();
+            }
+
+
+            if (bdsBoDe.Count == 0)
+                btnHieuChinh.Enabled = btnXoa.Enabled=false;
+            else   if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
+                || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+            {
+                btnHieuChinh.Enabled = false;
+                btnXoa.Enabled = false;
+            }
+            else btnHieuChinh.Enabled = btnXoa.Enabled = true;
+            
         }
         // Khi thoát đóng form
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -520,18 +519,7 @@ namespace THITRACNGHIEM
                 btnHieuChinh.Enabled = btnXoa.Enabled = false;
         }
 
-        private void fillToolStripButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.BODETableAdapter.Fill(this.DS_BODE.BODE, mAMHToolStripTextBox.Text);
-            }
-            catch (System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
 
-        }
         /// <summary>
         /// Khi nhấn hủy ta sẽ hủy đi edit nếu đang chỉnh sửa hoặc xóa dòng đó nếu đang thêm mới.
         /// Ẩn panel đi
@@ -553,8 +541,7 @@ namespace THITRACNGHIEM
                 btnXoa.Enabled = false;
             }
             else btnXoa.Enabled = btnHieuChinh.Enabled = true;
-            if (Data.mGroup.Equals("TRUONG")) btnThem.Enabled = false;
-            else btnThem.Enabled = true;
+            btnThem.Enabled = true;
             //Kiểm tra thử cho reload, ghi, thoát,chuyển môn ko
             UndoStackChange();
             //bật lên khi trường hợp người dùng nhấn nút hiệu chỉnh nhưng câu đó đã thi nên không cho hiệu chỉnh-> disable nút xong
