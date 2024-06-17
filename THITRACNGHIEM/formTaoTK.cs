@@ -15,6 +15,7 @@ namespace THITRACNGHIEM
     public partial class formTaoTK : Form
     {
         private DataTable dt;
+        private DataTable dtNhom;
         private DataRow currentDataRow;
         public formTaoTK()
         {
@@ -30,19 +31,11 @@ namespace THITRACNGHIEM
             cmbHoVaTen.ValueMember = "MAGV";
             cmbHoVaTen.SelectedIndex = 0;
 
-            DataTable dt1 = new DataTable();
-            dt1.Columns.Add("TENNHOM");
-            dt1.Columns.Add("NHOM");
-            if (Data.username.Contains("TRUONG"))
-            {
-                dt1.Rows.Add("TRƯỜNG", "TRUONG");
-            }
-            else
-            {
-                dt1.Rows.Add("CƠ SỞ", "COSO");
-                dt1.Rows.Add("GIẢNG VIÊN", "GIANGVIEN");
-            }
-            cmbNhom.DataSource = dt1;
+            dtNhom = new DataTable();
+            dtNhom.Columns.Add("TENNHOM");
+            dtNhom.Columns.Add("NHOM");
+
+            cmbNhom.DataSource = dtNhom;
             cmbNhom.DisplayMember = "TENNHOM";
             cmbNhom.ValueMember = "NHOM";
             this.cmbHoVaTen.SelectedIndexChanged += new System.EventHandler(this.cmbHoVaTen_SelectedIndexChanged);
@@ -63,21 +56,58 @@ namespace THITRACNGHIEM
             SqlDataReader dr = Data.ExecSqlDataReader("EXEC SP_LAYLGNAME_VA_NHOM " + username,Data.ServerConnection);
             String nhom;
             if (dr.Read())
-            { 
+            {
+                dtNhom.Clear();
+                dtNhom.Rows.Add("TRƯỜNG", "TRUONG");
+                dtNhom.Rows.Add("CƠ SỞ", "COSO");
+                dtNhom.Rows.Add("GIẢNG VIÊN", "GIANGVIEN");
+                
                 txtTK.Text = dr[0].ToString();
+                txtMK.Text = "********";
                 nhom = dr[1].ToString();
-                cmbNhom.SelectedValue = nhom.Trim();
+                cmbNhom.SelectedValue = nhom.Trim().ToUpper();
                 txtTK.Enabled = cmbNhom.Enabled =  txtMK.Enabled = false;
                 btnTaoTK.Enabled = false;
-                btnDoiMK.Enabled = true;
-                if(!txtMaGV.Text.Trim().Equals(Data.username.Trim())) 
-                    if (Data.mGroup.Equals("TRUONG") && nhom.Equals("TRUONG")) btnXoaTK.Enabled = true;
-                    else if(Data.mGroup.Equals("COSO") &&( nhom.Equals("COSO")||nhom.Equals("GIANGVIEN"))) btnXoaTK.Enabled = true;
-                    else btnXoaTK.Enabled = false;
-                else btnDoiMK.Enabled = false;
+
+                if (!txtMaGV.Text.Trim().ToUpper().Equals(Data.username.Trim().ToUpper()))
+                {
+                    if (Data.mGroup.Equals("TRUONG") && nhom.Equals("TRUONG"))
+                    {
+                        btnXoaTK.Enabled = true;
+                        btnDoiMK.Enabled = true;
+                    }
+                    else if (Data.mGroup.Equals("COSO") && (nhom.Equals("COSO") || nhom.Equals("GIANGVIEN")))
+                    { 
+                        btnXoaTK.Enabled = true;
+                        btnDoiMK.Enabled = true;
+                    }
+                    else
+                    {
+                        btnXoaTK.Enabled = false;
+                        btnDoiMK.Enabled= false;
+                    } 
+                        
+                }
+                
+                else
+                {
+                    btnDoiMK.Enabled = false;
+                    btnXoaTK.Enabled= false;
+                }    
             }
             else
             {
+                dtNhom .Clear();
+                if (Data.username.Contains("TRUONG"))
+                {
+                    dtNhom.Rows.Add("TRƯỜNG", "TRUONG");
+                }
+                else
+                {
+                    dtNhom.Rows.Add("CƠ SỞ", "COSO");
+                    dtNhom.Rows.Add("GIẢNG VIÊN", "GIANGVIEN");
+                }
+
                 txtTK.Text = "";
                 txtMK.Text = "";
                 txtTK.Enabled = txtMK.Enabled = cmbNhom.Enabled = true;
