@@ -38,7 +38,17 @@ namespace WindowsFormsApp1
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
+            lblErrorLoginName.Visible = false;
+            lblErrorPassword.Visible = false ;
+            if (inputTK.Text.Trim().Length == 0) lblErrorLoginName.Visible = true;
+            if (inputMK.Text.Trim().Length == 0) lblErrorPassword.Visible = true;
+
+            if(lblErrorLoginName.Visible || lblErrorPassword.Visible)
+            {
+                return;
+            }
             Data.servername = cmbCoSo.SelectedValue.ToString();
+            Data.mCoSo = cmbCoSo.SelectedIndex;
             //Trường hợp là giảng viên
             if (radioGiaoVien.Checked == true)
             {
@@ -105,7 +115,11 @@ namespace WindowsFormsApp1
                 }
              }
         }
-
+        public void clear()
+        {
+            this.inputTK.Clear();
+            this.inputMK.Clear();
+        }
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
