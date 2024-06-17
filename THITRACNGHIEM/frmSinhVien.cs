@@ -208,8 +208,12 @@ namespace THITRACNGHIEM
              panelEditSV.Visible=!allow;
              gcSinhVien.Enabled = allow;
         }
+        public static bool KiemTraChuoi(string chuoi)
+        {
+            return chuoi.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
+        }
 
-       
+
         //Hàm xử lý sự kiện cho từng nút lệnh
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -231,45 +235,71 @@ namespace THITRACNGHIEM
         }
         private void btnXong_Click(object sender, EventArgs e)
         {
+            lblErrorHo.Visible = lblErrorTen.Visible = lblErrorMasv.Visible = lblErrorPassword.Visible = false;
             currentDataRow = ((DataRowView)bdsSinhVien.Current).Row;
+            int checkError = 0;
             if (txtMasv.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Mã sinh viên không được phép trống");
-                return;
+                lblErrorMasv.Text = "Mã sinh viên không được phép trống";
+                lblErrorMasv.Visible = true;
+                checkError = 1;
             }
-            if (currentAction == ActionState.ADDED)//check
+            else if (currentAction == ActionState.ADDED)//check
             {
                 if(DS_SV.SINHVIEN.FindByMASV(txtMasv.Text.Trim()) != null)
                 {
-                    MessageBox.Show("Mã sinh viên đã tồn tại");
-                    return;
+                    lblErrorMasv.Text = "Mã sinh viên đã tồn tại";
+                    lblErrorMasv.Visible = true;
+                    checkError = 1;
                 }
-
-                //sqlcmd.Parameters["@masv"].Value = txtMasv.Text.Trim();
-                int check = Data.ExecuteScalar("select dbo.checkExistsMasv(" + txtMasv.Text + ")",Data.InformationRetrievalSite);
-               if(check == 1)
+                else
                 {
-                    MessageBox.Show("Mã sinh viên đã tồn tại");
-                    return;
+                    int check = Data.ExecuteScalar("select dbo.checkExistsMasv(" + txtMasv.Text + ")",Data.InformationRetrievalSite);
+                    if(check== 1)
+                    {
+                        checkError = 1;
+                        lblErrorMasv.Visible = true;
+                        lblErrorMasv.Text = "Mã sinh viên đã tồn tại";
+                    }
                 }
             }
             if (txtHo.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Họ không được phép trống");
-                return;
-            }   
+                lblErrorHo.Text = "Họ không được phép trống";
+                lblErrorHo.Visible = true;
+                checkError = 1;
+            }
+            else  if (KiemTraChuoi(txtHo.Text.Trim()) == false)
+            {
+                lblErrorHo.Text = "Họ chỉ chứa chữ và khoảng trống";
+                lblErrorHo.Visible = true;
+                checkError = 1;
+            }
             if (txtTen.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Tên không được phép trống");
-                return;
+                lblErrorTen.Text = "Tên không được phép trống";
+                lblErrorTen.Visible = true;
+                checkError = 1;
+            }
+            else if (KiemTraChuoi(txtTen.Text.Trim())==false)
+            {
+                lblErrorTen.Text = "Tên chỉ chứa chữ và khoảng trống";
+                lblErrorTen.Visible = true;
+                checkError = 1;
             }
             if (txtPassword.Text.Trim().Equals(""))
             {
-                MessageBox.Show("Password không được phép trống");
-                return;
+                lblErrorPassword.Text = "Password không được phép trống";
+                lblErrorPassword.Visible = true;
+                checkError = 1;
             }
-            
-
+            else if (txtPassword.Text.Trim().Contains(" "))
+            {
+                lblErrorPassword.Text = "Password không được chứa khoảng trống";
+                lblErrorPassword.Visible = true;
+                checkError = 1;
+            }
+            if (checkError == 1) return;
             try {
                 ((DataRowView)bdsSinhVien.Current).EndEdit();
                 HidePanelEdit(true);
