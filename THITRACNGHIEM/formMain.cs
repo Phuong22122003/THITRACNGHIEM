@@ -132,8 +132,14 @@ namespace WindowsFormsApp1
         }
         private void dangXuatBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
+            foreach (Form f in this.MdiChildren)
+            {
+               if(f.GetType()==typeof(formDangNhap)) ((formDangNhap) f).clear();
+               else f.Close();
+            }
+            Data.clear();
             clearInfo();
-            this.Close();
+            disableAll();
         }
 
         public Form CheckExist(Type type)
