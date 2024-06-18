@@ -21,12 +21,12 @@ namespace THITRACNGHIEM
         private int vitriLop = 0;
         private String makhoa = "";
         private String malop = "";
-        private String tenlop = "";
-        private List<String> malopArr = new List<String>();
-        private List<String> tenlopArr = new List<String>();
+        //private String tenlop = "";
+        //private List<String> malopArr = new List<String>();
+        //private List<String> tenlopArr = new List<String>();
         private UndoManager undoManagerKhoa;
         private UndoManager undoManagerLop;
-        private bool isXoaUndo = false;
+        private bool isUndoOrReundo = false;
         private bool clickPhucHoi = false;
         private TrangThaiGhi trangThaiGhiKhoa;
         private TrangThaiGhi trangThaiGhiLop;
@@ -50,10 +50,14 @@ namespace THITRACNGHIEM
        
         private void formNhapKhoaLop_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'DSKhoaLop.GIAOVIEN_DANGKY' table. You can move, or remove it, as needed.
+            this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
+            // TODO: This line of code loads data into the 'DSKhoaLop.GIAOVIEN_DANGKY' table. You can move, or remove it, as needed.
+            this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
             // TODO: This line of code loads data into the 'DSKhoaLop.SINHVIEN' table. You can move, or remove it, as needed.
-     
 
- 
+
+
             DSKhoaLop.EnforceConstraints = false;
 
             this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
@@ -62,6 +66,8 @@ namespace THITRACNGHIEM
             this.lOPTableAdapter.Fill(this.DSKhoaLop.LOP);
             this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.SINHVIENTableAdapter.Fill(this.DSKhoaLop.SINHVIEN);
+            this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
 
 
             this.cmbCoSo.DataSource = Data.bds_dspm;
@@ -141,8 +147,11 @@ namespace THITRACNGHIEM
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("EXECUTE SP_CheckMaKhoaTonTai @makhoa = " + txtMAKHOA.Text, Data.ServerConnection);
-                    command.ExecuteNonQuery();
+                    SqlCommand Sqlcmd = new SqlCommand("EXECUTE SP_CheckMaKhoaTonTai @makhoa = " + txtMAKHOA.Text, Data.ServerConnection);
+                    Sqlcmd.CommandType = CommandType.Text;
+                    Sqlcmd.CommandTimeout = 600;// 10 phut 
+                    if (Data.ServerConnection.State == ConnectionState.Closed) Data.ServerConnection.Open();
+                    Sqlcmd.ExecuteNonQuery();
                 }
                 catch (SqlException ex)
                 {
@@ -150,6 +159,10 @@ namespace THITRACNGHIEM
                     String errorMessage = ex.Message;
                     MessageBox.Show(errorMessage, "", MessageBoxButtons.OK);
                     return;
+                }
+                finally
+                {
+                    Data.ServerConnection.Close();
                 }
             }
 
@@ -274,80 +287,79 @@ namespace THITRACNGHIEM
         }
 
 
-        private void ghiToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = true;
-            //if (txtMaLop.Text.Trim() != malop.Trim())
-            //{
-            //    try
-            //    {
-            //        SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @malop = " + txtMaLop.Text, Program.conn);
-            //        command.ExecuteNonQuery();
-            //    }
-            //    catch (SqlException ex)
-            //    {
-            //        MessageBox.Show(ex.Message, "", MessageBoxButtons.OK);
-            //        return;
-            //    }
-            //}
-            //if ( txtTenLop.Text.Trim() != tenlop.Trim())
-            //{
-            //    try
-            //    {
-            //        SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @tenlop = " + "'" + txtTenLop.Text + "'", Program.conn);
-            //        command.ExecuteNonQuery();
-            //    }
-            //    catch (SqlException ex)
-            //    {
-            //        MessageBox.Show(ex.Message, "", MessageBoxButtons.OK);
-            //        return;
-            //    }
-            //}
+        //private void ghiToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = true;
+        //    //if (txtMaLop.Text.Trim() != malop.Trim())
+        //    //{
+        //    //    try
+        //    //    {
+        //    //        SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @malop = " + txtMaLop.Text, Program.conn);
+        //    //        command.ExecuteNonQuery();
+        //    //    }
+        //    //    catch (SqlException ex)
+        //    //    {
+        //    //        MessageBox.Show(ex.Message, "", MessageBoxButtons.OK);
+        //    //        return;
+        //    //    }
+        //    //}
+        //    //if ( txtTenLop.Text.Trim() != tenlop.Trim())
+        //    //{
+        //    //    try
+        //    //    {
+        //    //        SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @tenlop = " + "'" + txtTenLop.Text + "'", Program.conn);
+        //    //        command.ExecuteNonQuery();
+        //    //    }
+        //    //    catch (SqlException ex)
+        //    //    {
+        //    //        MessageBox.Show(ex.Message, "", MessageBoxButtons.OK);
+        //    //        return;
+        //    //    }
+        //    //}
 
-            //if (malopArr != null)
-            //{
-            //    for (int i = 0; i < malopArr.Count; i++)
-            //    {
-            //        if (malopArr[i].ToLower() == txtMaLop.Text.ToLower())
-            //        {
-            //            MessageBox.Show("Trùng mã lớp", "", MessageBoxButtons.OK);
-            //            return;
-            //        }
-            //    }
-            //}
-            //if (tenlopArr != null)
-            //{
-            //    for (int i = 0; i < tenlopArr.Count; i++)
-            //    {
-            //        if (tenlopArr[i].ToLower() == txtTenLop.Text.ToLower())
-            //        {
-            //            MessageBox.Show("Trùng tên lớp", "", MessageBoxButtons.OK);
-            //            return;
-            //        }
-            //    }
-            //}
+        //    //if (malopArr != null)
+        //    //{
+        //    //    for (int i = 0; i < malopArr.Count; i++)
+        //    //    {
+        //    //        if (malopArr[i].ToLower() == txtMaLop.Text.ToLower())
+        //    //        {
+        //    //            MessageBox.Show("Trùng mã lớp", "", MessageBoxButtons.OK);
+        //    //            return;
+        //    //        }
+        //    //    }
+        //    //}
+        //    //if (tenlopArr != null)
+        //    //{
+        //    //    for (int i = 0; i < tenlopArr.Count; i++)
+        //    //    {
+        //    //        if (tenlopArr[i].ToLower() == txtTenLop.Text.ToLower())
+        //    //        {
+        //    //            MessageBox.Show("Trùng tên lớp", "", MessageBoxButtons.OK);
+        //    //            return;
+        //    //        }
+        //    //    }
+        //    //}
 
-            try
-            {
-                bdsLOP.EndEdit();
-                bdsLOP.ResetCurrentItem();
-                undoManagerLop.ClearUndoStack();
-                undoManagerLop.ClearReUndoStack();
-                this.lOPTableAdapter.Connection.ConnectionString =   Data.ServerConnectionString;
-                this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
-                malopArr.Clear();
-                tenlopArr.Clear();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK); 
-                return;   
-            }
-        }
+        //    try
+        //    {
+        //        bdsLOP.EndEdit();
+        //        bdsLOP.ResetCurrentItem();
+        //        undoManagerLop.ClearUndoStack();
+        //        undoManagerLop.ClearReUndoStack();
+        //        this.lOPTableAdapter.Connection.ConnectionString =   Data.ServerConnectionString;
+        //        this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
+              
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK); 
+        //        return;   
+        //    }
+        //}
 
         private void xóaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            //btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = false;
             if (bdsLOP.Count == 0)
             {
                 MessageBox.Show("Không có lớp để xóa", "", MessageBoxButtons.OK);
@@ -356,6 +368,11 @@ namespace THITRACNGHIEM
             if (bdsSV.Count > 0)
             {
                 MessageBox.Show("Không thể xóa lớp có sinh viên", "", MessageBoxButtons.OK);
+                return;
+            }
+            if (bdsGV_DK.Count > 0)
+            {
+                MessageBox.Show("Không thể xóa lớp đã đăng ký thi", "", MessageBoxButtons.OK);
                 return;
             }
             if (MessageBox.Show
@@ -370,18 +387,22 @@ namespace THITRACNGHIEM
                     undoManagerLop.DeleteRecord(deletedRowArrayItem);
                     if (undoManagerLop.GetUndoStack().Count <= 0) phụcHồiToolStripMenuItem.Enabled = false;
                     else phụcHồiToolStripMenuItem.Enabled = true;
-                    bdsLOP.RemoveCurrent();
-                    this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-                    //this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
-                    if (malopArr.Contains(malop.ToLower()))
+                    try
                     {
-                        malopArr.Remove(malop.ToLower());
+                        bdsLOP.RemoveCurrent();
+                        undoManagerLop.ClearReUndoStack();
+
+                        this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                        this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
+
                     }
-                    String tenlop = ((DataRowView)bdsLOP[bdsLOP.Position])["TENLOP"].ToString().ToLower();
-                    if (tenlopArr.Contains(tenlop));
+                    catch (Exception ex)
                     {
-                        malopArr.Remove(tenlop);
+                        MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
+                        return;
                     }
+                
+                  
                 }
                 catch (Exception ex)
                 {
@@ -398,7 +419,7 @@ namespace THITRACNGHIEM
         private void themToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
-            btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            //btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = false;
             bdsLOP.AddNew();
             vitriLop = bdsLOP.Position;
             trangThaiGhiLop = TrangThaiGhi.them;
@@ -414,11 +435,7 @@ namespace THITRACNGHIEM
 
             private void gvLOP_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
             {
-                if (isXoaUndo)
-                {
-                    isXoaUndo = true;
-                    return; 
-                }
+            
             DataRowView row = (DataRowView)e.Row;
                 if (row != null && row["MALOP"].ToString().Trim() == "")
                 {
@@ -440,14 +457,17 @@ namespace THITRACNGHIEM
                 }
 
 
+                if (!isUndoOrReundo)
+            {
                 try
                 {
-                    if(Data.ServerConnection.State == ConnectionState.Closed) {
+                    if (Data.ServerConnection.State == ConnectionState.Closed)
+                    {
                         Data.ServerConnection.Open();
                     }
                     SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @malop = " + row["MALOP"].ToString().Trim() + ", @tenlop = " + row["TENLOP"].ToString().Trim(), Data.ServerConnection);
                     command.ExecuteNonQuery();
-                Data.ServerConnection.Close();
+                    Data.ServerConnection.Close();
                 }
                 catch (SqlException ex)
                 {
@@ -466,50 +486,18 @@ namespace THITRACNGHIEM
                     }
                     e.Valid = false;
 
-                return;
+                    return;
                 }
+            }
 
-                string maLop = row["MALOP"].ToString().Trim();
-                string tenLop = row["TENLOP"].ToString().Trim();
-                if (malopArr != null)
-                {
-                    for (int i = 0; i < malopArr.Count; i++)
-                    {
-                        if (malopArr[i].ToLower().Trim() == maLop.ToLower().Trim())
-                        {
-                            e.ErrorText = "Mã lớp bị trùng lặp.";
-                            gvLOP.FocusedRowHandle = e.RowHandle;
-                            gvLOP.FocusedColumn = gvLOP.Columns["MALOP"];
-                            e.Valid = false;
-
-                        return;
-                        }
-                    }
-                }
-                if (tenlopArr != null)
-                {
-                    for (int i = 0; i < tenlopArr.Count; i++)
-                    {   
-                        if (tenlopArr[i].ToLower().Trim() == tenLop.ToLower().Trim())
-                        {
-                            e.ErrorText = "Tên lớp bị trùng lặp.";
-                            gvLOP.FocusedRowHandle = e.RowHandle;
-                            gvLOP.FocusedColumn = gvLOP.Columns["TENLOP"];
-                            e.Valid = false;
-
-                        return;
-                        }
-                    }
-                }
-
-                malopArr.Add(maLop.ToLower().Trim());
-                tenlopArr.Add(tenLop.ToLower().Trim());
+          
+                
             foreach (DevExpress.XtraGrid.Columns.GridColumn column in gvLOP.Columns)
             {
                 column.OptionsColumn.AllowEdit = false;
             }
 
-            if(trangThaiGhiLop == TrangThaiGhi.them)
+            if(trangThaiGhiLop == TrangThaiGhi.them && !isUndoOrReundo)
             {
                 DataRowView addedRow = (DataRowView)bdsLOP.Current;
                 object[] addedRowArrayItem = addedRow.Row.ItemArray;
@@ -523,6 +511,26 @@ namespace THITRACNGHIEM
             {
                 phụcHồiToolStripMenuItem.Enabled = false;
             }
+            try
+            {
+                bdsLOP.EndEdit();
+                bdsLOP.ResetCurrentItem();
+                if (!isUndoOrReundo)
+                {
+                    undoManagerLop.ClearReUndoStack();
+                }
+
+                this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
+
+            }
+            catch (Exception ex)
+            {
+                e.Valid = false;
+                e.ErrorText = ex.Message;
+                return;
+            }
+            isUndoOrReundo = false;
         }
 
 
@@ -540,7 +548,7 @@ namespace THITRACNGHIEM
         private void hiệuChỉnhToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trangThaiGhiLop = TrangThaiGhi.hieuchinh;
-            btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            //btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = btnGhi.Enabled = btnPhucHoi.Enabled = false;
             string maLop;
             string tenLop;
             try
@@ -629,11 +637,7 @@ namespace THITRACNGHIEM
                         return;
                     }
                 }
-                if (newTenLop.ToLower().Trim() != tenLop.ToLower().Trim() && tenlopArr.Contains(newTenLop.ToLower().Trim()))
-                {
-                    MessageBox.Show("Tên lớp bị trùng", "", MessageBoxButtons.OK);
-                    return;
-                }
+             
                 DataRow selectedRow = ((DataRowView)gvLOP.GetFocusedRow()).Row;
                 DataRowView oldRow = (DataRowView)gvLOP.GetFocusedRow();
                 oldRowItemArrayLop = oldRow.Row.ItemArray;
@@ -641,6 +645,7 @@ namespace THITRACNGHIEM
                 DataRowView newRow = (DataRowView)gvLOP.GetFocusedRow();
                 object[] newRowItemArrayLop = newRow.Row.ItemArray;
                 undoManagerLop.EditRecord(oldRowItemArrayLop, newRowItemArrayLop);
+
                 if (undoManagerLop.GetUndoStack().Count > 0)
                 {
                     phụcHồiToolStripMenuItem.Enabled = true;
@@ -648,9 +653,24 @@ namespace THITRACNGHIEM
                 {
                     phụcHồiToolStripMenuItem.Enabled = false;
                 }
-                tenlopArr.Remove(tenLop.ToLower().Trim());
-                tenlopArr.Add(newTenLop.ToLower().Trim());
+               
                 gvLOP.RefreshData();
+                try
+                {
+                    if (!isUndoOrReundo)
+                    {
+                        undoManagerLop.ClearReUndoStack();
+                    }
+
+                    this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                    this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
+                    return;
+                }
                 confirmForm.Close();
             };
             confirmForm.ShowDialog();
@@ -684,17 +704,48 @@ namespace THITRACNGHIEM
 
         private void cmbCoSo_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (cmbCoSo.SelectedValue.ToString() == "System.Data.DataRowView") return;
+            Data.servername = cmbCoSo.SelectedValue.ToString();
+            if (cmbCoSo.SelectedIndex != Data.mCoSo)
+            {
+                Data.mlogin = Data.remotelogin;
+                Data.password = Data.remotepassword;
+            }
+            else
+            {
+                Data.mlogin = Data.mloginDN;
+                Data.password = Data.passwordDN;
+            }
+            if (Data.ConnectToServerWhenLogin(false) == 0)
+            {
+                MessageBox.Show("Lỗi kết nối về chi nhánh mới");
+            }
+            else
+            {
+                this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.KHOATableAdapter.Fill(this.DSKhoaLop.KHOA);
+                this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.lOPTableAdapter.Fill(this.DSKhoaLop.LOP);
+                this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.SINHVIENTableAdapter.Fill(this.DSKhoaLop.SINHVIEN);
+            }
         }
 
         private void phụcHồiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RowData temp = undoManagerLop.GetUndoStack().Peek();
-            if (temp.ActionType == ActionType.Delete) isXoaUndo = true;
-            else isXoaUndo = false;
+            if (undoManagerLop.GetUndoStack().Count != 0)
+            {
+                RowData temp = undoManagerLop.GetUndoStack().Peek();
+                if (temp.ActionType == ActionType.Delete)
+                {
+                    isUndoOrReundo = true;
+                }
+            }
             undoManagerLop.Undo();
-            bdsLOP.EndEdit();
-            bdsLOP.ResetCurrentItem();
+            //bdsLOP.EndEdit();
+            //bdsLOP.ResetCurrentItem();
+            this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
             if (undoManagerLop.GetUndoStack().Count <= 0) phụcHồiToolStripMenuItem.Enabled = false;
             else phụcHồiToolStripMenuItem.Enabled = true;
             if (undoManagerLop.GetReUndoStack().Count <= 0) táiPhụcHồiToolStripMenuItem.Enabled = false;
@@ -722,7 +773,17 @@ namespace THITRACNGHIEM
 
         private void táiPhụcHồiToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (undoManagerLop.GetReUndoStack().Count != 0)
+            {
+                RowData temp = undoManagerLop.GetReUndoStack().Peek();
+                if (temp.ActionType == ActionType.Delete)
+                {
+                    isUndoOrReundo = true;
+                }
+            }
             undoManagerLop.ReUndo();
+            this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
             if (undoManagerLop.GetReUndoStack().Count <= 0) táiPhụcHồiToolStripMenuItem.Enabled = false;
             else táiPhụcHồiToolStripMenuItem.Enabled = true;
             if (undoManagerLop.GetUndoStack().Count <= 0) phụcHồiToolStripMenuItem.Enabled = false;

@@ -1,4 +1,6 @@
-﻿using DevExpress.XtraEditors.Repository;
+﻿//using DevExpress.CodeParser;
+using DevExpress.Data.Extensions;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,12 @@ namespace THITRACNGHIEM
 
         private int vitri = 0;
         private String maGV;
-        private List<String> maGVArr = new List<String>();
+      
         private UndoManager undoManager;
         private TrangThaiGhi trangThaiGhi;
         private object[] oldRowItemArray;
-        private bool isXoaUndo = false;
+
+        private bool isUndoOrReundo = false;
         public formNhapGiaoVien()
         {
             InitializeComponent();
@@ -103,11 +106,16 @@ namespace THITRACNGHIEM
 
         private void gvGiaoVien_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
         {
-            if(isXoaUndo)
-            {
-                isXoaUndo = true;
-                return;
-            }
+            //if(isXoaUndo)
+            //{
+            //    isXoaUndo = false;
+            //    return;
+            //}
+            //if (isXoaReUndo)
+            //{
+            //    isXoaReUndo = false;
+            //    return;
+            //}
             DataRowView row = (DataRowView)e.Row;
             if (row != null && row["MAGV"].ToString().Trim() == "")
             {
@@ -139,45 +147,60 @@ namespace THITRACNGHIEM
                 return;
             }
 
-            try
+            if (!isUndoOrReundo)
             {
-                SqlCommand command = new SqlCommand("EXECUTE SP_CHECKMAGIAOVIENTONTAI @MAGV = " + row["MAGV"].ToString().Trim(), Data.ServerConnection);
-                command.ExecuteNonQuery();
-            }
-            catch (SqlException ex)
-            {
-                // Lấy thông điệp lỗi từ SqlException
-                e.ErrorText = ex.Message;
-                gvGiaoVien.FocusedRowHandle = e.RowHandle;
-                gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["MAGV"];
-                e.Valid = false;
-                
-                return;
+                try
+                {
+                    Data.ExecSqlNonQueryByServerConnection("EXECUTE SP_CHECKMAGIAOVIENTONTAI @MAGV = " + row["MAGV"].ToString().Trim(), false);
+                    SqlCommand Sqlcmd = new SqlCommand("EXECUTE SP_CHECKMAGIAOVIENTONTAI @MAGV = " + row["MAGV"].ToString().Trim(), Data.ServerConnection);
+                    Sqlcmd.CommandType = CommandType.Text;
+                    Sqlcmd.CommandTimeout = 600;// 10 phut 
+                    if (Data.ServerConnection.State == ConnectionState.Closed) Data.ServerConnection.Open();
+                    Sqlcmd.ExecuteNonQuery();
+                   
+                }
+                catch (SqlException ex)
+                {
+                    // Lấy thông điệp lỗi từ SqlException
+                    e.ErrorText = ex.Message;
+                    gvGiaoVien.FocusedRowHandle = e.RowHandle;
+                    gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["MAGV"];
+                    e.Valid = false;
+    
+                    return;
+                }
+                finally
+                {
+                    Data.ServerConnection.Close();
+                }
+
             }
             string maGV = row["MAGV"].ToString().Trim();
-            if (maGVArr != null)
-            {
-                for (int i = 0; i < maGVArr.Count; i++)
-                {
-                    if (maGVArr[i].ToLower().Trim() == maGV.ToLower().Trim())
-                    {
-                        e.ErrorText = "Mã giáo viên bị trùng lặp.";
-                        gvGiaoVien.FocusedRowHandle = e.RowHandle;
-                        gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["MAGV"];
-                        e.Valid = false;
+            //if (maGVArr != null)
+            //{
+            //    isXoaUndo = false;
+            //    isXoaReUndo = false;
+            //    for (int i = 0; i < maGVArr.Count; i++)
+            //    {
+            //        if (maGVArr[i].ToLower().Trim() == maGV.ToLower().Trim())
+            //        {
+            //            e.ErrorText = "Mã giáo viên bị trùng lặp.";
+            //            gvGiaoVien.FocusedRowHandle = e.RowHandle;
+            //            gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["MAGV"];
+            //            e.Valid = false;
                         
-                        return;
-                    }
-                }
+            //            return;
+            //        }
+            //    }
                 
-            }
-            maGVArr.Add(maGV.ToLower().Trim());
+            //}
+           
             foreach (DevExpress.XtraGrid.Columns.GridColumn column in gvGiaoVien.Columns)
             {
                 column.OptionsColumn.AllowEdit = false;
             }
 
-            if (trangThaiGhi == TrangThaiGhi.them)
+            if (trangThaiGhi == TrangThaiGhi.them && !isUndoOrReundo)
             {
                 DataRowView addedRow = (DataRowView)bdsGiaoVien.Current;
                 object[] addedRowArrayItem = addedRow.Row.ItemArray;
@@ -192,6 +215,25 @@ namespace THITRACNGHIEM
             {
                 phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
             }
+            try
+            {
+                bdsGiaoVien.EndEdit();
+                bdsGiaoVien.ResetCurrentItem();
+                if (!isUndoOrReundo)
+                {
+                    undoManager.ClearReUndoStack();
+                }
+                this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
+    
+            }
+            catch (Exception ex)
+            {
+                e.Valid = false;
+                e.ErrorText = ex.Message;
+                return;
+            }
+            isUndoOrReundo = false;
         }
 
         private void xóaLớpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -223,10 +265,24 @@ namespace THITRACNGHIEM
                     undoManager.DeleteRecord(deletedRowArrayItem);
                     if (undoManager.GetUndoStack().Count <= 0) phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
                     else phụcHồiGiáoViênToolStripmenuItem.Enabled = true;
-                    bdsGiaoVien.RemoveCurrent();
-                    if (maGVArr.Contains(maGV.ToLower()))
+            
+                    //if (maGVArr.Contains(maGV.ToLower()))
+                    //{
+                    //    maGVArr.Remove(maGV.ToLower());
+                    //}
+                    try
                     {
-                        maGVArr.Remove(maGV.ToLower());
+                        bdsGiaoVien.RemoveCurrent();
+                        undoManager.ClearReUndoStack();
+                      
+                        this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                        this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -299,6 +355,7 @@ namespace THITRACNGHIEM
 
             TextBox txtHo = new TextBox();
             txtHo.Text = ho;
+            txtHo.MaxLength = 10;
             tableLayoutPanel.Controls.Add(txtHo, 1, 1);
 
             // Tạo Label và TextBox cho Tên
@@ -309,6 +366,7 @@ namespace THITRACNGHIEM
 
             TextBox txtTen = new TextBox();
             txtTen.Text = ten;
+            txtTen.MaxLength = 50;
             tableLayoutPanel.Controls.Add(txtTen, 1, 2);
 
             // Tạo Label và TextBox cho Địa chỉ
@@ -319,6 +377,7 @@ namespace THITRACNGHIEM
 
             TextBox txtDiaChi = new TextBox();
             txtDiaChi.Text = diachi;
+            txtDiaChi.MaxLength = 50;
             tableLayoutPanel.Controls.Add(txtDiaChi, 1, 3);
 
             // Tạo Label và ComboBox cho Học vị
@@ -374,7 +433,7 @@ namespace THITRACNGHIEM
                 selectedRow["DIACHI"] = newDiachi;
                 if (newHocvi == "KHÔNG")
                 {
-                    selectedRow["HOCVI"] = "";
+                    selectedRow["HOCVI"] = null;
                 } else selectedRow["HOCVI"] = newHocvi;
                 DataRowView newRow = (DataRowView)gvGiaoVien.GetFocusedRow();
                 object[] newRowItemArray = newRow.Row.ItemArray;
@@ -388,6 +447,22 @@ namespace THITRACNGHIEM
                     phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
                 }
                 gvGiaoVien.RefreshData();
+                try
+                {
+                    if(!isUndoOrReundo)
+                    {
+                        undoManager.ClearReUndoStack();
+                    }
+               
+                  
+                    this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                    this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
+                    return;
+                }
                 confirmForm.Close();
             };
 
@@ -395,34 +470,70 @@ namespace THITRACNGHIEM
             confirmForm.ShowDialog();
         }
 
-        private void ghiLớpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                bdsGiaoVien.EndEdit();
-                bdsGiaoVien.ResetCurrentItem();
-                undoManager.ClearUndoStack();
-                undoManager.ClearReUndoStack();
-                this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-                this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
-                maGVArr.Clear();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
-                return;
-            }
-        }
-
+       
         private void phụcHồiGiáoViênToolStripmenuItem_Click(object sender, EventArgs e)
         {
-            RowData temp = undoManager.GetUndoStack().Peek();
-            if (temp.ActionType == ActionType.Delete) isXoaUndo = true;
-            else isXoaUndo = false;
+            //if (undoManager.GetUndoStack().Count <= 0)
+            //{
+            //    phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
+            //    return;
+            //}
+            //else phụcHồiGiáoViênToolStripmenuItem.Enabled = true;
+
+            //RowData temp = undoManager.GetUndoStack().Peek();
+
+            //if (undoManager.Undo() == 0)
+            //{
+            //    if (temp.ActionType == ActionType.Delete)
+            //    {
+            //        this.maGVArr.Add(temp.RowItemArray[0].ToString());
+            //        isXoaUndo = true;
+            //    }
+            //    else
+            //    {
+            //        isXoaUndo = false;
+            //    }
+            //    if (temp.ActionType == ActionType.Add)
+            //    {
+            //        if (this.maGVArr.Contains(temp.RowItemArray[0].ToString()))
+            //        {
+            //            this.maGVArr.Remove(temp.RowItemArray[0].ToString());
+            //        }
+            //    }
+            //    if (temp.ActionType == ActionType.Edit)
+            //    {
+            //        if (this.maGVArr.Contains(temp.EditedRowItemArray[0].ToString()))
+            //        {
+            //            this.maGVArr.Remove(temp.EditedRowItemArray[0].ToString());
+            //            this.maGVArr.Add(temp.RowItemArray[0].ToString());
+            //        }
+            //    }
+
+            //}
+            if (undoManager.GetUndoStack().Count != 0)
+            {
+                RowData temp = undoManager.GetUndoStack().Peek();
+                if (temp.ActionType == ActionType.Delete)
+                {
+                    isUndoOrReundo = true;
+                }
+            }
+
             undoManager.Undo();
-            if (undoManager.GetUndoStack().Count <= 0) phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
+        
+            this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
+
+            if (undoManager.GetUndoStack().Count <= 0)
+            {
+                phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
+            }
             else phụcHồiGiáoViênToolStripmenuItem.Enabled = true;
-            if (undoManager.GetReUndoStack().Count <= 0) táiPhụcHồiToolStripMenuItem.Enabled = false;
+
+            if (undoManager.GetReUndoStack().Count <= 0)
+            {
+                táiPhụcHồiToolStripMenuItem.Enabled = false;
+            }
             else táiPhụcHồiToolStripMenuItem.Enabled = true;
         }
 
@@ -433,11 +544,100 @@ namespace THITRACNGHIEM
 
         private void táiPhụcHồiToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //if (undoManager.GetReUndoStack().Count <= 0)
+            //{
+            //    táiPhụcHồiToolStripMenuItem.Enabled = false;
+            //    return;
+            //}
+            //else táiPhụcHồiToolStripMenuItem.Enabled = true;
+
+            //RowData temp = undoManager.GetReUndoStack().Peek();
+
+
+            //if (undoManager.ReUndo() == 0)
+            //{
+
+
+            //    } else
+            //    {
+            //        isXoaReUndo = false;
+            //    }
+            //    if (temp.ActionType == ActionType.Add)
+            //    {
+            //        if (this.maGVArr.Contains(temp.RowItemArray[0].ToString()))
+            //        {
+            //            this.maGVArr.Remove(temp.RowItemArray[0].ToString());
+            //        }
+            //    }
+            //    if (temp.ActionType == ActionType.Edit)
+            //    {
+            //        if (this.maGVArr.Contains(temp.EditedRowItemArray[0].ToString()))
+            //        {
+            //            this.maGVArr.Remove(temp.EditedRowItemArray[0].ToString());
+            //            this.maGVArr.Add(temp.RowItemArray[0].ToString());
+            //        }
+            //    }
+            //}
+            if (undoManager.GetReUndoStack().Count != 0)
+            {
+                RowData temp = undoManager.GetReUndoStack().Peek();
+                if (temp.ActionType == ActionType.Delete)
+                {
+                 
+                    isUndoOrReundo = true;
+                }
+            }
+            
             undoManager.ReUndo();
-            if (undoManager.GetReUndoStack().Count <= 0) táiPhụcHồiToolStripMenuItem.Enabled = false;
+            this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
+        
+            if (undoManager.GetReUndoStack().Count <= 0)
+            {
+                táiPhụcHồiToolStripMenuItem.Enabled = false;
+
+            }
             else táiPhụcHồiToolStripMenuItem.Enabled = true;
-            if (undoManager.GetUndoStack().Count <= 0) phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
+            if (undoManager.GetUndoStack().Count <= 0)
+            {
+                phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
+            }
             else phụcHồiGiáoViênToolStripmenuItem.Enabled = true;
+
+        }
+
+        private void cmbCoSo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbCoSo.SelectedValue.ToString() == "System.Data.DataRowView") return;
+            Data.servername = cmbCoSo.SelectedValue.ToString();
+            if (cmbCoSo.SelectedIndex != Data.mCoSo)
+            {
+                Data.mlogin = Data.remotelogin;
+                Data.password = Data.remotepassword;
+            }
+            else
+            {
+                Data.mlogin = Data.mloginDN;
+                Data.password = Data.passwordDN;
+            }
+            if (Data.ConnectToServerWhenLogin(false) == 0)
+            {
+                MessageBox.Show("Lỗi kết nối về chi nhánh mới");
+            }
+            else
+            {
+                this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.KHOATableAdapter.Fill(this.dSNhapLop.KHOA);
+
+                this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GIAOVIENTableAdapter.Fill(this.dSNhapLop.GIAOVIEN);
+
+                this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GIAOVIEN_DANGKYTableAdapter.Fill(this.dSNhapLop.GIAOVIEN_DANGKY);
+
+                this.BODETableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.BODETableAdapter.Fill(this.dSNhapLop.BODE);
+            }
         }
     }
 }

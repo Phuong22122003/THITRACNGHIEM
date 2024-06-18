@@ -32,7 +32,19 @@ namespace THITRACNGHIEM
 
             this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.LOPTableAdapter.Fill(this.dSBangDiemTheoMon.LOP);
+            this.cmbCoSo.DataSource = Data.bds_dspm;
+            this.cmbCoSo.DisplayMember = "TENCS";
+            this.cmbCoSo.ValueMember = "TENSERVER";
+            this.cmbCoSo.SelectedIndex = Data.mCoSo;
 
+            if (Data.mGroup == "TRUONG")
+            {
+                cmbCoSo.Enabled = true;
+            }
+            else
+            {
+                cmbCoSo.Enabled = false;
+            }
             cmbLanThi.SelectedIndex = 0;
         }
 
@@ -46,6 +58,32 @@ namespace THITRACNGHIEM
 
         }
 
+        private void cmbCoSo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbCoSo.SelectedValue.ToString() == "System.Data.DataRowView") return;
+            Data.servername = cmbCoSo.SelectedValue.ToString();
+            if (cmbCoSo.SelectedIndex != Data.mCoSo)
+            {
+                Data.mlogin = Data.remotelogin;
+                Data.password = Data.remotepassword;
+            }
+            else
+            {
+                Data.mlogin = Data.mloginDN;
+                Data.password = Data.passwordDN;
+            }
+            if (Data.ConnectToServerWhenLogin(false) == 0)
+            {
+                MessageBox.Show("Lỗi kết nối về chi nhánh mới");
+            }
+            else
+            {
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.MONHOCTableAdapter.Fill(this.dSBangDiemTheoMon.MONHOC);
 
+                this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.LOPTableAdapter.Fill(this.dSBangDiemTheoMon.LOP);
+            }
+        }
     }
 }

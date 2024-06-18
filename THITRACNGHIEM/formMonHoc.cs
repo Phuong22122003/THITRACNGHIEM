@@ -57,20 +57,17 @@ namespace THITRACNGHIEM
             this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.GIAOVIEN_DANGKYTableAdapter.Fill(this.DSMonHoc.GIAOVIEN_DANGKY);
 
-            this.cmbCoSo.DataSource = Data.bds_dspm;
-            this.cmbCoSo.DisplayMember = "TENCS";
-            this.cmbCoSo.ValueMember = "TENSERVER";
-            this.cmbCoSo.SelectedIndex = Data.mCoSo;
+   
 
             
             if (Data.mGroup == "TRUONG")
             {
-                cmbCoSo.Enabled = true;
+            
                 btnGhi.Enabled = btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
             }
             else
             {
-                cmbCoSo.Enabled = false;
+           
                 btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
             }
             pcMonHoc.Enabled = false;
@@ -270,11 +267,7 @@ namespace THITRACNGHIEM
             btnGhi.Enabled = pcMonHoc.Enabled = false;
         }
 
-        private void cmbCoSo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+     
         private void undoBtn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (undoManager.GetUndoStack().Count <= 0)

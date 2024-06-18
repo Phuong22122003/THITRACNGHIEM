@@ -46,84 +46,86 @@
             // 
             // inputTK
             // 
-            this.inputTK.Location = new System.Drawing.Point(852, 267);
-            this.inputTK.Margin = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.inputTK.Location = new System.Drawing.Point(958, 334);
+            this.inputTK.Margin = new System.Windows.Forms.Padding(9, 6, 9, 6);
             this.inputTK.Name = "inputTK";
-            this.inputTK.Size = new System.Drawing.Size(316, 22);
+            this.inputTK.Size = new System.Drawing.Size(356, 26);
             this.inputTK.TabIndex = 1;
             // 
             // inputMK
             // 
-            this.inputMK.Location = new System.Drawing.Point(852, 381);
-            this.inputMK.Margin = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.inputMK.Location = new System.Drawing.Point(958, 476);
+            this.inputMK.Margin = new System.Windows.Forms.Padding(9, 6, 9, 6);
             this.inputMK.Name = "inputMK";
             this.inputMK.Properties.PasswordChar = '*';
-            this.inputMK.Size = new System.Drawing.Size(316, 22);
+            this.inputMK.Size = new System.Drawing.Size(356, 26);
             this.inputMK.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(730, 152);
+            this.label1.Location = new System.Drawing.Point(821, 190);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 16);
+            this.label1.Size = new System.Drawing.Size(50, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "Cơ sở";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(730, 270);
+            this.label2.Location = new System.Drawing.Point(821, 338);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 16);
+            this.label2.Size = new System.Drawing.Size(80, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Tài Khoản";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(730, 387);
+            this.label3.Location = new System.Drawing.Point(821, 484);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 16);
+            this.label3.Size = new System.Drawing.Size(75, 20);
             this.label3.TabIndex = 5;
             this.label3.Text = "Mật khẩu";
             // 
             // btnDangNhap
             // 
-            this.btnDangNhap.Location = new System.Drawing.Point(799, 543);
-            this.btnDangNhap.Margin = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.btnDangNhap.Location = new System.Drawing.Point(899, 679);
+            this.btnDangNhap.Margin = new System.Windows.Forms.Padding(9, 6, 9, 6);
             this.btnDangNhap.Name = "btnDangNhap";
-            this.btnDangNhap.Size = new System.Drawing.Size(151, 42);
+            this.btnDangNhap.Size = new System.Drawing.Size(170, 52);
             this.btnDangNhap.TabIndex = 6;
             this.btnDangNhap.Text = "Đăng nhập";
             this.btnDangNhap.Click += new System.EventHandler(this.btnDangNhap_Click);
             // 
             // btnThoat
             // 
-            this.btnThoat.Location = new System.Drawing.Point(1081, 543);
-            this.btnThoat.Margin = new System.Windows.Forms.Padding(8, 5, 8, 5);
+            this.btnThoat.Location = new System.Drawing.Point(1216, 679);
+            this.btnThoat.Margin = new System.Windows.Forms.Padding(9, 6, 9, 6);
             this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(157, 42);
+            this.btnThoat.Size = new System.Drawing.Size(177, 52);
             this.btnThoat.TabIndex = 7;
             this.btnThoat.Text = "Thoát";
             this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
             // 
             // cmbCoSo
             // 
+            this.cmbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCoSo.FormattingEnabled = true;
-            this.cmbCoSo.Location = new System.Drawing.Point(852, 148);
-            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbCoSo.Location = new System.Drawing.Point(958, 185);
+            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbCoSo.Name = "cmbCoSo";
-            this.cmbCoSo.Size = new System.Drawing.Size(316, 24);
+            this.cmbCoSo.Size = new System.Drawing.Size(355, 28);
             this.cmbCoSo.TabIndex = 8;
             // 
             // radioGiaoVien
             // 
             this.radioGiaoVien.AutoSize = true;
             this.radioGiaoVien.Checked = true;
-            this.radioGiaoVien.Location = new System.Drawing.Point(864, 463);
+            this.radioGiaoVien.Location = new System.Drawing.Point(972, 579);
+            this.radioGiaoVien.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.radioGiaoVien.Name = "radioGiaoVien";
-            this.radioGiaoVien.Size = new System.Drawing.Size(85, 20);
+            this.radioGiaoVien.Size = new System.Drawing.Size(100, 24);
             this.radioGiaoVien.TabIndex = 9;
             this.radioGiaoVien.TabStop = true;
             this.radioGiaoVien.Text = "Giáo viên";
@@ -132,9 +134,10 @@
             // radioSinhVien
             // 
             this.radioSinhVien.AutoSize = true;
-            this.radioSinhVien.Location = new System.Drawing.Point(1081, 463);
+            this.radioSinhVien.Location = new System.Drawing.Point(1216, 579);
+            this.radioSinhVien.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.radioSinhVien.Name = "radioSinhVien";
-            this.radioSinhVien.Size = new System.Drawing.Size(84, 20);
+            this.radioSinhVien.Size = new System.Drawing.Size(102, 24);
             this.radioSinhVien.TabIndex = 10;
             this.radioSinhVien.Text = "Sinh Viên";
             this.radioSinhVien.UseVisualStyleBackColor = true;
@@ -143,9 +146,9 @@
             // 
             this.lblErrorLoginName.AutoSize = true;
             this.lblErrorLoginName.ForeColor = System.Drawing.Color.Red;
-            this.lblErrorLoginName.Location = new System.Drawing.Point(931, 225);
+            this.lblErrorLoginName.Location = new System.Drawing.Point(1047, 281);
             this.lblErrorLoginName.Name = "lblErrorLoginName";
-            this.lblErrorLoginName.Size = new System.Drawing.Size(166, 16);
+            this.lblErrorLoginName.Size = new System.Drawing.Size(202, 20);
             this.lblErrorLoginName.TabIndex = 11;
             this.lblErrorLoginName.Text = "Vui lòng nhập tên tài khoản";
             this.lblErrorLoginName.Visible = false;
@@ -154,18 +157,18 @@
             // 
             this.lblErrorPassword.AutoSize = true;
             this.lblErrorPassword.ForeColor = System.Drawing.Color.Red;
-            this.lblErrorPassword.Location = new System.Drawing.Point(931, 340);
+            this.lblErrorPassword.Location = new System.Drawing.Point(1047, 425);
             this.lblErrorPassword.Name = "lblErrorPassword";
-            this.lblErrorPassword.Size = new System.Drawing.Size(145, 16);
+            this.lblErrorPassword.Size = new System.Drawing.Size(176, 20);
             this.lblErrorPassword.TabIndex = 12;
             this.lblErrorPassword.Text = "Vui lòng nhập mật khẩu";
             this.lblErrorPassword.Visible = false;
             // 
             // formDangNhap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1391, 814);
+            this.ClientSize = new System.Drawing.Size(1565, 1018);
             this.Controls.Add(this.lblErrorPassword);
             this.Controls.Add(this.lblErrorLoginName);
             this.Controls.Add(this.radioSinhVien);

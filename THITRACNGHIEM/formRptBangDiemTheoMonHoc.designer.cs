@@ -42,6 +42,8 @@
             this.MONHOCTableAdapter = new THITRACNGHIEM.DSBangDiemTheoMonTableAdapters.MONHOCTableAdapter();
             this.cmbLop = new System.Windows.Forms.ComboBox();
             this.cmbMH = new System.Windows.Forms.ComboBox();
+            this.cmbCoSo = new System.Windows.Forms.ComboBox();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             tENMHLabel = new System.Windows.Forms.Label();
             tenlopLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dSBangDiemTheoMon)).BeginInit();
@@ -151,11 +153,31 @@
             this.cmbMH.TabIndex = 8;
             this.cmbMH.ValueMember = "MAMH";
             // 
+            // cmbCoSo
+            // 
+            this.cmbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCoSo.FormattingEnabled = true;
+            this.cmbCoSo.Location = new System.Drawing.Point(427, 104);
+            this.cmbCoSo.Name = "cmbCoSo";
+            this.cmbCoSo.Size = new System.Drawing.Size(563, 28);
+            this.cmbCoSo.TabIndex = 10;
+            this.cmbCoSo.SelectedIndexChanged += new System.EventHandler(this.cmbCoSo_SelectedIndexChanged);
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(366, 107);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(42, 19);
+            this.labelControl1.TabIndex = 9;
+            this.labelControl1.Text = "Cơ Sở";
+            // 
             // formRptBangDiemTheoMonHoc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1396, 365);
+            this.Controls.Add(this.cmbCoSo);
+            this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.cmbMH);
             this.Controls.Add(this.cmbLop);
             this.Controls.Add(this.btnPreview);
@@ -186,5 +208,7 @@
         private DSBangDiemTheoMonTableAdapters.MONHOCTableAdapter MONHOCTableAdapter;
         private System.Windows.Forms.ComboBox cmbLop;
         private System.Windows.Forms.ComboBox cmbMH;
+        private System.Windows.Forms.ComboBox cmbCoSo;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }

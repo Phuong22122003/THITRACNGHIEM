@@ -58,15 +58,14 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.thêmLớpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xóaLớpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ghiLớpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hiệuChỉnhGiáoViênToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.phụcHồiGiáoViênToolStripmenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.táiPhụcHồiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bdsBoDe = new System.Windows.Forms.BindingSource(this.components);
             this.BODETableAdapter = new THITRACNGHIEM.DSNhapLopTableAdapters.BODETableAdapter();
             this.bdsGVDK = new System.Windows.Forms.BindingSource(this.components);
             this.GIAOVIEN_DANGKYTableAdapter = new THITRACNGHIEM.DSNhapLopTableAdapters.GIAOVIEN_DANGKYTableAdapter();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
-            this.táiPhụcHồiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dSNhapLop)).BeginInit();
@@ -90,7 +89,7 @@
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = null;
             this.barDockControlTop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControlTop.Size = new System.Drawing.Size(1458, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(1640, 0);
             // 
             // barDockControl1
             // 
@@ -99,7 +98,7 @@
             this.barDockControl1.Location = new System.Drawing.Point(0, 0);
             this.barDockControl1.Manager = null;
             this.barDockControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControl1.Size = new System.Drawing.Size(1458, 0);
+            this.barDockControl1.Size = new System.Drawing.Size(1640, 0);
             // 
             // barDockControl2
             // 
@@ -108,7 +107,7 @@
             this.barDockControl2.Location = new System.Drawing.Point(0, 0);
             this.barDockControl2.Manager = null;
             this.barDockControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControl2.Size = new System.Drawing.Size(1458, 0);
+            this.barDockControl2.Size = new System.Drawing.Size(1640, 0);
             // 
             // panelControl1
             // 
@@ -118,25 +117,27 @@
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
             this.panelControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1458, 84);
+            this.panelControl1.Size = new System.Drawing.Size(1640, 105);
             this.panelControl1.TabIndex = 12;
             this.panelControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.panelControl1_Paint);
             // 
             // cmbCoSo
             // 
+            this.cmbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCoSo.FormattingEnabled = true;
-            this.cmbCoSo.Location = new System.Drawing.Point(135, 30);
+            this.cmbCoSo.Location = new System.Drawing.Point(152, 38);
             this.cmbCoSo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbCoSo.Name = "cmbCoSo";
-            this.cmbCoSo.Size = new System.Drawing.Size(501, 24);
+            this.cmbCoSo.Size = new System.Drawing.Size(563, 27);
             this.cmbCoSo.TabIndex = 1;
+            this.cmbCoSo.SelectedIndexChanged += new System.EventHandler(this.cmbCoSo_SelectedIndexChanged);
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(81, 32);
+            this.labelControl1.Location = new System.Drawing.Point(91, 40);
             this.labelControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(34, 16);
+            this.labelControl1.Size = new System.Drawing.Size(42, 19);
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "Cơ Sở";
             // 
@@ -172,11 +173,11 @@
             this.gcKhoa.DataSource = this.bdsKhoa;
             this.gcKhoa.Dock = System.Windows.Forms.DockStyle.Top;
             this.gcKhoa.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gcKhoa.Location = new System.Drawing.Point(0, 84);
+            this.gcKhoa.Location = new System.Drawing.Point(0, 105);
             this.gcKhoa.MainView = this.gvKhoa;
             this.gcKhoa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcKhoa.Name = "gcKhoa";
-            this.gcKhoa.Size = new System.Drawing.Size(1458, 246);
+            this.gcKhoa.Size = new System.Drawing.Size(1640, 308);
             this.gcKhoa.TabIndex = 20;
             this.gcKhoa.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvKhoa});
@@ -187,7 +188,6 @@
             this.colMAKH1,
             this.colTENKH,
             this.colMACS});
-            this.gvKhoa.DetailHeight = 280;
             this.gvKhoa.GridControl = this.gcKhoa;
             this.gvKhoa.Name = "gvKhoa";
             this.gvKhoa.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
@@ -196,32 +196,32 @@
             // colMAKH1
             // 
             this.colMAKH1.FieldName = "MAKH";
-            this.colMAKH1.MinWidth = 27;
+            this.colMAKH1.MinWidth = 30;
             this.colMAKH1.Name = "colMAKH1";
             this.colMAKH1.OptionsColumn.AllowEdit = false;
             this.colMAKH1.Visible = true;
             this.colMAKH1.VisibleIndex = 0;
-            this.colMAKH1.Width = 100;
+            this.colMAKH1.Width = 112;
             // 
             // colTENKH
             // 
             this.colTENKH.FieldName = "TENKH";
-            this.colTENKH.MinWidth = 27;
+            this.colTENKH.MinWidth = 30;
             this.colTENKH.Name = "colTENKH";
             this.colTENKH.OptionsColumn.AllowEdit = false;
             this.colTENKH.Visible = true;
             this.colTENKH.VisibleIndex = 1;
-            this.colTENKH.Width = 100;
+            this.colTENKH.Width = 112;
             // 
             // colMACS
             // 
             this.colMACS.FieldName = "MACS";
-            this.colMACS.MinWidth = 27;
+            this.colMACS.MinWidth = 30;
             this.colMACS.Name = "colMACS";
             this.colMACS.OptionsColumn.AllowEdit = false;
             this.colMACS.Visible = true;
             this.colMACS.VisibleIndex = 2;
-            this.colMACS.Width = 100;
+            this.colMACS.Width = 112;
             // 
             // bdsGiaoVien
             // 
@@ -233,13 +233,13 @@
             this.gcGiaoVien.DataSource = this.bdsGiaoVien;
             this.gcGiaoVien.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcGiaoVien.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gcGiaoVien.Location = new System.Drawing.Point(0, 330);
+            this.gcGiaoVien.Location = new System.Drawing.Point(0, 413);
             this.gcGiaoVien.MainView = this.gvGiaoVien;
             this.gcGiaoVien.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcGiaoVien.Name = "gcGiaoVien";
             this.gcGiaoVien.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemComboBox1});
-            this.gcGiaoVien.Size = new System.Drawing.Size(1458, 257);
+            this.gcGiaoVien.Size = new System.Drawing.Size(1640, 321);
             this.gcGiaoVien.TabIndex = 20;
             this.gcGiaoVien.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvGiaoVien});
@@ -254,7 +254,6 @@
             this.colDIACHI,
             this.colMAKH,
             this.colHOCVI});
-            this.gvGiaoVien.DetailHeight = 280;
             this.gvGiaoVien.GridControl = this.gcGiaoVien;
             this.gvGiaoVien.Name = "gvGiaoVien";
             this.gvGiaoVien.InvalidRowException += new DevExpress.XtraGrid.Views.Base.InvalidRowExceptionEventHandler(this.gvGiaoVien_InvalidRowException);
@@ -263,62 +262,62 @@
             // colMAGV
             // 
             this.colMAGV.FieldName = "MAGV";
-            this.colMAGV.MinWidth = 27;
+            this.colMAGV.MinWidth = 30;
             this.colMAGV.Name = "colMAGV";
             this.colMAGV.OptionsColumn.AllowEdit = false;
             this.colMAGV.Visible = true;
             this.colMAGV.VisibleIndex = 0;
-            this.colMAGV.Width = 91;
+            this.colMAGV.Width = 102;
             // 
             // colHO
             // 
             this.colHO.FieldName = "HO";
-            this.colHO.MinWidth = 27;
+            this.colHO.MinWidth = 30;
             this.colHO.Name = "colHO";
             this.colHO.OptionsColumn.AllowEdit = false;
             this.colHO.Visible = true;
             this.colHO.VisibleIndex = 1;
-            this.colHO.Width = 102;
+            this.colHO.Width = 115;
             // 
             // colTEN
             // 
             this.colTEN.FieldName = "TEN";
-            this.colTEN.MinWidth = 27;
+            this.colTEN.MinWidth = 30;
             this.colTEN.Name = "colTEN";
             this.colTEN.OptionsColumn.AllowEdit = false;
             this.colTEN.Visible = true;
             this.colTEN.VisibleIndex = 2;
-            this.colTEN.Width = 127;
+            this.colTEN.Width = 143;
             // 
             // colDIACHI
             // 
             this.colDIACHI.FieldName = "DIACHI";
-            this.colDIACHI.MinWidth = 27;
+            this.colDIACHI.MinWidth = 30;
             this.colDIACHI.Name = "colDIACHI";
             this.colDIACHI.OptionsColumn.AllowEdit = false;
             this.colDIACHI.Visible = true;
             this.colDIACHI.VisibleIndex = 3;
-            this.colDIACHI.Width = 253;
+            this.colDIACHI.Width = 285;
             // 
             // colMAKH
             // 
             this.colMAKH.FieldName = "MAKH";
-            this.colMAKH.MinWidth = 27;
+            this.colMAKH.MinWidth = 30;
             this.colMAKH.Name = "colMAKH";
             this.colMAKH.OptionsColumn.AllowEdit = false;
             this.colMAKH.Visible = true;
             this.colMAKH.VisibleIndex = 4;
-            this.colMAKH.Width = 189;
+            this.colMAKH.Width = 213;
             // 
             // colHOCVI
             // 
             this.colHOCVI.FieldName = "HOCVI";
-            this.colHOCVI.MinWidth = 27;
+            this.colHOCVI.MinWidth = 30;
             this.colHOCVI.Name = "colHOCVI";
             this.colHOCVI.OptionsColumn.AllowEdit = false;
             this.colHOCVI.Visible = true;
             this.colHOCVI.VisibleIndex = 5;
-            this.colHOCVI.Width = 166;
+            this.colHOCVI.Width = 187;
             // 
             // repositoryItemComboBox1
             // 
@@ -336,38 +335,30 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.thêmLớpToolStripMenuItem,
             this.xóaLớpToolStripMenuItem,
-            this.ghiLớpToolStripMenuItem,
             this.hiệuChỉnhGiáoViênToolStripMenuItem,
             this.phụcHồiGiáoViênToolStripmenuItem,
             this.táiPhụcHồiToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(214, 148);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(245, 164);
             // 
             // thêmLớpToolStripMenuItem
             // 
             this.thêmLớpToolStripMenuItem.Name = "thêmLớpToolStripMenuItem";
-            this.thêmLớpToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.thêmLớpToolStripMenuItem.Size = new System.Drawing.Size(244, 32);
             this.thêmLớpToolStripMenuItem.Text = "Thêm giáo viên";
             this.thêmLớpToolStripMenuItem.Click += new System.EventHandler(this.thêmLớpToolStripMenuItem_Click);
             // 
             // xóaLớpToolStripMenuItem
             // 
             this.xóaLớpToolStripMenuItem.Name = "xóaLớpToolStripMenuItem";
-            this.xóaLớpToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.xóaLớpToolStripMenuItem.Size = new System.Drawing.Size(244, 32);
             this.xóaLớpToolStripMenuItem.Text = "Xóa giáo viên";
             this.xóaLớpToolStripMenuItem.Click += new System.EventHandler(this.xóaLớpToolStripMenuItem_Click);
-            // 
-            // ghiLớpToolStripMenuItem
-            // 
-            this.ghiLớpToolStripMenuItem.Name = "ghiLớpToolStripMenuItem";
-            this.ghiLớpToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
-            this.ghiLớpToolStripMenuItem.Text = "Ghi giáo viên";
-            this.ghiLớpToolStripMenuItem.Click += new System.EventHandler(this.ghiLớpToolStripMenuItem_Click);
             // 
             // hiệuChỉnhGiáoViênToolStripMenuItem
             // 
             this.hiệuChỉnhGiáoViênToolStripMenuItem.Name = "hiệuChỉnhGiáoViênToolStripMenuItem";
-            this.hiệuChỉnhGiáoViênToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
+            this.hiệuChỉnhGiáoViênToolStripMenuItem.Size = new System.Drawing.Size(244, 32);
             this.hiệuChỉnhGiáoViênToolStripMenuItem.Text = "Hiệu chỉnh giáo viên";
             this.hiệuChỉnhGiáoViênToolStripMenuItem.Click += new System.EventHandler(this.hiệuChỉnhGiáoViênToolStripMenuItem_Click);
             // 
@@ -375,9 +366,17 @@
             // 
             this.phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
             this.phụcHồiGiáoViênToolStripmenuItem.Name = "phụcHồiGiáoViênToolStripmenuItem";
-            this.phụcHồiGiáoViênToolStripmenuItem.Size = new System.Drawing.Size(213, 24);
+            this.phụcHồiGiáoViênToolStripmenuItem.Size = new System.Drawing.Size(244, 32);
             this.phụcHồiGiáoViênToolStripmenuItem.Text = "Phục hồi";
             this.phụcHồiGiáoViênToolStripmenuItem.Click += new System.EventHandler(this.phụcHồiGiáoViênToolStripmenuItem_Click);
+            // 
+            // táiPhụcHồiToolStripMenuItem
+            // 
+            this.táiPhụcHồiToolStripMenuItem.Enabled = false;
+            this.táiPhụcHồiToolStripMenuItem.Name = "táiPhụcHồiToolStripMenuItem";
+            this.táiPhụcHồiToolStripMenuItem.Size = new System.Drawing.Size(244, 32);
+            this.táiPhụcHồiToolStripMenuItem.Text = "Tái phục hồi";
+            this.táiPhụcHồiToolStripMenuItem.Click += new System.EventHandler(this.táiPhụcHồiToolStripMenuItem_Click);
             // 
             // bdsBoDe
             // 
@@ -397,19 +396,11 @@
             // 
             this.GIAOVIEN_DANGKYTableAdapter.ClearBeforeFill = true;
             // 
-            // táiPhụcHồiToolStripMenuItem
-            // 
-            this.táiPhụcHồiToolStripMenuItem.Enabled = false;
-            this.táiPhụcHồiToolStripMenuItem.Name = "táiPhụcHồiToolStripMenuItem";
-            this.táiPhụcHồiToolStripMenuItem.Size = new System.Drawing.Size(213, 24);
-            this.táiPhụcHồiToolStripMenuItem.Text = "Tái phục hồi";
-            this.táiPhụcHồiToolStripMenuItem.Click += new System.EventHandler(this.táiPhụcHồiToolStripMenuItem_Click);
-            // 
             // formNhapGiaoVien
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1458, 587);
+            this.ClientSize = new System.Drawing.Size(1640, 734);
             this.Controls.Add(this.gcGiaoVien);
             this.Controls.Add(this.gcKhoa);
             this.Controls.Add(this.panelControl1);
@@ -470,7 +461,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem thêmLớpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem xóaLớpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ghiLớpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hiệuChỉnhGiáoViênToolStripMenuItem;
         private System.Windows.Forms.BindingSource bdsBoDe;
         private DSNhapLopTableAdapters.BODETableAdapter BODETableAdapter;

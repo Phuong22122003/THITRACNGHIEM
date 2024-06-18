@@ -18,7 +18,7 @@ namespace THITRACNGHIEM
         /// <summary>
         /// Biến chứa tên server để tra cứu
         /// </summary>
-        public static String servernameTraCuu = "PHUONG\\MSSQLSERVER03";
+        public static String servernameTraCuu = "LAPTOP-3KF7N80A\\SERVER3";
 
         //dùng lưu trử thông tin người dùng
         /// <summary>
@@ -88,7 +88,7 @@ namespace THITRACNGHIEM
         /// <summary>
         /// Connection String của site chủ
         /// </summary>
-        public static String PublisherConnectionString="Data Source=PHUONG;Initial Catalog=TN_CSDLPT;Integrated Security=True";
+        public static String PublisherConnectionString= "Data Source=LAPTOP-3KF7N80A;Initial Catalog=TN_CSDLPT;Integrated Security=True";
         /// <summary>
         /// Kết nối về site của người dùng
         /// </summary>

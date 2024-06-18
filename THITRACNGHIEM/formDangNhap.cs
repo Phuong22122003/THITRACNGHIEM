@@ -89,8 +89,8 @@ namespace WindowsFormsApp1
                     Data.mlogin = Data.svlogin;
                     Data.password = Data.svpassword;
                     if (Data.ConnectToServerWhenLogin() != 1) return;
-                    
-                    SqlDataReader reader = Data.ExecSqlDataReader("exec SP_LayThongTinSV " + inputTK.Text + ", " + inputMK.Text,Data.ServerConnection);
+
+                SqlDataReader reader = Data.ExecSqlDataReader("exec SP_LayThongTinSV '" + inputTK.Text + "', '" + inputMK.Text + "'", Data.ServerConnection);
                 try
                 {
 
@@ -99,7 +99,7 @@ namespace WindowsFormsApp1
                         Data.mHoten = reader[0].ToString();
                         Data.mlogin = inputTK.Text;
                         Data.password = inputMK.Text;
-                        Data.mGroup = "SINH VIÊN";
+                        Data.mGroup = "SINHVIEN";
                         Data.username = Data.mlogin;
                         this.parentForm.showInfo(Data.mHoten, Data.mGroup);           
                     }

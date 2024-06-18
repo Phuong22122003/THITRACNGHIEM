@@ -44,7 +44,10 @@ namespace THITRACNGHIEM
 
         private void formChuanBiThi_Load(object sender, EventArgs e)
         {
-            Data.ExecSqlNonQueryByServerConnection("SET IDENTITY_INSERT GIAOVIEN_DANGKY ON");
+            if (Data.mGroup == "COSO")
+            {
+                Data.ExecSqlNonQueryByServerConnection("SET IDENTITY_INSERT GIAOVIEN_DANGKY ON");
+            } 
             dSChuanBiThi.EnforceConstraints = false;
 
             this.GIAOVIENTableAdapter1.Connection.ConnectionString = Data.ServerConnectionString;
@@ -163,13 +166,13 @@ namespace THITRACNGHIEM
                         }
                         if (addRowView != null)
                         {
-                            List<object[]> listRowItemArrayCopy = lastAction.ListRowItemArray.ConvertAll(rowItemArray =>
-                            {
-                                // Tạo một bản sao của mảng đối tượng hiện tại
-                                object[] newRowItemArray = new object[rowItemArray.Length];
-                                Array.Copy(rowItemArray, newRowItemArray, rowItemArray.Length);
-                                return newRowItemArray;
-                            }); 
+                            //List<object[]> listRowItemArrayCopy = lastAction.ListRowItemArray.ConvertAll(rowItemArray =>
+                            //{
+                            //    // Tạo một bản sao của mảng đối tượng hiện tại
+                            //    object[] newRowItemArray = new object[rowItemArray.Length];
+                            //    Array.Copy(rowItemArray, newRowItemArray, rowItemArray.Length);
+                            //    return newRowItemArray;
+                            //}); 
 
                             foreach (DataRowView rowview in bdsCT_GVDK)
                             {
@@ -375,6 +378,7 @@ namespace THITRACNGHIEM
                     bdsGiaoVienDangKy.Position = vitri;
                     DataRowView addedRow = (DataRowView)bdsGiaoVienDangKy.Current;
                     object[] addedRowArrayItem = addedRow.Row.ItemArray;
+             
                     undoManager.AddNewRecord(addedRowArrayItem);
                     if (undoManager.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
                     else btnPhucHoi.Enabled = true;
@@ -394,24 +398,37 @@ namespace THITRACNGHIEM
                     SqlTransaction transaction = Data.ServerConnection.BeginTransaction();
                     try
                     {
-                        String stringSuaGVDK =
-                            $"UPDATE GIAOVIEN_DANGKY SET [MAGV] = '{cmbGiaoVien.SelectedValue}', [MAMH] = '{cmbMonHoc.SelectedValue}', " +
-                            $"[MALOP] = '{cmbLop.SelectedValue}', [TRINHDO] = '{cmbTrinhDo.SelectedItem}', [NGAYTHI] = '{dateNgayThi.EditValue}'," +
-                            $" [LAN] = {cmbLanThi.SelectedItem}, [SOCAUTHI] = {spinEditSoCauThi.Value}, [THOIGIAN] = {spinEditThoiGianThi.Value} " +
-                            $"WHERE [ID_CTDK] = {txtID_CTDK.Text}";
+                        //String stringSuaGVDK =
+                        //    $"UPDATE GIAOVIEN_DANGKY SET [MAGV] = '{cmbGiaoVien.SelectedValue}', [MAMH] = '{cmbMonHoc.SelectedValue}', " +
+                        //    $"[MALOP] = '{cmbLop.SelectedValue}', [TRINHDO] = '{cmbTrinhDo.SelectedItem}', [NGAYTHI] = '{dateNgayThi.EditValue}'," +
+                        //    $" [LAN] = {cmbLanThi.SelectedItem}, [SOCAUTHI] = {spinEditSoCauThi.Value}, [THOIGIAN] = {spinEditThoiGianThi.Value} " +
+                        //    $"WHERE [ID_CTDK] = {txtID_CTDK.Text}";
                         // Tạo đối tượng SqlCommand và gắn kết nối và Transaction
-                        using (SqlCommand commandSuaGVDK = new SqlCommand(stringSuaGVDK, Data.ServerConnection))
-                        using (SqlCommand commandDeleteCT_GVDK = new SqlCommand($"DELETE FROM CT_GVDK WHERE ID_CTDK = {txtID_CTDK.Text}", Data.ServerConnection))
+                        using (SqlCommand commandSuaGVDK = new SqlCommand("spUpdateGVDK", Data.ServerConnection))
+                        //using (SqlCommand commandDeleteCT_GVDK = new SqlCommand($"DELETE FROM CT_GVDK WHERE ID_CTDK = {txtID_CTDK.Text}", Data.ServerConnection))
+                        using (SqlCommand commandDeleteCT_GVDK = new SqlCommand("spDeteleCT_GVDK", Data.ServerConnection))
                         using (SqlCommand commandAddNewCT_GVDK = new SqlCommand("SP_INSERT_CT_GVDK", Data.ServerConnection))
                         {
                             commandDeleteCT_GVDK.Transaction = transaction;
-                            commandDeleteCT_GVDK.CommandType = CommandType.Text;
+                            commandDeleteCT_GVDK.CommandType = CommandType.StoredProcedure;
                             commandAddNewCT_GVDK.Transaction = transaction;
                             commandAddNewCT_GVDK.CommandType = CommandType.StoredProcedure;
                             commandSuaGVDK.Transaction = transaction;
-                            commandSuaGVDK.CommandType = CommandType.Text;
+                            commandSuaGVDK.CommandType = CommandType.StoredProcedure;
 
+                            commandSuaGVDK.Parameters.AddWithValue("@magv", cmbGiaoVien.SelectedValue);
+                            commandSuaGVDK.Parameters.AddWithValue("@mamh", cmbMonHoc.SelectedValue);
+                            commandSuaGVDK.Parameters.AddWithValue("@malop", cmbLop.SelectedValue);
+                            commandSuaGVDK.Parameters.AddWithValue("@trinhdo", cmbTrinhDo.SelectedItem.ToString());
+                            commandSuaGVDK.Parameters.AddWithValue("@ngaythi", dateNgayThi.EditValue);
+                            commandSuaGVDK.Parameters.AddWithValue("@lan", Convert.ToInt16(cmbLanThi.SelectedItem));
+                            commandSuaGVDK.Parameters.AddWithValue("@socauthi", Convert.ToInt32(spinEditSoCauThi.Value));
+                            commandSuaGVDK.Parameters.AddWithValue("@thoigian", Convert.ToInt32(spinEditThoiGianThi.Value));
+                            commandSuaGVDK.Parameters.AddWithValue("@id_ctdk", Convert.ToInt32(txtID_CTDK.Text));
                             commandSuaGVDK.ExecuteNonQuery();
+
+
+                            commandDeleteCT_GVDK.Parameters.Add("@id", SqlDbType.Int).Value = int.Parse(txtID_CTDK.Text);
                             commandDeleteCT_GVDK.ExecuteNonQuery();
 
                             commandAddNewCT_GVDK.Parameters.Add("@ID_CTDK", SqlDbType.Int).Value = int.Parse(txtID_CTDK.Text);

@@ -75,6 +75,7 @@
             malopLabel.Size = new System.Drawing.Size(69, 20);
             malopLabel.TabIndex = 19;
             malopLabel.Text = "Tên lớp: ";
+            malopLabel.Click += new System.EventHandler(this.malopLabel_Click);
             // 
             // cmbCoSo
             // 
@@ -93,6 +94,7 @@
             this.labelControl1.Size = new System.Drawing.Size(42, 19);
             this.labelControl1.TabIndex = 2;
             this.labelControl1.Text = "Cơ Sở";
+            this.labelControl1.Click += new System.EventHandler(this.labelControl1_Click);
             // 
             // labelControl3
             // 
@@ -148,7 +150,7 @@
             // tableAdapterManager
             // 
             this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            //this.tableAdapterManager.SINHVIENTableAdapter = this.SINHVIENTableAdapter;
+            this.tableAdapterManager.Connection = null;
             this.tableAdapterManager.UpdateOrder = THITRACNGHIEM.DSChiTietBaiThiTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // SINHVIENTableAdapter
