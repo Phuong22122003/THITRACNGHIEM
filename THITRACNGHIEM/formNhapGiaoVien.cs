@@ -254,7 +254,7 @@ namespace THITRACNGHIEM
                 return;
             }
             if (MessageBox.Show
-                ("Bạn có thật sự muốn xóa lớp này ??", "Xác nhận",
+                ("Bạn có thật sự muốn xóa giảng viên này ??", "Xác nhận",
                 MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 try
@@ -281,13 +281,13 @@ namespace THITRACNGHIEM
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
+                        MessageBox.Show($"Lỗi ghi giảng viên, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
                         return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi xóa lớp, vui lòng thử lại\n" + ex.Message, "", MessageBoxButtons.OK);
+                    MessageBox.Show("Lỗi xóa giảng viên, vui lòng thử lại\n" + ex.Message, "", MessageBoxButtons.OK);
                     this.GIAOVIENTableAdapter.Fill(dSNhapLop.GIAOVIEN);
                     bdsGiaoVien.Position = bdsGiaoVien.Find("MAGV", maGV);
                     return;
@@ -355,7 +355,7 @@ namespace THITRACNGHIEM
 
             TextBox txtHo = new TextBox();
             txtHo.Text = ho;
-            txtHo.MaxLength = 10;
+            txtHo.MaxLength = 50;
             tableLayoutPanel.Controls.Add(txtHo, 1, 1);
 
             // Tạo Label và TextBox cho Tên
@@ -366,7 +366,7 @@ namespace THITRACNGHIEM
 
             TextBox txtTen = new TextBox();
             txtTen.Text = ten;
-            txtTen.MaxLength = 50;
+            txtTen.MaxLength = 10;
             tableLayoutPanel.Controls.Add(txtTen, 1, 2);
 
             // Tạo Label và TextBox cho Địa chỉ
@@ -460,7 +460,7 @@ namespace THITRACNGHIEM
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi ghi lớp, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
+                    MessageBox.Show($"Lỗi ghi giảng viên, vui lòng thử lại!{ex}", "", MessageBoxButtons.OK);
                     return;
                 }
                 confirmForm.Close();

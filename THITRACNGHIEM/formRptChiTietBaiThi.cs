@@ -44,6 +44,8 @@ namespace THITRACNGHIEM
            
             } else
             {
+                lblHoTen.Visible = false;
+                lblLop.Visible = false;
                 
                 this.cmbLop.Visible = false;
                 this.cmbMaSV.Visible = false;
@@ -107,12 +109,12 @@ namespace THITRACNGHIEM
                  ngayThi = Convert.ToDateTime(reader["NGAYTHI"]).Date;
                 tenLop = reader["TENLOP"].ToString();
             }
+             reader.Close();
             if (!isExist)
             {
                 MessageBox.Show("Không có thông tin!", "", MessageBoxButtons.OK);
                 return;
             }
-            reader.Close();
             rpt.lblLop.Text = tenLop;
             rpt.lblNgayThi.Text = ngayThi.ToString();
             if (Data.mGroup == "SINHVIEN")

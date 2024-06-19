@@ -131,7 +131,7 @@ namespace THITRACNGHIEM
             {
                 this.cmbCoSo.Enabled = true;
                 btnThem.Enabled=btnHieuChinh.Enabled=
-                       btnXoa.Enabled= btnGhi.Enabled =btnPhucHoi.Enabled=false;  
+                       btnXoa.Enabled= btnGhi.Enabled =btnPhucHoi.Enabled = btnRedo.Enabled=false;  
             }
             else if (Data.mGroup.Equals("COSO"))
             {

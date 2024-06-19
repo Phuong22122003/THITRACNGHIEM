@@ -21,7 +21,14 @@ namespace THITRACNGHIEM
             this.sqlDataSource1.Queries[0].Parameters[0].Value = mamh;
             this.sqlDataSource1.Queries[0].Parameters[1].Value = malop;
             this.sqlDataSource1.Queries[0].Parameters[2].Value = lanthi;
+            try
+            {
             this.sqlDataSource1.Fill();
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
 
 
         }

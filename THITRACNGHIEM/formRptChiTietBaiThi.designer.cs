@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label hotenLabel1;
-            System.Windows.Forms.Label malopLabel;
             this.cmbCoSo = new System.Windows.Forms.ComboBox();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
@@ -49,8 +47,8 @@
             this.bdsMH = new System.Windows.Forms.BindingSource(this.components);
             this.MONHOCTableAdapter = new THITRACNGHIEM.DSChiTietBaiThiTableAdapters.MONHOCTableAdapter();
             this.cmbMaMH = new System.Windows.Forms.ComboBox();
-            hotenLabel1 = new System.Windows.Forms.Label();
-            malopLabel = new System.Windows.Forms.Label();
+            this.lblLop = new System.Windows.Forms.Label();
+            this.lblHoTen = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dSChiTietBaiThi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsSV)).BeginInit();
@@ -58,49 +56,33 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdsMH)).BeginInit();
             this.SuspendLayout();
             // 
-            // hotenLabel1
-            // 
-            hotenLabel1.AutoSize = true;
-            hotenLabel1.Location = new System.Drawing.Point(503, 153);
-            hotenLabel1.Name = "hotenLabel1";
-            hotenLabel1.Size = new System.Drawing.Size(61, 20);
-            hotenLabel1.TabIndex = 16;
-            hotenLabel1.Text = "Họ tên:";
-            // 
-            // malopLabel
-            // 
-            malopLabel.AutoSize = true;
-            malopLabel.Location = new System.Drawing.Point(97, 153);
-            malopLabel.Name = "malopLabel";
-            malopLabel.Size = new System.Drawing.Size(69, 20);
-            malopLabel.TabIndex = 19;
-            malopLabel.Text = "Tên lớp: ";
-            malopLabel.Click += new System.EventHandler(this.malopLabel_Click);
-            // 
             // cmbCoSo
             // 
             this.cmbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCoSo.FormattingEnabled = true;
-            this.cmbCoSo.Location = new System.Drawing.Point(162, 55);
+            this.cmbCoSo.Location = new System.Drawing.Point(144, 44);
+            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbCoSo.Name = "cmbCoSo";
-            this.cmbCoSo.Size = new System.Drawing.Size(563, 28);
+            this.cmbCoSo.Size = new System.Drawing.Size(501, 24);
             this.cmbCoSo.TabIndex = 3;
             this.cmbCoSo.SelectedIndexChanged += new System.EventHandler(this.cmbCoSo_SelectedIndexChanged);
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(101, 58);
+            this.labelControl1.Location = new System.Drawing.Point(90, 46);
+            this.labelControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(42, 19);
+            this.labelControl1.Size = new System.Drawing.Size(34, 16);
             this.labelControl1.TabIndex = 2;
             this.labelControl1.Text = "Cơ Sở";
             this.labelControl1.Click += new System.EventHandler(this.labelControl1_Click);
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(89, 280);
+            this.labelControl3.Location = new System.Drawing.Point(79, 224);
+            this.labelControl3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(66, 19);
+            this.labelControl3.Size = new System.Drawing.Size(53, 16);
             this.labelControl3.TabIndex = 6;
             this.labelControl3.Text = "Môn học:";
             // 
@@ -111,9 +93,10 @@
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(510, 283);
+            this.labelControl4.Location = new System.Drawing.Point(453, 226);
+            this.labelControl4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(54, 19);
+            this.labelControl4.Size = new System.Drawing.Size(43, 16);
             this.labelControl4.TabIndex = 10;
             this.labelControl4.Text = "Lần thi:";
             // 
@@ -124,16 +107,18 @@
             this.cmbLanThi.Items.AddRange(new object[] {
             "1",
             "2"});
-            this.cmbLanThi.Location = new System.Drawing.Point(601, 274);
+            this.cmbLanThi.Location = new System.Drawing.Point(534, 219);
+            this.cmbLanThi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbLanThi.Name = "cmbLanThi";
-            this.cmbLanThi.Size = new System.Drawing.Size(282, 28);
+            this.cmbLanThi.Size = new System.Drawing.Size(251, 24);
             this.cmbLanThi.TabIndex = 11;
             // 
             // btnPreview
             // 
-            this.btnPreview.Location = new System.Drawing.Point(961, 275);
+            this.btnPreview.Location = new System.Drawing.Point(854, 220);
+            this.btnPreview.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnPreview.Name = "btnPreview";
-            this.btnPreview.Size = new System.Drawing.Size(112, 28);
+            this.btnPreview.Size = new System.Drawing.Size(100, 22);
             this.btnPreview.TabIndex = 14;
             this.btnPreview.Text = "Preview";
             this.btnPreview.Click += new System.EventHandler(this.btnPreview_Click);
@@ -165,9 +150,10 @@
             this.cmbLop.DataSource = this.bdsLop;
             this.cmbLop.DisplayMember = "tenlop";
             this.cmbLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbLop.Location = new System.Drawing.Point(172, 150);
+            this.cmbLop.Location = new System.Drawing.Point(153, 120);
+            this.cmbLop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbLop.Name = "cmbLop";
-            this.cmbLop.Size = new System.Drawing.Size(282, 28);
+            this.cmbLop.Size = new System.Drawing.Size(251, 24);
             this.cmbLop.TabIndex = 21;
             this.cmbLop.ValueMember = "MALOP";
             this.cmbLop.SelectedIndexChanged += new System.EventHandler(this.malopComboBox_SelectedIndexChanged);
@@ -183,9 +169,10 @@
             this.cmbMaSV.DataSource = this.bdsSV;
             this.cmbMaSV.DisplayMember = "hoten";
             this.cmbMaSV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMaSV.Location = new System.Drawing.Point(601, 150);
+            this.cmbMaSV.Location = new System.Drawing.Point(534, 120);
+            this.cmbMaSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbMaSV.Name = "cmbMaSV";
-            this.cmbMaSV.Size = new System.Drawing.Size(282, 28);
+            this.cmbMaSV.Size = new System.Drawing.Size(251, 24);
             this.cmbMaSV.TabIndex = 22;
             this.cmbMaSV.ValueMember = "masv";
             // 
@@ -211,28 +198,48 @@
             this.cmbMaMH.DataSource = this.bdsMH;
             this.cmbMaMH.DisplayMember = "tenmh";
             this.cmbMaMH.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMaMH.Location = new System.Drawing.Point(173, 277);
+            this.cmbMaMH.Location = new System.Drawing.Point(154, 222);
+            this.cmbMaMH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbMaMH.Name = "cmbMaMH";
-            this.cmbMaMH.Size = new System.Drawing.Size(281, 28);
+            this.cmbMaMH.Size = new System.Drawing.Size(250, 24);
             this.cmbMaMH.TabIndex = 23;
             this.cmbMaMH.ValueMember = "mamh";
             // 
+            // lblLop
+            // 
+            this.lblLop.AutoSize = true;
+            this.lblLop.Location = new System.Drawing.Point(76, 123);
+            this.lblLop.Name = "lblLop";
+            this.lblLop.Size = new System.Drawing.Size(36, 16);
+            this.lblLop.TabIndex = 24;
+            this.lblLop.Text = "Lớp: ";
+            // 
+            // lblHoTen
+            // 
+            this.lblHoTen.AutoSize = true;
+            this.lblHoTen.Location = new System.Drawing.Point(449, 126);
+            this.lblHoTen.Name = "lblHoTen";
+            this.lblHoTen.Size = new System.Drawing.Size(67, 16);
+            this.lblHoTen.TabIndex = 25;
+            this.lblHoTen.Text = "Họ và tên:";
+            // 
             // formRptChiTietBaiThi
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1588, 452);
+            this.ClientSize = new System.Drawing.Size(1412, 362);
+            this.Controls.Add(this.lblHoTen);
+            this.Controls.Add(this.lblLop);
             this.Controls.Add(this.cmbMaMH);
             this.Controls.Add(this.cmbMaSV);
             this.Controls.Add(this.cmbLop);
-            this.Controls.Add(malopLabel);
-            this.Controls.Add(hotenLabel1);
             this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.cmbLanThi);
             this.Controls.Add(this.labelControl4);
             this.Controls.Add(this.labelControl3);
             this.Controls.Add(this.cmbCoSo);
             this.Controls.Add(this.labelControl1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "formRptChiTietBaiThi";
             this.Text = "formRptChiTietBaiThi";
             this.Load += new System.EventHandler(this.formRptChiTietBaiThi_Load);
@@ -266,5 +273,7 @@
         private System.Windows.Forms.BindingSource bdsMH;
         private DSChiTietBaiThiTableAdapters.MONHOCTableAdapter MONHOCTableAdapter;
         private System.Windows.Forms.ComboBox cmbMaMH;
+        private System.Windows.Forms.Label lblLop;
+        private System.Windows.Forms.Label lblHoTen;
     }
 }

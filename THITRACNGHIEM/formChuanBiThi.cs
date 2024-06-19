@@ -293,7 +293,7 @@ namespace THITRACNGHIEM
                 cmbGiaoVien.Focus();
                 return;
             }
-            if (dateNgayThi.EditValue.ToString() == "")
+            if (dateNgayThi.EditValue==null||dateNgayThi.EditValue.ToString() == "")
             {
                 MessageBox.Show("Ngày thi không hợp lệ!", "", MessageBoxButtons.OK);
                 dateNgayThi.Focus();
@@ -367,7 +367,7 @@ namespace THITRACNGHIEM
             if (stateGhi == "ghi")
             {
                 string lenh = $"EXEC SP_CREATEDANGKYTHI '{cmbGiaoVien.SelectedValue}', '{cmbMonHoc.SelectedValue}', '{cmbLop.SelectedValue}', " +
-                    $"'{cmbTrinhDo.Text}', '{dateNgayThi.EditValue}', {cmbLanThi.SelectedItem}, {spinEditSoCauThi.Value}, {spinEditThoiGianThi.Value}";
+                    $"'{cmbTrinhDo.Text}', '{dateNgayThi.DateTime.ToShortDateString()}', {cmbLanThi.SelectedItem}, {spinEditSoCauThi.Value}, {spinEditThoiGianThi.Value}";
                 Console.WriteLine(lenh);
                 if (Data.ExecSqlNonQueryByServerConnection(lenh) == 0)
                 {
@@ -432,6 +432,11 @@ namespace THITRACNGHIEM
                             commandDeleteCT_GVDK.ExecuteNonQuery();
 
                             commandAddNewCT_GVDK.Parameters.Add("@ID_CTDK", SqlDbType.Int).Value = int.Parse(txtID_CTDK.Text);
+                            SqlParameter outputParam = new SqlParameter("@socauconthieu", SqlDbType.Int)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+                            commandAddNewCT_GVDK.Parameters.Add(outputParam);
                             commandAddNewCT_GVDK.Parameters.Add("@ERROR", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
                             commandAddNewCT_GVDK.ExecuteNonQuery();
                             // 0 LA KHONG CO LOI, 1 LA LOI KHONG DU SO LUONG CAU HOI CUNG TRINH DO, 2 LA KO DU SO LUONG CAU HOI

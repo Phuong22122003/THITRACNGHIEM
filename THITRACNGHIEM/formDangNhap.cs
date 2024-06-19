@@ -23,8 +23,14 @@ namespace WindowsFormsApp1
 
         private void formDangNhap_Load(object sender, EventArgs e)
         {
+
             DataTable danhSachCoso = Data.ExecuteStatementByPublisherConnection("SELECT * FROM V_DS_PHANMANH");
             if(danhSachCoso == null)
+            {
+                btnDangNhap.Enabled = false;
+                return;
+            }
+            if (Data.mlogin.Length > 0)
             {
                 btnDangNhap.Enabled = false;
                 return;
@@ -67,7 +73,8 @@ namespace WindowsFormsApp1
                         Data.mGroup = reader[2].ToString();
                         Data.mloginDN = Data.mlogin;
                         Data.passwordDN = Data.password;
-                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);           
+                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);
+                        btnDangNhap.Enabled = false;
                     }
                     // Kết nối vào cơ sở dữ liệu nhưng chưa đăng ký tài khoảng
                     else
@@ -101,7 +108,8 @@ namespace WindowsFormsApp1
                         Data.password = inputMK.Text;
                         Data.mGroup = "SINHVIEN";
                         Data.username = Data.mlogin;
-                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);           
+                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);
+                        btnDangNhap.Enabled = false;
                     }
                     else
                     {
@@ -119,6 +127,10 @@ namespace WindowsFormsApp1
         {
             this.inputTK.Clear();
             this.inputMK.Clear();
+        }
+        public void enableBtnDangNhap(bool enable = true)
+        { 
+            btnDangNhap.Enabled = enable;
         }
         private void btnThoat_Click(object sender, EventArgs e)
         {

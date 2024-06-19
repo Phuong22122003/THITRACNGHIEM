@@ -50,13 +50,6 @@ namespace THITRACNGHIEM
        
         private void formNhapKhoaLop_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'DSKhoaLop.GIAOVIEN_DANGKY' table. You can move, or remove it, as needed.
-            this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
-            // TODO: This line of code loads data into the 'DSKhoaLop.GIAOVIEN_DANGKY' table. You can move, or remove it, as needed.
-            this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
-            // TODO: This line of code loads data into the 'DSKhoaLop.SINHVIEN' table. You can move, or remove it, as needed.
-
-
 
             DSKhoaLop.EnforceConstraints = false;
 
@@ -66,7 +59,7 @@ namespace THITRACNGHIEM
             this.lOPTableAdapter.Fill(this.DSKhoaLop.LOP);
             this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.SINHVIENTableAdapter.Fill(this.DSKhoaLop.SINHVIEN);
-            this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GV_DKTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
 
 

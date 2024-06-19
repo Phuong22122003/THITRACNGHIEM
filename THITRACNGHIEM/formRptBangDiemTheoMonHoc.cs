@@ -50,11 +50,19 @@ namespace THITRACNGHIEM
 
         private void btnPreview_Click(object sender, EventArgs e)
         {
+            try
+            {
             xrtp_PhieuBangDiemTheoMon rpt = new xrtp_PhieuBangDiemTheoMon(cmbMH.SelectedValue.ToString(), cmbLop.SelectedValue.ToString(), int.Parse(cmbLanThi.Text));
             rpt.header.Text = "BẢNG ĐIỂM MÔN HỌC " + cmbMH.Text +
                 " LẦN THỨ " + cmbLanThi.Text + " CỦA LỚP " + cmbLop.Text;
             ReportPrintTool print = new ReportPrintTool(rpt);
             print.ShowPreviewDialog();
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Không thể xem bảng điểm lúc này\n" + ex.Message);
+            }
 
         }
 

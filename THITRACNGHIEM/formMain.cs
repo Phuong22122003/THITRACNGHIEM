@@ -134,7 +134,10 @@ namespace WindowsFormsApp1
         {
             foreach (Form f in this.MdiChildren)
             {
-               if(f.GetType()==typeof(formDangNhap)) ((formDangNhap) f).clear();
+                if (f.GetType() == typeof(formDangNhap)) { 
+                ((formDangNhap) f).clear();
+                    ((formDangNhap)f).enableBtnDangNhap();
+                }
                else f.Close();
             }
             Data.clear();
@@ -164,6 +167,7 @@ namespace WindowsFormsApp1
         }
         public void showInfo(String hoVaTen="",String group="")
         {
+
             if (group.Trim().ToUpper().Equals("TRUONG"))
             {
                 group = "TRƯỜNG";
