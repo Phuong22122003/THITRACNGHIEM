@@ -30,6 +30,8 @@ namespace THITRACNGHIEM
 
         private int remainingTime;
 
+        private Dictionary<int, char> listToUpdate = new Dictionary<int, char>(); 
+
         private String mamh;
 
         private CTBTs ctbt;
@@ -336,6 +338,7 @@ namespace THITRACNGHIEM
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(paramCtbt);
             cmd.Parameters.AddWithValue("@IDBD", this.IDBD);
+            cmd.Parameters.AddWithValue("@TGCONLAI", 0);
             cmd.Parameters.AddWithValue("@DIEM", diem);
             try
             {
@@ -454,6 +457,7 @@ namespace THITRACNGHIEM
                 lvLuaChon.Items[bdsCauHoi.Position].SubItems[4].Text = "✔️";
                 ctbt.setLuaChonSV(bdsCauHoi.Position, 'D');
             }
+            listToUpdate[ctbt.getCTBT(bdsCauHoi.Position).CauHoi] = ctbt.getCTBT(bdsCauHoi.Position).LuaChonSV;
         }
         private void UpdateTimerDisplay()
         {
@@ -509,28 +513,38 @@ namespace THITRACNGHIEM
             SqlCommand cmd = new SqlCommand("SP_LUU_CTBT",Data.ServerConnection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(param);
-            while (this.remainingTime > 0)
+            cmd.Parameters.AddWithValue("@IDBD", this.IDBD);
+            cmd.Parameters.AddWithValue("@TGCONLAI", 0);
+            Thread.Sleep(TimeSpan.FromSeconds(2));// Chờ tránh cập nhật lúc đầu.
+            while (this.remainingTime > 59)
             {   
-                Thread.Sleep(TimeSpan.FromSeconds(1));
-                if (this.remainingTime % 60 != 0||this.remainingTime==0) continue;
-                String strLenh = "UPDATE BANGDIEM SET TGCONLAI = "+this.remainingTime+"WHERE IDBD = " + IDBD;
-                int check = Data.ExecSqlNonQuery(strLenh, Data.ServerConnection);
-                if (check != 0) MessageBox.Show("Lỗi cập nhật");
-                foreach (CTBT ct in ctbt.getList())
-                {
-                    if (ct.LuaChonSV != '\0')
-                        dt.Rows.Add(ct.CauHoi, IDBD,null, ct.LuaChonSV,null,null,null,null);
+                Thread.Sleep(TimeSpan.FromSeconds(1));//sau 1 giây thì kiểm tra thời gian còn lại
+                Console.WriteLine(this.remainingTime);
+                if (this.remainingTime % 60 != 0 || this.remainingTime <= 0) continue;
+                
+                //cập nhật số phút
+                cmd.Parameters["@TGCONLAI"].Value = (int) Math.Round(this.remainingTime /60.0);
+
+                if (listToUpdate.Count == 0) continue;
+                foreach (int cauHoi in listToUpdate.Keys) 
+                { 
+                        dt.Rows.Add(cauHoi, IDBD,null,listToUpdate[cauHoi],null,null,null,null);
                 }
+
                 param.Value = dt;
                 if (Data.ServerConnection.State == ConnectionState.Closed) Data.ServerConnection.Open();
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    dt.Clear();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Update thất bại" + ex.Message);
+                }
+                finally
+                {
+                    dt.Clear();
+                    listToUpdate.Clear();
                 }
             }
         

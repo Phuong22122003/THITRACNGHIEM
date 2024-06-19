@@ -81,7 +81,7 @@ namespace THITRACNGHIEM
             else
             {
                 btnThi.Text = "Tiếp tục";
-                speThoiGianConLai.Value = speThoiGianConLai.Value / 60;
+               // speThoiGianConLai.Value = speThoiGianConLai.Value / 60;
             }
 
         }

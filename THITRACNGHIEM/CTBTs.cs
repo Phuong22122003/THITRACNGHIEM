@@ -56,11 +56,10 @@ namespace THITRACNGHIEM
             _DapAn_ThuTu = new Dictionary<String, int>();
             _LuaChonSV = '\0';
         }
-        public CTBT(int cauHoi, char luaChonSV, int thuTu)
+        public CTBT(int cauHoi, char luaChonSV)
         {
             _CauHoi = cauHoi;
             _LuaChonSV = luaChonSV;
-            _ThuTu = thuTu;
             _DapAn_ThuTu = new Dictionary<String, int>();
         }
         public char LuaChonSV
