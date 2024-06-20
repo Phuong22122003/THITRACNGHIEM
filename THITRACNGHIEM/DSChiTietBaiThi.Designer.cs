@@ -925,9 +925,9 @@ namespace THITRACNGHIEM {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class MONHOCDataTable : global::System.Data.TypedTableBase<MONHOCRow> {
             
-            private global::System.Data.DataColumn columntenmh;
+            private global::System.Data.DataColumn columnTENMH;
             
-            private global::System.Data.DataColumn columnmamh;
+            private global::System.Data.DataColumn columnMAMH;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -964,17 +964,17 @@ namespace THITRACNGHIEM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn tenmhColumn {
+            public global::System.Data.DataColumn TENMHColumn {
                 get {
-                    return this.columntenmh;
+                    return this.columnTENMH;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn mamhColumn {
+            public global::System.Data.DataColumn MAMHColumn {
                 get {
-                    return this.columnmamh;
+                    return this.columnMAMH;
                 }
             }
             
@@ -1015,11 +1015,11 @@ namespace THITRACNGHIEM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public MONHOCRow AddMONHOCRow(string tenmh, string mamh) {
+            public MONHOCRow AddMONHOCRow(string TENMH, string MAMH) {
                 MONHOCRow rowMONHOCRow = ((MONHOCRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        tenmh,
-                        mamh};
+                        TENMH,
+                        MAMH};
                 rowMONHOCRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowMONHOCRow);
                 return rowMONHOCRow;
@@ -1027,9 +1027,9 @@ namespace THITRACNGHIEM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public MONHOCRow FindBymamh(string mamh) {
+            public MONHOCRow FindByMAMH(string MAMH) {
                 return ((MONHOCRow)(this.Rows.Find(new object[] {
-                            mamh})));
+                            MAMH})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1049,24 +1049,24 @@ namespace THITRACNGHIEM {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             internal void InitVars() {
-                this.columntenmh = base.Columns["tenmh"];
-                this.columnmamh = base.Columns["mamh"];
+                this.columnTENMH = base.Columns["TENMH"];
+                this.columnMAMH = base.Columns["MAMH"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             private void InitClass() {
-                this.columntenmh = new global::System.Data.DataColumn("tenmh", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntenmh);
-                this.columnmamh = new global::System.Data.DataColumn("mamh", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnmamh);
+                this.columnTENMH = new global::System.Data.DataColumn("TENMH", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTENMH);
+                this.columnMAMH = new global::System.Data.DataColumn("MAMH", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMAMH);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnmamh}, true));
-                this.columntenmh.AllowDBNull = false;
-                this.columntenmh.MaxLength = 50;
-                this.columnmamh.AllowDBNull = false;
-                this.columnmamh.Unique = true;
-                this.columnmamh.MaxLength = 5;
+                                this.columnMAMH}, true));
+                this.columnTENMH.AllowDBNull = false;
+                this.columnTENMH.MaxLength = 50;
+                this.columnMAMH.AllowDBNull = false;
+                this.columnMAMH.Unique = true;
+                this.columnMAMH.MaxLength = 5;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1333,23 +1333,23 @@ namespace THITRACNGHIEM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string tenmh {
+            public string TENMH {
                 get {
-                    return ((string)(this[this.tableMONHOC.tenmhColumn]));
+                    return ((string)(this[this.tableMONHOC.TENMHColumn]));
                 }
                 set {
-                    this[this.tableMONHOC.tenmhColumn] = value;
+                    this[this.tableMONHOC.TENMHColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string mamh {
+            public string MAMH {
                 get {
-                    return ((string)(this[this.tableMONHOC.mamhColumn]));
+                    return ((string)(this[this.tableMONHOC.MAMHColumn]));
                 }
                 set {
-                    this[this.tableMONHOC.mamhColumn] = value;
+                    this[this.tableMONHOC.MAMHColumn] = value;
                 }
             }
         }
@@ -1919,8 +1919,8 @@ namespace THITRACNGHIEM.DSChiTietBaiThiTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "MONHOC";
-            tableMapping.ColumnMappings.Add("tenmh", "tenmh");
-            tableMapping.ColumnMappings.Add("mamh", "mamh");
+            tableMapping.ColumnMappings.Add("TENMH", "TENMH");
+            tableMapping.ColumnMappings.Add("MAMH", "MAMH");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1937,16 +1937,24 @@ namespace THITRACNGHIEM.DSChiTietBaiThiTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "select tenmh, mamh from monhoc";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].CommandText = "dbo.sp_FindMonHocSinhVienDaThi";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@masv", global::System.Data.SqlDbType.Char, 10, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(DSChiTietBaiThi.MONHOCDataTable dataTable) {
+        public virtual int Fill(DSChiTietBaiThi.MONHOCDataTable dataTable, string masv) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((masv == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(masv));
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -1958,8 +1966,14 @@ namespace THITRACNGHIEM.DSChiTietBaiThiTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual DSChiTietBaiThi.MONHOCDataTable GetData() {
+        public virtual DSChiTietBaiThi.MONHOCDataTable GetData(string masv) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((masv == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(masv));
+            }
             DSChiTietBaiThi.MONHOCDataTable dataTable = new DSChiTietBaiThi.MONHOCDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

@@ -63,12 +63,17 @@ namespace THITRACNGHIEM
             if (Data.mGroup == "TRUONG")
             {
             
-                btnGhi.Enabled = btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
+                btnGhi.Enabled = btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
             }
             else
             {
            
                 btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
+                if (bdsMH.Count == 0)
+                {
+                    btnXoa.Enabled = false;
+                    btnHieuChinh.Enabled = false;
+                }
             }
             pcMonHoc.Enabled = false;
 
@@ -196,7 +201,11 @@ namespace THITRACNGHIEM
                     return;
                 }
 
-                if (bdsMH.Count == 0) btnXoa.Enabled = false;
+                if (bdsMH.Count == 0)
+                {
+                    btnXoa.Enabled = false;
+                    btnHieuChinh.Enabled = false;
+                }
             }
         }
 

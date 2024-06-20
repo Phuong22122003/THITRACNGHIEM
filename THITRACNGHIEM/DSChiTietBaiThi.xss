@@ -8,10 +8,10 @@
   <Shapes>
     <Shape ID="DesignTable:SINHVIEN" ZOrder="4" X="586" Y="543" Height="182" Width="281" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="115" />
     <Shape ID="DesignTable:LOP" ZOrder="3" X="1341" Y="332" Height="155" Width="228" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="32" OldDataTableHeight="0" SplitterPosition="88" />
-    <Shape ID="DesignTable:MONHOC" ZOrder="2" X="814" Y="173" Height="155" Width="279" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="88" />
+    <Shape ID="DesignTable:MONHOC" ZOrder="1" X="814" Y="173" Height="155" Width="279" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="88" />
   </Shapes>
   <Connectors>
-    <Connector ID="DesignRelation:FK_SINHVIEN_LOP" ZOrder="1" LineWidth="11">
+    <Connector ID="DesignRelation:FK_SINHVIEN_LOP" ZOrder="2" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>1358</X>

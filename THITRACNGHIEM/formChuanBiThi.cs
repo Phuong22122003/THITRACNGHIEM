@@ -44,10 +44,8 @@ namespace THITRACNGHIEM
 
         private void formChuanBiThi_Load(object sender, EventArgs e)
         {
-            if (Data.mGroup == "COSO")
-            {
-                Data.ExecSqlNonQueryByServerConnection("SET IDENTITY_INSERT GIAOVIEN_DANGKY ON");
-            } 
+        
+            Data.ExecSqlNonQueryByServerConnection("SET IDENTITY_INSERT GIAOVIEN_DANGKY ON");
             dSChuanBiThi.EnforceConstraints = false;
 
             this.GIAOVIENTableAdapter1.Connection.ConnectionString = Data.ServerConnectionString;
@@ -586,6 +584,11 @@ namespace THITRACNGHIEM
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             this.Close();
+        }
+
+        private void formChuanBiThi_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.cmbGiaoVien.DataSource = null;
         }
     }
 }
