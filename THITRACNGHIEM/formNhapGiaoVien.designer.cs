@@ -192,6 +192,7 @@
             this.gvKhoa.Name = "gvKhoa";
             this.gvKhoa.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colTENKH, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.gvKhoa.FocusedRowChanged += new DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventHandler(this.gvKhoa_FocusedRowChanged);
             // 
             // colMAKH1
             // 
@@ -339,7 +340,7 @@
             this.phụcHồiGiáoViênToolStripmenuItem,
             this.táiPhụcHồiToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(245, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(245, 197);
             // 
             // thêmLớpToolStripMenuItem
             // 

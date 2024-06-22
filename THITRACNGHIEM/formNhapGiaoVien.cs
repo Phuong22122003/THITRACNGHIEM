@@ -25,11 +25,12 @@ namespace THITRACNGHIEM
         private UndoManager undoManager;
         private TrangThaiGhi trangThaiGhi;
         private object[] oldRowItemArray;
-
+        private formMain formMain;
         private bool isUndoOrReundo = false;
-        public formNhapGiaoVien()
+        public formNhapGiaoVien(formMain formMain)
         {
             InitializeComponent();
+            this.formMain = formMain;
         }
 
 
@@ -65,10 +66,12 @@ namespace THITRACNGHIEM
             if (Data.mGroup == "TRUONG")
             {
                 cmbCoSo.Enabled = true;
+                contextMenuStrip1.Enabled = false;
             }
             else
             {
                 cmbCoSo.Enabled = false;
+                contextMenuStrip1 .Enabled = true;
             }
 
             undoManager = new UndoManager(this.bdsGiaoVien);
@@ -82,8 +85,16 @@ namespace THITRACNGHIEM
                 if (column.FieldName == "MAKH") continue;
                 column.OptionsColumn.AllowEdit = true;
             }
-            if (bdsGiaoVien.Count == 0) xóaLớpToolStripMenuItem.Enabled = false;
-            else xóaLớpToolStripMenuItem.Enabled = true;
+            if (bdsGiaoVien.Count == 0)
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = false;
+                xóaLớpToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = true;
+                xóaLớpToolStripMenuItem.Enabled = true;
+            }
             trangThaiGhi = TrangThaiGhi.them;
         }
 
@@ -238,6 +249,7 @@ namespace THITRACNGHIEM
 
         private void xóaLớpToolStripMenuItem_Click(object sender, EventArgs e)
         {
+           
             if (bdsGiaoVien.Count == 0)
             {
                 MessageBox.Show("Không có giáo viên để xóa", "", MessageBoxButtons.OK);
@@ -253,6 +265,43 @@ namespace THITRACNGHIEM
                 MessageBox.Show("Không thể xóa giảng viên đã có câu hỏi", "", MessageBoxButtons.OK);
                 return;
             }
+
+             SqlDataReader reader = Data.ExecSqlDataReader($"EXEC SP_LAYLGNAME_VA_NHOM {((DataRowView)bdsGiaoVien[bdsGiaoVien.Position])["MAGV"].ToString()}", Data.ServerConnection);
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    string loginName = reader.GetString(reader.GetOrdinal("LOGINNAME"));
+                    if (loginName.Equals(Data.mlogin, StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show("Không thể xóa tài khoản đang đăng nhập!", "", MessageBoxButtons.OK);
+                        reader.Close();
+                        return;
+                    }
+                }
+                DialogResult result = MessageBox.Show("Giáo viên đã có tài khoản, vui lòng xóa tài khoản", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+
+                        reader.Close();
+                        formTaoTK f = new formTaoTK(((DataRowView)bdsGiaoVien[bdsGiaoVien.Position])["MAGV"].ToString());
+                        f.Show();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi " + ex.Message);
+                      
+                    }
+      
+
+                }
+                reader.Close();
+                return;
+            }
+           
             if (MessageBox.Show
                 ("Bạn có thật sự muốn xóa giảng viên này ??", "Xác nhận",
                 MessageBoxButtons.OKCancel) == DialogResult.OK)
@@ -292,7 +341,15 @@ namespace THITRACNGHIEM
                     bdsGiaoVien.Position = bdsGiaoVien.Find("MAGV", maGV);
                     return;
                 }
-                if (bdsGiaoVien.Count == 0) xóaLớpToolStripMenuItem.Enabled = false;
+                if (bdsGiaoVien.Count == 0)
+                {
+                    xóaLớpToolStripMenuItem.Enabled = false;
+                    hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = false;
+                } else
+                {
+                    xóaLớpToolStripMenuItem.Enabled = true;
+                    hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = true;
+                }
             }
 
         }
@@ -315,11 +372,24 @@ namespace THITRACNGHIEM
         private void hiệuChỉnhGiáoViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trangThaiGhi = TrangThaiGhi.hieuchinh;
-            string magv = gvGiaoVien.GetFocusedDataRow()["MAGV"].ToString();
-            string ho = gvGiaoVien.GetFocusedDataRow()["HO"].ToString();
-            string ten = gvGiaoVien.GetFocusedDataRow()["TEN"].ToString();
-            string diachi = gvGiaoVien.GetFocusedDataRow()["DIACHI"].ToString();
-            string hocvi = gvGiaoVien.GetFocusedDataRow()["HOCVI"].ToString().ToUpper().Trim();
+            string magv = "";
+            string ho = "";
+            string ten = "";
+            string diachi = "";
+            string hocvi = "";
+            try
+            {
+                 magv = gvGiaoVien.GetFocusedDataRow()["MAGV"].ToString();
+                 ho = gvGiaoVien.GetFocusedDataRow()["HO"].ToString();
+                 ten = gvGiaoVien.GetFocusedDataRow()["TEN"].ToString();
+                 diachi = gvGiaoVien.GetFocusedDataRow()["DIACHI"].ToString();
+                 hocvi = gvGiaoVien.GetFocusedDataRow()["HOCVI"].ToString().ToUpper().Trim();
+            }
+            catch ( Exception ex )
+            {
+                MessageBox.Show("Không thể hiệu chỉnh!");
+                return;
+            }
             Form confirmForm = new Form();
             confirmForm.Text = "Hiệu chỉnh";
             confirmForm.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -524,6 +594,17 @@ namespace THITRACNGHIEM
             this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
 
+            if (bdsGiaoVien.Count == 0)
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = false;
+                xóaLớpToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = true;
+                xóaLớpToolStripMenuItem.Enabled = true;
+            }
+
             if (undoManager.GetUndoStack().Count <= 0)
             {
                 phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
@@ -591,7 +672,18 @@ namespace THITRACNGHIEM
             undoManager.ReUndo();
             this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.GIAOVIENTableAdapter.Update(this.dSNhapLop.GIAOVIEN);
-        
+
+            if (bdsGiaoVien.Count == 0)
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = false;
+                xóaLớpToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = true;
+                xóaLớpToolStripMenuItem.Enabled = true;
+            }
+
             if (undoManager.GetReUndoStack().Count <= 0)
             {
                 táiPhụcHồiToolStripMenuItem.Enabled = false;
@@ -637,6 +729,23 @@ namespace THITRACNGHIEM
 
                 this.BODETableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.BODETableAdapter.Fill(this.dSNhapLop.BODE);
+            }
+        }
+
+        private void gvKhoa_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            undoManager.ClearReUndoStack();
+            undoManager.ClearUndoStack();
+            phụcHồiGiáoViênToolStripmenuItem.Enabled = false;
+            táiPhụcHồiToolStripMenuItem.Enabled = false;
+            if (bdsGiaoVien.Count <= 0)
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = false;
+                xóaLớpToolStripMenuItem.Enabled = false;
+            } else
+            {
+                hiệuChỉnhGiáoViênToolStripMenuItem.Enabled = true;
+                xóaLớpToolStripMenuItem.Enabled = true;
             }
         }
     }

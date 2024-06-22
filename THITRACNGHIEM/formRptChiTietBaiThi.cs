@@ -30,8 +30,7 @@ namespace THITRACNGHIEM
            
             this.dSChiTietBaiThi.EnforceConstraints = false;
 
-            this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-            this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC);
+            
 
             if (Data.mGroup != "SINHVIEN")
             {
@@ -41,9 +40,15 @@ namespace THITRACNGHIEM
                 this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.SINHVIENTableAdapter.Fill(this.dSChiTietBaiThi.SINHVIEN);
 
-           
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC, "undefined");
+
+
             } else
             {
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC, Data.mlogin);
+
                 lblHoTen.Visible = false;
                 lblLop.Visible = false;
                 
@@ -103,13 +108,21 @@ namespace THITRACNGHIEM
             DateTime ngayThi = DateTime.Today.Date;
             String tenLop = "";
             Boolean isExist = false;
-            while (reader.Read())
+            try
             {
-                isExist = true;
-                 ngayThi = Convert.ToDateTime(reader["NGAYTHI"]).Date;
-                tenLop = reader["TENLOP"].ToString();
+                while (reader.Read())
+                {
+                    isExist = true;
+                    ngayThi = Convert.ToDateTime(reader["NGAYTHI"]).Date;
+                    tenLop = reader["TENLOP"].ToString();
+                }
+                reader.Close();
             }
-             reader.Close();
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK);
+                return;
+            }
             if (!isExist)
             {
                 MessageBox.Show("Không có thông tin!", "", MessageBoxButtons.OK);
@@ -155,7 +168,7 @@ namespace THITRACNGHIEM
                 this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.SINHVIENTableAdapter.Fill(this.dSChiTietBaiThi.SINHVIEN);
                 this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-                this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC);
+                this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC, "undefined");
             }
         }
 

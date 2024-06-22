@@ -17,9 +17,16 @@ namespace THITRACNGHIEM
         private DataTable dt;
         private DataTable dtNhom;
         private DataRow currentDataRow;
+        private String magv = "";
         public formTaoTK()
         {
             InitializeComponent();
+        }
+
+        public formTaoTK(String magv)
+        {
+            InitializeComponent();
+            this.magv = magv;
         }
 
         private void formTaoTK_Load(object sender, EventArgs e)
@@ -40,7 +47,10 @@ namespace THITRACNGHIEM
             cmbNhom.ValueMember = "NHOM";
             this.cmbHoVaTen.SelectedIndexChanged += new System.EventHandler(this.cmbHoVaTen_SelectedIndexChanged);
             cmbHoVaTen_SelectedIndexChanged(null, null);
-
+            if (this.magv != "")
+            {
+                cmbHoVaTen.SelectedValue = this.magv;
+            }
    
         }
 

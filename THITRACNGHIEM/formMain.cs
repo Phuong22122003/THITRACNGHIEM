@@ -331,7 +331,7 @@ namespace WindowsFormsApp1
             if (frm != null) frm.Activate();
             else
             {
-                formNhapGiaoVien f = new formNhapGiaoVien();
+                formNhapGiaoVien f = new formNhapGiaoVien(this);
                 f.MdiParent = this;
                 f.Show();
             }

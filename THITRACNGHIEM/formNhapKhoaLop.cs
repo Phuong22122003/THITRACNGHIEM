@@ -71,15 +71,32 @@ namespace THITRACNGHIEM
             if (Data.mGroup == "TRUONG")
             {
                 cmbCoSo.Enabled = true;
-                btnGhi.Enabled = btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
+                btnGhi.Enabled = btnHieuChinh.Enabled = btnPhucHoi.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
+                contextMenuStrip1.Enabled = false;
+               
             }
             else
             {
                 cmbCoSo.Enabled = false;
                 btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
+                contextMenuStrip1.Enabled = true;
             }
 
             if (bdsLOP.Count == 0) xóaToolStripMenuItem.Enabled = false;
+            
+            if (Data.mGroup == "COSO")
+            {
+                if (bdsKHOA.Count == 0)
+                {
+                    btnXoa.Enabled = false;
+                    btnHieuChinh.Enabled = false;
+                }
+                else
+                {
+                    btnXoa.Enabled = true;
+                    btnHieuChinh.Enabled = true;
+                }
+            }
             undoManagerKhoa = new UndoManager(this.bdsKHOA);
             undoManagerLop = new UndoManager(this.bdsLOP);
         }
@@ -140,7 +157,7 @@ namespace THITRACNGHIEM
             {
                 try
                 {
-                    SqlCommand Sqlcmd = new SqlCommand("EXECUTE SP_CheckMaKhoaTonTai @makhoa = " + txtMAKHOA.Text, Data.ServerConnection);
+                    SqlCommand Sqlcmd = new SqlCommand($"EXECUTE SP_CHECKVALIDATEKHOA @makhoa = N'{txtMAKHOA.Text}', @TENKHOA = N'{txtTENKHOA.Text}'",  Data.ServerConnection);
                     Sqlcmd.CommandType = CommandType.Text;
                     Sqlcmd.CommandTimeout = 600;// 10 phut 
                     if (Data.ServerConnection.State == ConnectionState.Closed) Data.ServerConnection.Open();
@@ -179,6 +196,16 @@ namespace THITRACNGHIEM
                 }
                 if (undoManagerKhoa.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
                 else btnPhucHoi.Enabled = true;
+                if (bdsLOP.Count == 0)
+                {
+                    xóaToolStripMenuItem.Enabled = false;
+                    hiệuChỉnhToolStripMenuItem.Enabled = false;
+                }
+                else
+                {
+                    xóaToolStripMenuItem.Enabled = true;
+                    hiệuChỉnhToolStripMenuItem.Enabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -214,6 +241,29 @@ namespace THITRACNGHIEM
                     undoManagerKhoa.ClearReUndoStack();
                     if (undoManagerKhoa.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
                     else btnPhucHoi.Enabled = true;
+                    if (bdsLOP.Count == 0)
+                    {
+                        xóaToolStripMenuItem.Enabled = false;
+                        hiệuChỉnhToolStripMenuItem.Enabled = false;
+                    }
+                    else
+                    {
+                        xóaToolStripMenuItem.Enabled = true;
+                        hiệuChỉnhToolStripMenuItem.Enabled = true;
+                    }
+                    if (Data.mGroup == "COSO")
+                    {
+                        if (bdsKHOA.Count == 0)
+                        {
+                            btnXoa.Enabled = false;
+                            btnHieuChinh.Enabled = false;
+                        }
+                        else
+                        {
+                            btnXoa.Enabled = true;
+                            btnHieuChinh.Enabled = true;
+                        }
+                    }
                     bdsKHOA.RemoveCurrent();
                     this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                     this.KHOATableAdapter.Update(this.DSKhoaLop.KHOA);
@@ -249,6 +299,16 @@ namespace THITRACNGHIEM
                 {
                     KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                     KHOATableAdapter.Update(DSKhoaLop.KHOA);
+                    if (bdsLOP.Count == 0)
+                    {
+                        xóaToolStripMenuItem.Enabled = false;
+                        hiệuChỉnhToolStripMenuItem.Enabled = false;
+                    }
+                    else
+                    {
+                        xóaToolStripMenuItem.Enabled = true;
+                        hiệuChỉnhToolStripMenuItem.Enabled = true;
+                    }
                 }
             }
             gcKHOA.Enabled = true;
@@ -404,7 +464,17 @@ namespace THITRACNGHIEM
                     //bdsLOP.Position = bdsLOP.Find("MALOP", malop);
                     return;
                 }
-                if (bdsLOP.Count == 0) xóaToolStripMenuItem.Enabled = false;
+                if (bdsLOP.Count == 0)
+                {
+                    xóaToolStripMenuItem.Enabled = false;
+                    hiệuChỉnhToolStripMenuItem.Enabled = false;
+                }
+                else
+                {
+                    xóaToolStripMenuItem.Enabled = true;
+                    hiệuChỉnhToolStripMenuItem.Enabled = true;
+                }
+
             }
             
         }
@@ -422,8 +492,16 @@ namespace THITRACNGHIEM
                 if (column.FieldName == "MAKH") continue;
                 column.OptionsColumn.AllowEdit = true;
             }
-            if (bdsLOP.Count == 0) xóaToolStripMenuItem.Enabled = false;
-            else xóaToolStripMenuItem.Enabled = true;
+            if (bdsLOP.Count == 0)
+            {
+                xóaToolStripMenuItem.Enabled = false;
+                hiệuChỉnhToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                xóaToolStripMenuItem.Enabled = true;
+                hiệuChỉnhToolStripMenuItem.Enabled = true;
+            }
         }
 
             private void gvLOP_ValidateRow(object sender, DevExpress.XtraGrid.Views.Base.ValidateRowEventArgs e)
@@ -529,8 +607,20 @@ namespace THITRACNGHIEM
 
         private void gvKHOA_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
         {
-            if (bdsLOP.Count == 0) xóaToolStripMenuItem.Enabled = false;
-            else xóaToolStripMenuItem.Enabled = true;
+            undoManagerLop.ClearUndoStack();
+            undoManagerLop.ClearReUndoStack();
+            táiPhụcHồiToolStripMenuItem.Enabled = false;
+            phụcHồiToolStripMenuItem.Enabled = false;
+            if (bdsLOP.Count == 0)
+            {
+                xóaToolStripMenuItem.Enabled = false;
+                hiệuChỉnhToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                xóaToolStripMenuItem.Enabled = true;
+                hiệuChỉnhToolStripMenuItem.Enabled = true;
+            }
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
@@ -735,6 +825,16 @@ namespace THITRACNGHIEM
                 }
             }
             undoManagerLop.Undo();
+            if (bdsLOP.Count == 0)
+            {
+                xóaToolStripMenuItem.Enabled = false;
+                hiệuChỉnhToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                xóaToolStripMenuItem.Enabled = true;
+                hiệuChỉnhToolStripMenuItem.Enabled = true;
+            }
             //bdsLOP.EndEdit();
             //bdsLOP.ResetCurrentItem();
             this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
@@ -757,6 +857,16 @@ namespace THITRACNGHIEM
             {
                 KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 KHOATableAdapter.Update(DSKhoaLop.KHOA);
+                if (bdsLOP.Count == 0)
+                {
+                    xóaToolStripMenuItem.Enabled = false;
+                    hiệuChỉnhToolStripMenuItem.Enabled = false;
+                }
+                else
+                {
+                    xóaToolStripMenuItem.Enabled = true;
+                    hiệuChỉnhToolStripMenuItem.Enabled = true;
+                }
             }
             if (undoManagerKhoa.GetReUndoStack().Count <= 0) btnTaiPhucHoi.Enabled = false;
             else btnTaiPhucHoi.Enabled = true;
@@ -775,6 +885,16 @@ namespace THITRACNGHIEM
                 }
             }
             undoManagerLop.ReUndo();
+            if (bdsLOP.Count == 0)
+            {
+                xóaToolStripMenuItem.Enabled = false;
+                hiệuChỉnhToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                xóaToolStripMenuItem.Enabled = true;
+                hiệuChỉnhToolStripMenuItem.Enabled = true;
+            }
             this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.lOPTableAdapter.Update(this.DSKhoaLop.LOP);
             if (undoManagerLop.GetReUndoStack().Count <= 0) táiPhụcHồiToolStripMenuItem.Enabled = false;

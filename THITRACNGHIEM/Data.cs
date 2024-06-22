@@ -225,11 +225,11 @@ namespace THITRACNGHIEM
                     return null;
                 }
             }
-            if(Data.PublisherConnection.State ==ConnectionState.Closed) Data.PublisherConnection.Open ();
-            DataTable table = new DataTable();
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement,Data.PublisherConnection);
             try
             {
+                if(Data.PublisherConnection.State ==ConnectionState.Closed) Data.PublisherConnection.Open ();
+                DataTable table = new DataTable();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(statement,Data.PublisherConnection);
                 sqlDataAdapter.Fill(table);
                 return table;
             }
@@ -396,11 +396,12 @@ namespace THITRACNGHIEM
             {
                 if(enable_error == true)
                  MessageBox.Show(ex.Message);
+                
                 return null;
             }
             finally
             {
-                //connection.Close();
+                
             }
         }
         public static int ExecSqlAndGetReturnedValue(String spName,SqlParameter param1 = null, SqlParameter param2 = null)
