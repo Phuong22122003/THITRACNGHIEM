@@ -58,6 +58,7 @@
             this.ribbonPage4 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
+            this.btnXemLichThiGV = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,10 +85,11 @@
             this.btnQuanLyKhoaLop,
             this.btnDangKyThi,
             this.btnBangDiem,
-            this.btnChiTietPhieuThi});
+            this.btnChiTietPhieuThi,
+            this.btnXemLichThiGV});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
             this.ribbon.Margin = new System.Windows.Forms.Padding(8, 9, 8, 9);
-            this.ribbon.MaxItemId = 21;
+            this.ribbon.MaxItemId = 22;
             this.ribbon.Name = "ribbon";
             this.ribbon.OptionsMenuMinWidth = 927;
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -312,6 +314,7 @@
             // ribbonPageGroup4
             // 
             this.ribbonPageGroup4.ItemLinks.Add(this.btnXemLichThi);
+            this.ribbonPageGroup4.ItemLinks.Add(this.btnXemLichThiGV);
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "Lịch thi";
             // 
@@ -324,6 +327,15 @@
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbon;
             this.ribbonStatusBar.Size = new System.Drawing.Size(1114, 30);
+            // 
+            // btnXemLichThiGV
+            // 
+            this.btnXemLichThiGV.Caption = "Xem lich thi cho giảng viên";
+            this.btnXemLichThiGV.Id = 21;
+            this.btnXemLichThiGV.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
+            this.btnXemLichThiGV.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.LargeImage")));
+            this.btnXemLichThiGV.Name = "btnXemLichThiGV";
+            this.btnXemLichThiGV.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXemLichThiGV_ItemClick);
             // 
             // formMain
             // 
@@ -375,5 +387,6 @@
         private DevExpress.XtraBars.BarButtonItem btnBangDiem;
         private DevExpress.XtraBars.BarButtonItem btnChiTietPhieuThi;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupDangKy;
+        private DevExpress.XtraBars.BarButtonItem btnXemLichThiGV;
     }
 }

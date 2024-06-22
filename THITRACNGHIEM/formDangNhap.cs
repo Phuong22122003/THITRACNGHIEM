@@ -53,7 +53,7 @@ namespace WindowsFormsApp1
             {
                 return;
             }
-            Data.servername = cmbCoSo.SelectedValue.ToString();
+            Data.mServerName = Data.servername = cmbCoSo.SelectedValue.ToString();
             Data.mCoSo = cmbCoSo.SelectedIndex;
             //Trường hợp là giảng viên
             if (radioGiaoVien.Checked == true)
@@ -64,63 +64,52 @@ namespace WindowsFormsApp1
                 //Kết nối thành công
                 try
                 {
-                    SqlDataReader reader = Data.ExecSqlDataReader("exec SP_LayThongTinGV " + Data.mlogin,Data.ServerConnection);
+                    Dictionary<String,String> teacherInfo = Data.getTeacherInfo(Data.mlogin);
                     //Kết nối thành công và lấy dữ liệu
-                    if (reader.Read())
-                    {
-                        Data.username = reader[0].ToString();
-                        Data.mHoten = reader[1].ToString();
-                        Data.mGroup = reader[2].ToString();
-                        Data.mloginDN = Data.mlogin;
-                        Data.passwordDN = Data.password;
-                        this.parentForm.showInfo(Data.mHoten, Data.mGroup);
-                        btnDangNhap.Enabled = false;
-                    }
-                    // Kết nối vào cơ sở dữ liệu nhưng chưa đăng ký tài khoảng
-                    else
-                    {
-                        MessageBox.Show("Tài khoảng chưa được đăng ký!");
-                        Data.mlogin = "";
-                        Data.password = "";
-                    }
+
+                    Data.username = teacherInfo["USERNAME"];
+                    Data.mHoten = teacherInfo["HOVATEN"];
+                    Data.mGroup = teacherInfo["NHOM"];
+                    Data.mloginDN = Data.mlogin;
+                    Data.passwordDN = Data.password;
+                    this.parentForm.showInfo(Data.mHoten, Data.mGroup);
+                    btnDangNhap.Enabled = false;
 
                 }catch(Exception ex)
                 {
-                        MessageBox.Show(ex.ToString());
+                    Data.mlogin = "";
+                    Data.password = "";
+                    MessageBox.Show(ex.Message);
                 }
-                
             }
             //trường hợp là sinh viên
             else
                 {
                     Data.mlogin = Data.svlogin;
                     Data.password = Data.svpassword;
-                    if (Data.ConnectToServerWhenLogin() != 1) return;
-
-                SqlDataReader reader = Data.ExecSqlDataReader("exec SP_LayThongTinSV '" + inputTK.Text + "', '" + inputMK.Text + "'", Data.ServerConnection);
-                try
-                {
-
-                    if(reader.Read())
+                    if (Data.ConnectToServerWhenLogin(false) != 1)
                     {
-                        Data.mHoten = reader[0].ToString();
+                        MessageBox.Show("Không thể kết nối đến hệ thống lúc này");
+                        return;
+                    }
+
+                    try
+                    {
+                        Dictionary<String,String> studentInfo= Data.getStudentInfo(inputTK.Text, inputMK.Text);
+                        Data.mHoten = studentInfo["HOTEN"];
+                        Data.tenLop = studentInfo["TENLOP"];
                         Data.mlogin = inputTK.Text;
                         Data.password = inputMK.Text;
                         Data.mGroup = "SINHVIEN";
                         Data.username = Data.mlogin;
                         this.parentForm.showInfo(Data.mHoten, Data.mGroup);
                         btnDangNhap.Enabled = false;
+      
                     }
-                    else
+                    catch(Exception ex)
                     {
-                        MessageBox.Show("Bạn xem lại user name và password.\n ");
+                            MessageBox.Show("       Đăng nhập thất bại\n" + ex.Message);
                     }
-                    
-                }
-                catch
-                {
-
-                }
              }
         }
         public void clear()

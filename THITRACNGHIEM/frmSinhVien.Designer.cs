@@ -369,7 +369,7 @@
             this.panelControl1.Controls.Add(this.cmbCoSo);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 51);
-            this.panelControl1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.panelControl1.Margin = new System.Windows.Forms.Padding(5);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(1298, 86);
             this.panelControl1.TabIndex = 4;
@@ -386,9 +386,10 @@
             // 
             // cmbCoSo
             // 
+            this.cmbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCoSo.FormattingEnabled = true;
             this.cmbCoSo.Location = new System.Drawing.Point(280, 26);
-            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.cmbCoSo.Margin = new System.Windows.Forms.Padding(5);
             this.cmbCoSo.Name = "cmbCoSo";
             this.cmbCoSo.Size = new System.Drawing.Size(480, 24);
             this.cmbCoSo.TabIndex = 0;
@@ -427,10 +428,10 @@
             // 
             this.gcLop.DataSource = this.bdsLop;
             this.gcLop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gcLop.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gcLop.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(5);
             this.gcLop.Location = new System.Drawing.Point(0, 137);
             this.gcLop.MainView = this.gridView1;
-            this.gcLop.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gcLop.Margin = new System.Windows.Forms.Padding(5);
             this.gcLop.MenuManager = this.barManager1;
             this.gcLop.Name = "gcLop";
             this.gcLop.Size = new System.Drawing.Size(1298, 222);
@@ -489,10 +490,10 @@
             this.gcSinhVien.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcSinhVien.EmbeddedNavigator.Appearance.BackColor = System.Drawing.Color.White;
             this.gcSinhVien.EmbeddedNavigator.Appearance.Options.UseBackColor = true;
-            this.gcSinhVien.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gcSinhVien.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(5);
             this.gcSinhVien.Location = new System.Drawing.Point(888, 359);
             this.gcSinhVien.MainView = this.gridView2;
-            this.gcSinhVien.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gcSinhVien.Margin = new System.Windows.Forms.Padding(5);
             this.gcSinhVien.MenuManager = this.barManager1;
             this.gcSinhVien.Name = "gcSinhVien";
             this.gcSinhVien.Size = new System.Drawing.Size(410, 380);
@@ -626,7 +627,7 @@
             this.panelEditSV.Controls.Add(this.btnXong);
             this.panelEditSV.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelEditSV.Location = new System.Drawing.Point(0, 359);
-            this.panelEditSV.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.panelEditSV.Margin = new System.Windows.Forms.Padding(5);
             this.panelEditSV.Name = "panelEditSV";
             this.panelEditSV.Size = new System.Drawing.Size(888, 380);
             this.panelEditSV.TabIndex = 16;
@@ -684,7 +685,7 @@
             // 
             this.txtDiaChi.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "DIACHI", true));
             this.txtDiaChi.Location = new System.Drawing.Point(142, 299);
-            this.txtDiaChi.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtDiaChi.Margin = new System.Windows.Forms.Padding(5);
             this.txtDiaChi.MenuManager = this.barManager1;
             this.txtDiaChi.Name = "txtDiaChi";
             this.txtDiaChi.Size = new System.Drawing.Size(694, 22);
@@ -696,7 +697,7 @@
             this.txtNgaySinh.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "NGAYSINH", true));
             this.txtNgaySinh.EditValue = null;
             this.txtNgaySinh.Location = new System.Drawing.Point(627, 220);
-            this.txtNgaySinh.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtNgaySinh.Margin = new System.Windows.Forms.Padding(5);
             this.txtNgaySinh.MenuManager = this.barManager1;
             this.txtNgaySinh.Name = "txtNgaySinh";
             this.txtNgaySinh.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -711,9 +712,11 @@
             // 
             this.txtPassword.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "PASSWORD", true));
             this.txtPassword.Location = new System.Drawing.Point(628, 142);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(5);
             this.txtPassword.MenuManager = this.barManager1;
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Properties.MaxLength = 30;
+            this.txtPassword.Properties.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(195, 22);
             this.txtPassword.TabIndex = 18;
             this.txtPassword.EditValueChanged += new System.EventHandler(this.ValueChanged);
@@ -723,7 +726,7 @@
             this.txtMalop.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "MALOP", true));
             this.txtMalop.Enabled = false;
             this.txtMalop.Location = new System.Drawing.Point(628, 45);
-            this.txtMalop.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtMalop.Margin = new System.Windows.Forms.Padding(5);
             this.txtMalop.MenuManager = this.barManager1;
             this.txtMalop.Name = "txtMalop";
             this.txtMalop.Size = new System.Drawing.Size(195, 22);
@@ -734,9 +737,10 @@
             // 
             this.txtTen.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "TEN", true));
             this.txtTen.Location = new System.Drawing.Point(134, 220);
-            this.txtTen.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtTen.Margin = new System.Windows.Forms.Padding(5);
             this.txtTen.MenuManager = this.barManager1;
             this.txtTen.Name = "txtTen";
+            this.txtTen.Properties.MaxLength = 10;
             this.txtTen.Size = new System.Drawing.Size(195, 22);
             this.txtTen.TabIndex = 16;
             this.txtTen.EditValueChanged += new System.EventHandler(this.ValueChanged);
@@ -745,9 +749,10 @@
             // 
             this.txtHo.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "HO", true));
             this.txtHo.Location = new System.Drawing.Point(135, 142);
-            this.txtHo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtHo.Margin = new System.Windows.Forms.Padding(5);
             this.txtHo.MenuManager = this.barManager1;
             this.txtHo.Name = "txtHo";
+            this.txtHo.Properties.MaxLength = 50;
             this.txtHo.Size = new System.Drawing.Size(195, 22);
             this.txtHo.TabIndex = 15;
             this.txtHo.EditValueChanged += new System.EventHandler(this.ValueChanged);
@@ -756,9 +761,10 @@
             // 
             this.txtMasv.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "MASV", true));
             this.txtMasv.Location = new System.Drawing.Point(135, 45);
-            this.txtMasv.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtMasv.Margin = new System.Windows.Forms.Padding(5);
             this.txtMasv.MenuManager = this.barManager1;
             this.txtMasv.Name = "txtMasv";
+            this.txtMasv.Properties.MaxLength = 8;
             this.txtMasv.Size = new System.Drawing.Size(195, 22);
             this.txtMasv.TabIndex = 14;
             this.txtMasv.EditValueChanged += new System.EventHandler(this.ValueChanged);
@@ -766,7 +772,7 @@
             // btnHuy
             // 
             this.btnHuy.Location = new System.Drawing.Point(521, 361);
-            this.btnHuy.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnHuy.Margin = new System.Windows.Forms.Padding(5);
             this.btnHuy.Name = "btnHuy";
             this.btnHuy.Size = new System.Drawing.Size(101, 28);
             this.btnHuy.TabIndex = 13;
@@ -777,7 +783,7 @@
             // btnXong
             // 
             this.btnXong.Location = new System.Drawing.Point(282, 361);
-            this.btnXong.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnXong.Margin = new System.Windows.Forms.Padding(5);
             this.btnXong.Name = "btnXong";
             this.btnXong.Size = new System.Drawing.Size(101, 28);
             this.btnXong.TabIndex = 12;

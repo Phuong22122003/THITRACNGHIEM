@@ -20,8 +20,8 @@ namespace WindowsFormsApp1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Data.ConnectToRetrievalSite();
-            Data.ConnectToPublisher();
+            //Data.ConnectToRetrievalSite();
+            //Data.ConnectToPublisher();
             Data.formChinh = new formMain();
             Application.Run(Data.formChinh);
         }

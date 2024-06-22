@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1;
+using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
 
 namespace THITRACNGHIEM
 {
@@ -47,6 +48,8 @@ namespace THITRACNGHIEM
         /// </summary>
         public static String svpassword = "123456789";
 
+        public static String tenLop;
+
         //site tra cứu
         /// <summary>
         /// Tên database
@@ -64,6 +67,7 @@ namespace THITRACNGHIEM
 
         public static String mloginDN = "";
         public static String passwordDN = "";
+        public static String mServerName = "";
 
         /// <summary>
         ///Nhóm của người dùng
@@ -105,6 +109,8 @@ namespace THITRACNGHIEM
         /// ConnectionString của site tra cứu
         /// </summary>
         public static String InformationRetrievalSiteConnectionString;
+
+        public static SqlDataReader sqlDataReader;
 
         //====================Log out========================//
         public static void clear()
@@ -195,7 +201,7 @@ namespace THITRACNGHIEM
             catch (Exception e)
             {
                 if (enable_error == true)
-                    MessageBox.Show("             Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n           " + e.Message, "", MessageBoxButtons.OK);
+                    MessageBox.Show("Lỗi kết nối cơ sở dữ liệu.\nBạn xem lại user name và password.\n" + e.Message, "", MessageBoxButtons.OK);
                 return 0;
             }
         }
@@ -376,14 +382,14 @@ namespace THITRACNGHIEM
         /// <returns></returns>
         public static SqlDataReader ExecSqlDataReader(String strLenh,SqlConnection connection, bool enable_error = true)
         {
-            SqlDataReader myreader;
             SqlCommand sqlcmd = new SqlCommand(strLenh,connection);
             sqlcmd.CommandType = CommandType.Text;
             if (connection.State == ConnectionState.Closed) connection.Open();
+            if(sqlDataReader != null&&sqlDataReader.IsClosed == false) sqlDataReader.Close();
             try
             {
-                myreader = sqlcmd.ExecuteReader(); 
-                return myreader;
+                sqlDataReader = sqlcmd.ExecuteReader(); 
+                return sqlDataReader;
 
             }
             catch (SqlException ex)
@@ -397,6 +403,35 @@ namespace THITRACNGHIEM
                 //connection.Close();
             }
         }
+        public static int ExecSqlAndGetReturnedValue(String spName,SqlParameter param1 = null, SqlParameter param2 = null)
+        {
+            SqlCommand Sqlcmd = new SqlCommand(spName, ServerConnection);
+            Sqlcmd.CommandType = CommandType.StoredProcedure;
+            Sqlcmd.CommandTimeout = 600;// 10 phut 
+            SqlParameter returnValue = new SqlParameter();
+            returnValue.Direction = ParameterDirection.ReturnValue;
+            Sqlcmd.Parameters.Add(returnValue);
+            if(param1!=null)
+                Sqlcmd.Parameters.Add(param1);
+            if(param2!=null)
+                Sqlcmd.Parameters.Add(param2);
+
+            if (ServerConnection.State == ConnectionState.Closed) ServerConnection.Open();
+            try
+            {
+                Sqlcmd.ExecuteNonQuery();
+
+                return (int)returnValue.Value;
+            }
+            catch
+            {
+                return -1;
+            }
+            finally
+            {
+                ServerConnection.Close();
+            }
+        }
         /// <summary>
         /// Thực hiện câu lệnh với kết quả tùy chọn.
         /// Có thông báo lỗi. Để tắt set enable_error = false
@@ -406,7 +441,6 @@ namespace THITRACNGHIEM
         /// <returns>Trả về 0 nếu thành công. Hoặc Trả về mã lỗi từ server</returns>
         public static int ExecSqlNonQuery(String strlenh,SqlConnection connection, bool enable_error = true)
         {
-            if(connection.State==ConnectionState.Closed) connection.Open();
             SqlCommand Sqlcmd = new SqlCommand(strlenh, connection);
             Sqlcmd.CommandType = CommandType.Text;
             Sqlcmd.CommandTimeout = 600;// 10 phut 
@@ -454,6 +488,65 @@ namespace THITRACNGHIEM
             finally
             {
                Data.ServerConnection.Close();
+            }
+        }
+
+        public static Dictionary<String,String> getStudentInfo(String masv,String password)
+        {
+            SqlCommand cmd = new SqlCommand("SP_LayThongTinSV", Data.ServerConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@masv", masv);
+            cmd.Parameters.AddWithValue("@password",password);
+
+            try
+            {
+                Dictionary<String, String> studentInfo = null;
+                sqlDataReader = cmd.ExecuteReader();
+                if (sqlDataReader.Read())
+                {
+                    studentInfo = new Dictionary<String, String>();
+                    studentInfo["HOTEN"] = sqlDataReader["HOTEN"].ToString();
+                    studentInfo["TENLOP"] = sqlDataReader["TENLOP"].ToString();
+                }
+                else throw new Exception("Bạn xem lại tên đăng nhập và mật khẩu.");
+                return studentInfo;
+            }
+            catch (Exception ex)
+            { 
+                throw ex;
+            }
+            finally
+            {
+                sqlDataReader.Close();
+            }
+        }
+        public static Dictionary<String, String> getTeacherInfo(String loginname)
+        {
+            SqlCommand cmd = new SqlCommand("SP_LayThongTinGV", Data.ServerConnection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@LOGINNAME", loginname);
+
+            try
+            {
+                Dictionary<String, String> teacherInfo = null;
+                sqlDataReader = cmd.ExecuteReader();
+                if (sqlDataReader.Read())
+                {
+                    teacherInfo = new Dictionary<String, String>();
+                    teacherInfo["USERNAME"] = sqlDataReader["MAGV"].ToString();
+                    teacherInfo["HOVATEN"] = sqlDataReader["HOVATEN"].ToString();
+                    teacherInfo["NHOM"] = sqlDataReader["NHOM"].ToString();
+                }
+                else throw new Exception("Tài khoảng chưa được đăng ký");
+                return teacherInfo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlDataReader.Close();
             }
         }
     }

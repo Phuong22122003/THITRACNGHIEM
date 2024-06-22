@@ -142,6 +142,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DS_THI.xsd</DependentUpon>
     </Compile>
+    <Compile Include="formXemLichChoGV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formXemLichChoGV.Designer.cs">
+      <DependentUpon>formXemLichChoGV.cs</DependentUpon>
+    </Compile>
     <Compile Include="formBoDe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -278,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="formXemDanhSachDangKy.resx">
       <DependentUpon>formXemDanhSachDangKy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formXemLichChoGV.resx">
+      <DependentUpon>formXemLichChoGV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSinhVien.resx">
       <DependentUpon>frmSinhVien.cs</DependentUpon>

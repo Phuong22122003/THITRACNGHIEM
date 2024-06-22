@@ -188,7 +188,7 @@ namespace THITRACNGHIEM
         {
             btnPhucHoi.Enabled = (UndoStack.getSize() > 0);
 
-            gcLop.Enabled = btnReload.Enabled = btnThoat.Enabled = (UndoStack.getSize() == IndexOfStack);
+            gcLop.Enabled = btnReload.Enabled =  (UndoStack.getSize() == IndexOfStack);//btnThoat.Enabled =
 
             btnGhi.Enabled = (UndoStack.getSize() != IndexOfStack);
         }
@@ -254,7 +254,14 @@ namespace THITRACNGHIEM
                 }
                 else
                 {
-                    int check = Data.ExecuteScalar("select dbo.checkExistsMasv(" + txtMasv.Text + ")",Data.InformationRetrievalSite);
+
+                    int check = Data.ExecSqlAndGetReturnedValue("SP_CHECKEXIST_MASV",new SqlParameter("@MASV",txtMasv.Text));
+                    if(check == -1)
+                    {
+                        checkError = 1;
+                        lblErrorMasv.Text = "Không thể kiểm tra mã sinh viên lúc này";
+                        lblErrorMasv.Visible = true;
+                    }
                     if(check== 1)
                     {
                         checkError = 1;
@@ -303,15 +310,23 @@ namespace THITRACNGHIEM
             try {
                 ((DataRowView)bdsSinhVien.Current).EndEdit();
                 HidePanelEdit(true);
-                btnHieuChinh.Enabled = btnXoa.Enabled = btnThem.Enabled = true;
-                if (currentDataRow.RowState == DataRowState.Unchanged) return;
+                btnThoat.Enabled= btnHieuChinh.Enabled = btnXoa.Enabled = btnThem.Enabled = true;
+                if (currentDataRow.RowState == DataRowState.Unchanged)
+                { 
+                    UndoStack.TriggerEvent();
+                     return;
+                }
                 if (currentAction == ActionState.ADDED)
                 {
                     UndoStack.Push(ActionState.ADDED, currentDataRow["MASV"].ToString(), currentDataRow.ItemArray);
                 }
                 else if (HasChange)
                     UndoStack.Push(ActionState.MODIFIED, currentDataRow["MASV"].ToString(),previousData);
-                else return;
+                else
+                {
+                    UndoStack.TriggerEvent();
+                    return;
+                } 
                 RedoStack.Clear();
             }
             catch (Exception ex)
@@ -395,8 +410,23 @@ namespace THITRACNGHIEM
 
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            Data.mlogin = Data.mloginDN;
-            Data.password = Data.passwordDN;
+            if (btnGhi.Enabled == true)
+            {
+                DialogResult result = MessageBox.Show("Bạn có muốn thoát? Các thao tác trên sinh viên sẽ không được lưu", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+            //Trường hợp nhóm trường chuyển cơ sở để xem
+            if (!Data.servername.Equals(Data.mServerName))
+            {
+                Data.mlogin = Data.mloginDN;
+                Data.password = Data.passwordDN;
+                Data.servername = Data.mServerName;
+                Data.ConnectToServerWhenLogin(false);
+            }
+
             this.Close();
         }
 
@@ -429,7 +459,7 @@ namespace THITRACNGHIEM
             bdsSinhVien.CancelEdit();
             HidePanelEdit(true);
             UndoStack.TriggerEvent();
-            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
+            btnThoat.Enabled = btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
         }
 
         private void btnRedo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

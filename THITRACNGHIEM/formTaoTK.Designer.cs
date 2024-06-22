@@ -112,6 +112,7 @@
             // 
             // cmbNhom
             // 
+            this.cmbNhom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbNhom.FormattingEnabled = true;
             this.cmbNhom.Location = new System.Drawing.Point(665, 380);
             this.cmbNhom.Name = "cmbNhom";
@@ -120,6 +121,7 @@
             // 
             // cmbHoVaTen
             // 
+            this.cmbHoVaTen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbHoVaTen.FormattingEnabled = true;
             this.cmbHoVaTen.Location = new System.Drawing.Point(665, 187);
             this.cmbHoVaTen.Name = "cmbHoVaTen";

@@ -38,9 +38,51 @@ namespace THITRACNGHIEM
         private Timer timer;
         private Thread thread;
 
-        public Thi()
+        //setter
+        public void setLanThi(int lanthi)
+        {
+            this.lan = lanthi;
+            txtLanThi.Text = lanthi.ToString();
+        }
+        public void setTenMon(String tenmh)
+        {
+            txtMonThi.Text = tenmh;
+        }
+
+        /// <summary>
+        /// Thi cho giang vien
+        /// </summary>
+        public Thi(int ID_CTDK, int remainingTime)
         {
             InitializeComponent();
+            this.totalTime = remainingTime;
+            this.remainingTime = remainingTime*60;
+            this.ID_CTDK = ID_CTDK;
+
+            //Hiển thị thông tin sinh viên
+            showInfo();
+
+            //Load đề mới lên
+            LoadDeThiMoi();
+
+            //xáo trộn đáp án
+            RandomDapAn();
+
+            labelSoCau.Text = (1 + bdsCauHoi.Position).ToString();
+            bdsCauHoi.PositionChanged += PositionChanged;
+            lvLuaChon.SelectedIndexChanged += listViewIndexChanged;
+
+            //Khởi tạo lại danh sách chi tiết các lựa chọn
+            ShowLVLuaChon();
+
+            PositionChanged(null, null);
+
+            //Khởi tạo timer để đếm thời gian
+            timer = new Timer();
+            timer.Interval = 980;
+            timer.Tick += Timer_Tick;
+
+            timer.Start();
         }
 
         /// <summary>
@@ -105,6 +147,7 @@ namespace THITRACNGHIEM
             this.ID_CTDK = ID_CTDK;
             this.mamh = mamh;
             this.lan = lan;
+            txtLanThi.Text = lan.ToString();
             this.remainingTime = remainingTime * 60;
 
             //Hiển thị thông tin sinh viên
@@ -327,6 +370,11 @@ namespace THITRACNGHIEM
         {
             DataTable dt = new DataTable();
             float diem = layCTBTs(dt);
+            if (Data.mGroup.Equals("GIANGVIEN"))
+            {
+                MessageBox.Show("Điểm là: " + diem);
+                return;
+            }
             SqlParameter paramCtbt = new SqlParameter();
             paramCtbt.SqlDbType = SqlDbType.Structured;
             paramCtbt.TypeName = "dbo.TYPE_CTBT";
@@ -414,7 +462,8 @@ namespace THITRACNGHIEM
         private void btnNopBai_Click(object sender, EventArgs e)
         {
             remainingTime = 0;
-            thread.Join();
+            if(Data.mGroup.Equals("SINHVIEN"))
+                thread.Join();
             timer.Stop();
             NopBai();
            

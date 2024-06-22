@@ -1,4 +1,5 @@
 ﻿using DevExpress.DataAccess.ConnectionParameters;
+using DevExpress.DataAccess.Sql;
 
 namespace THITRACNGHIEM
 {
@@ -43,7 +44,9 @@ namespace THITRACNGHIEM
             this.pageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.lblReportHeader = new DevExpress.XtraReports.UI.XRLabel();
-            this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
+            MsSqlConnectionParameters sqlConParams = new MsSqlConnectionParameters(Data.servername, Data.database, Data.mlogin, Data.password, MsSqlAuthorizationType.SqlServer);
+            this.sqlDataSource1 = new SqlDataSource(sqlConParams);
+            //new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
             this.Title = new DevExpress.XtraReports.UI.XRControlStyle();
             this.GroupCaption1 = new DevExpress.XtraReports.UI.XRControlStyle();
             this.GroupData1 = new DevExpress.XtraReports.UI.XRControlStyle();
@@ -127,7 +130,7 @@ namespace THITRACNGHIEM
             // 
             // sqlDataSource1
             // 
-            this.sqlDataSource1.ConnectionName = "THITRACNGHIEM.Properties.Settings.connection";
+            //this.sqlDataSource1.ConnectionName = "THITRACNGHIEM.Properties.Settings.connection";
             this.sqlDataSource1.Name = "sqlDataSource1";
             storedProcQuery1.Name = "SP_XEMDANHSACHDK_SONGSONG";
             queryParameter1.Name = "@TUNGAY";

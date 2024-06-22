@@ -41,6 +41,8 @@ namespace WindowsFormsApp1
             ribbonPage4.Visible = true;
             btnXemLichThi.Visibility = BarItemVisibility.Always;
             btnXemLichThi.Enabled = true;
+            btnXemLichThiGV.Visibility = BarItemVisibility.Never;
+            btnXemLichThiGV.Enabled = false;
         }
         public void GiaoDienGiangVien()
         {
@@ -59,6 +61,11 @@ namespace WindowsFormsApp1
 
             btnXemDanhSachDk.Visibility = BarItemVisibility.Never;
             btnXemDanhSachDk.Enabled = false;
+            ribbonPage4.Visible = true;
+            btnXemLichThi.Visibility = BarItemVisibility.Never;
+            btnXemLichThi.Enabled = false;
+            btnXemLichThiGV.Visibility = BarItemVisibility.Always;
+            btnXemLichThiGV.Enabled = true;
 
         }
 
@@ -375,6 +382,33 @@ namespace WindowsFormsApp1
                 formRptChiTietBaiThi f = new formRptChiTietBaiThi();
                 f.MdiParent = this;
                 f.Show();
+            }
+        }
+
+        private void btnXemLichThiGV_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExist(typeof(formXemLichChoGV));
+            if (frm != null)
+            {
+                frm.Activate();
+                formXemLichChoGV current = (formXemLichChoGV)frm;
+               // current.btnReloadClick(null, null);
+
+            }
+            else
+            {
+                try
+                {
+                    formXemLichChoGV f = new formXemLichChoGV();
+
+                    f.MdiParent = this;
+                    f.Show();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi tải lịch thi" + ex.Message);
+                }
             }
         }
     }

@@ -119,10 +119,15 @@ namespace THITRACNGHIEM
                 {
                     int ID_CTDK = (int)((DataRowView)bdsLichThi.Current)["ID_CTDK"];
                     if (btnThi.Text.Equals("Thi"))
+                    {
                         thi = new Thi(ID_CTDK,txtMaMH.Text, (int)speLanThi.Value,(int)speThoiLuong.Value,(int)speThoiLuong.Value);
+                        thi.setTenMon(txtTenMH.Text);
+                    }
                     else
                     { 
                         thi = new Thi((int)((DataRowView)bdsLichThi.Current)["IDBD"],txtMaMH.Text,(int)speThoiGianConLai.Value, (int)speThoiLuong.Value);
+                        thi.setTenMon(txtTenMH.Text);
+                        thi.setLanThi((int)speLanThi.Value);
                     }
                     thi.MdiParent = this.parent;
                     thi.Show();

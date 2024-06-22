@@ -79,6 +79,7 @@
             this.colTD = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colISUED = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panelEditCauHoi = new DevExpress.XtraEditors.PanelControl();
+            this.iSUSEDCheckEdit = new DevExpress.XtraEditors.CheckEdit();
             this.btnHuy = new System.Windows.Forms.Button();
             this.btnXong = new System.Windows.Forms.Button();
             this.cmbTrinhDo = new System.Windows.Forms.ComboBox();
@@ -105,6 +106,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelEditCauHoi)).BeginInit();
             this.panelEditCauHoi.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iSUSEDCheckEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).BeginInit();
@@ -208,7 +210,7 @@
             this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnThem, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnHieuChinh, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnGhi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnGhi, "", false, true, false, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnXoa, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPhucHoi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRedo, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -316,7 +318,7 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1807, 51);
+            this.barDockControlTop.Size = new System.Drawing.Size(1828, 51);
             // 
             // barDockControlBottom
             // 
@@ -324,7 +326,7 @@
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 1035);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1807, 20);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1828, 20);
             // 
             // barDockControlLeft
             // 
@@ -338,7 +340,7 @@
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1807, 51);
+            this.barDockControlRight.Location = new System.Drawing.Point(1828, 51);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 984);
             // 
@@ -350,7 +352,7 @@
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 51);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1807, 81);
+            this.panelControl1.Size = new System.Drawing.Size(1828, 81);
             this.panelControl1.TabIndex = 4;
             // 
             // checkGV_BD
@@ -377,6 +379,7 @@
             // 
             this.cmbMonHoc.DataSource = this.bdsMonHoc;
             this.cmbMonHoc.DisplayMember = "TENMH";
+            this.cmbMonHoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMonHoc.FormattingEnabled = true;
             this.cmbMonHoc.Location = new System.Drawing.Point(180, 27);
             this.cmbMonHoc.Name = "cmbMonHoc";
@@ -420,7 +423,7 @@
             this.fillToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.fillToolStrip.Location = new System.Drawing.Point(0, 132);
             this.fillToolStrip.Name = "fillToolStrip";
-            this.fillToolStrip.Size = new System.Drawing.Size(1807, 25);
+            this.fillToolStrip.Size = new System.Drawing.Size(1828, 25);
             this.fillToolStrip.TabIndex = 9;
             this.fillToolStrip.Text = "fillToolStrip";
             // 
@@ -432,7 +435,7 @@
             this.gcBode.MainView = this.gridView1;
             this.gcBode.MenuManager = this.barManager1;
             this.gcBode.Name = "gcBode";
-            this.gcBode.Size = new System.Drawing.Size(1807, 878);
+            this.gcBode.Size = new System.Drawing.Size(1828, 878);
             this.gcBode.TabIndex = 9;
             this.gcBode.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -575,6 +578,7 @@
             // 
             // panelEditCauHoi
             // 
+            this.panelEditCauHoi.Controls.Add(this.iSUSEDCheckEdit);
             this.panelEditCauHoi.Controls.Add(this.btnHuy);
             this.panelEditCauHoi.Controls.Add(this.btnXong);
             this.panelEditCauHoi.Controls.Add(tRINHDOLabel);
@@ -594,8 +598,19 @@
             this.panelEditCauHoi.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelEditCauHoi.Location = new System.Drawing.Point(0, 517);
             this.panelEditCauHoi.Name = "panelEditCauHoi";
-            this.panelEditCauHoi.Size = new System.Drawing.Size(1807, 518);
+            this.panelEditCauHoi.Size = new System.Drawing.Size(1828, 518);
             this.panelEditCauHoi.TabIndex = 10;
+            // 
+            // iSUSEDCheckEdit
+            // 
+            this.iSUSEDCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "ISUSED", true));
+            this.iSUSEDCheckEdit.EditValue = true;
+            this.iSUSEDCheckEdit.Location = new System.Drawing.Point(720, 392);
+            this.iSUSEDCheckEdit.MenuManager = this.barManager1;
+            this.iSUSEDCheckEdit.Name = "iSUSEDCheckEdit";
+            this.iSUSEDCheckEdit.Properties.Caption = "Còn sử dụng";
+            this.iSUSEDCheckEdit.Size = new System.Drawing.Size(145, 24);
+            this.iSUSEDCheckEdit.TabIndex = 19;
             // 
             // btnHuy
             // 
@@ -624,7 +639,6 @@
             this.cmbTrinhDo.Name = "cmbTrinhDo";
             this.cmbTrinhDo.Size = new System.Drawing.Size(305, 24);
             this.cmbTrinhDo.TabIndex = 16;
-            this.cmbTrinhDo.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
             // 
             // cmbDapAn
             // 
@@ -633,7 +647,6 @@
             this.cmbDapAn.Name = "cmbDapAn";
             this.cmbDapAn.Size = new System.Drawing.Size(121, 24);
             this.cmbDapAn.TabIndex = 15;
-            this.cmbDapAn.SelectedIndexChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtNoiDung
             // 
@@ -643,7 +656,6 @@
             this.txtNoiDung.Name = "txtNoiDung";
             this.txtNoiDung.Size = new System.Drawing.Size(948, 62);
             this.txtNoiDung.TabIndex = 5;
-            this.txtNoiDung.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtA
             // 
@@ -653,7 +665,6 @@
             this.txtA.Name = "txtA";
             this.txtA.Size = new System.Drawing.Size(948, 49);
             this.txtA.TabIndex = 7;
-            this.txtA.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtB
             // 
@@ -663,7 +674,6 @@
             this.txtB.Name = "txtB";
             this.txtB.Size = new System.Drawing.Size(948, 40);
             this.txtB.TabIndex = 9;
-            this.txtB.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtC
             // 
@@ -673,7 +683,6 @@
             this.txtC.Name = "txtC";
             this.txtC.Size = new System.Drawing.Size(946, 40);
             this.txtC.TabIndex = 11;
-            this.txtC.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // txtD
             // 
@@ -683,14 +692,13 @@
             this.txtD.Name = "txtD";
             this.txtD.Size = new System.Drawing.Size(948, 40);
             this.txtD.TabIndex = 13;
-            this.txtD.EditValueChanged += new System.EventHandler(this.ValueChanged);
             // 
             // formBoDe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1807, 1055);
+            this.ClientSize = new System.Drawing.Size(1828, 1055);
             this.Controls.Add(this.panelEditCauHoi);
             this.Controls.Add(this.gcBode);
             this.Controls.Add(this.fillToolStrip);
@@ -716,6 +724,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelEditCauHoi)).EndInit();
             this.panelEditCauHoi.ResumeLayout(false);
             this.panelEditCauHoi.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iSUSEDCheckEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNoiDung.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtA.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtB.Properties)).EndInit();
@@ -779,5 +788,6 @@
         private DevExpress.XtraEditors.MemoEdit txtB;
         private DevExpress.XtraEditors.MemoEdit txtC;
         private DevExpress.XtraEditors.MemoEdit txtD;
+        private DevExpress.XtraEditors.CheckEdit iSUSEDCheckEdit;
     }
 }

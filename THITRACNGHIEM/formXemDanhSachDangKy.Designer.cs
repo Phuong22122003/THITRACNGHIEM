@@ -34,6 +34,8 @@
             this.lblTuNgay = new System.Windows.Forms.Label();
             this.lblDenNgay = new System.Windows.Forms.Label();
             this.btnXem = new System.Windows.Forms.Button();
+            this.lblErrorTuNgay = new System.Windows.Forms.Label();
+            this.lblErrorDenNgay = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dateEditTuNgay.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateEditTuNgay.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateEditDenNgay.Properties)).BeginInit();
@@ -43,7 +45,7 @@
             // dateEditTuNgay
             // 
             this.dateEditTuNgay.EditValue = null;
-            this.dateEditTuNgay.Location = new System.Drawing.Point(581, 203);
+            this.dateEditTuNgay.Location = new System.Drawing.Point(790, 283);
             this.dateEditTuNgay.Name = "dateEditTuNgay";
             this.dateEditTuNgay.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -55,7 +57,7 @@
             // dateEditDenNgay
             // 
             this.dateEditDenNgay.EditValue = null;
-            this.dateEditDenNgay.Location = new System.Drawing.Point(581, 284);
+            this.dateEditDenNgay.Location = new System.Drawing.Point(790, 364);
             this.dateEditDenNgay.Name = "dateEditDenNgay";
             this.dateEditDenNgay.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -68,7 +70,7 @@
             // 
             this.lblXemDanhSachDK.AutoSize = true;
             this.lblXemDanhSachDK.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblXemDanhSachDK.Location = new System.Drawing.Point(480, 56);
+            this.lblXemDanhSachDK.Location = new System.Drawing.Point(689, 136);
             this.lblXemDanhSachDK.Name = "lblXemDanhSachDK";
             this.lblXemDanhSachDK.Size = new System.Drawing.Size(305, 26);
             this.lblXemDanhSachDK.TabIndex = 2;
@@ -77,7 +79,7 @@
             // lblTuNgay
             // 
             this.lblTuNgay.AutoSize = true;
-            this.lblTuNgay.Location = new System.Drawing.Point(461, 206);
+            this.lblTuNgay.Location = new System.Drawing.Point(670, 286);
             this.lblTuNgay.Name = "lblTuNgay";
             this.lblTuNgay.Size = new System.Drawing.Size(59, 16);
             this.lblTuNgay.TabIndex = 3;
@@ -86,7 +88,7 @@
             // lblDenNgay
             // 
             this.lblDenNgay.AutoSize = true;
-            this.lblDenNgay.Location = new System.Drawing.Point(456, 290);
+            this.lblDenNgay.Location = new System.Drawing.Point(665, 370);
             this.lblDenNgay.Name = "lblDenNgay";
             this.lblDenNgay.Size = new System.Drawing.Size(64, 16);
             this.lblDenNgay.TabIndex = 4;
@@ -94,7 +96,7 @@
             // 
             // btnXem
             // 
-            this.btnXem.Location = new System.Drawing.Point(581, 355);
+            this.btnXem.Location = new System.Drawing.Point(790, 435);
             this.btnXem.Name = "btnXem";
             this.btnXem.Size = new System.Drawing.Size(125, 23);
             this.btnXem.TabIndex = 5;
@@ -102,11 +104,35 @@
             this.btnXem.UseVisualStyleBackColor = true;
             this.btnXem.Click += new System.EventHandler(this.btnXem_Click);
             // 
+            // lblErrorTuNgay
+            // 
+            this.lblErrorTuNgay.AutoSize = true;
+            this.lblErrorTuNgay.ForeColor = System.Drawing.Color.Red;
+            this.lblErrorTuNgay.Location = new System.Drawing.Point(790, 238);
+            this.lblErrorTuNgay.Name = "lblErrorTuNgay";
+            this.lblErrorTuNgay.Size = new System.Drawing.Size(85, 16);
+            this.lblErrorTuNgay.TabIndex = 6;
+            this.lblErrorTuNgay.Text = "ErrorTuNgay";
+            this.lblErrorTuNgay.Visible = false;
+            // 
+            // lblErrorDenNgay
+            // 
+            this.lblErrorDenNgay.AutoSize = true;
+            this.lblErrorDenNgay.ForeColor = System.Drawing.Color.Red;
+            this.lblErrorDenNgay.Location = new System.Drawing.Point(790, 332);
+            this.lblErrorDenNgay.Name = "lblErrorDenNgay";
+            this.lblErrorDenNgay.Size = new System.Drawing.Size(94, 16);
+            this.lblErrorDenNgay.TabIndex = 7;
+            this.lblErrorDenNgay.Text = "ErrorDenNgay";
+            this.lblErrorDenNgay.Visible = false;
+            // 
             // formXemDanhSachDangKy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1444, 572);
+            this.Controls.Add(this.lblErrorDenNgay);
+            this.Controls.Add(this.lblErrorTuNgay);
             this.Controls.Add(this.btnXem);
             this.Controls.Add(this.lblDenNgay);
             this.Controls.Add(this.lblTuNgay);
@@ -132,5 +158,7 @@
         private System.Windows.Forms.Label lblTuNgay;
         private System.Windows.Forms.Label lblDenNgay;
         private System.Windows.Forms.Button btnXem;
+        private System.Windows.Forms.Label lblErrorTuNgay;
+        private System.Windows.Forms.Label lblErrorDenNgay;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraPrinting.Native;
+﻿using DevExpress.CodeParser;
+using DevExpress.XtraPrinting.Native;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace THITRACNGHIEM
     public partial class formBoDe : Form
     {
         private int index;
-        private int vitri;
+        private int vitri=-1;
         private bool HasChange;
         private ActionState currentAction;
         private DataRow currentDataRow;
@@ -80,8 +81,7 @@ namespace THITRACNGHIEM
             ///Nếu là của giáo viên đó và chưa được thi thì cho hiệu chỉnh với xóa.
             if (bdsBoDe.Count == 0)
                 btnHieuChinh.Enabled = btnXoa.Enabled = false;
-            else   if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-                            || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+            else   if (!((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
             {
                 btnHieuChinh.Enabled = false;
                 btnXoa.Enabled = false;
@@ -98,8 +98,7 @@ namespace THITRACNGHIEM
             if (bdsBoDe.Position < 0) return;
             if (Data.mGroup.Equals("TRUONG") || Data.mGroup.Equals("COSO")) return;
 
-            if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-            || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+            if (!((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
             {
                 btnHieuChinh.Enabled = false;
                 btnXoa.Enabled = false;
@@ -107,10 +106,10 @@ namespace THITRACNGHIEM
             else btnHieuChinh.Enabled = btnXoa.Enabled = true;
 
         }
-        private void ValueChanged(object sender, EventArgs e)
-        {
-            HasChange = true;
-        }
+        //private void ValueChanged(object sender, EventArgs e)
+        //{
+        //    HasChange = true;
+        //}
         //Set các giá trị cho combobox đáp án và combobox trình độ
         private void SetComboboxValue()
         {
@@ -142,8 +141,8 @@ namespace THITRACNGHIEM
         {
            btnPhucHoi.Enabled = (UndoStack.getSize() > 0);
             
-            btnReload.Enabled = btnThoat.Enabled = (UndoStack.getSize() ==index);
-            
+            btnReload.Enabled = (UndoStack.getSize() ==index);//btnThoat.Enabled = 
+
             cmbMonHoc.Enabled = (UndoStack.getSize() == index);
 
             btnGhi.Enabled = (UndoStack.getSize() != index);
@@ -270,13 +269,14 @@ namespace THITRACNGHIEM
             //thêm filed
             currentDataRow["TRINHDO"] = cmbTrinhDo.SelectedValue.ToString();
             currentDataRow["DAP_AN"] = cmbDapAn.SelectedItem.ToString();
-            currentDataRow["ISUSED"] = false;
+            //
+            if (currentDataRow["ISUSED"].ToString().Length == 0) currentDataRow["ISUSED"] = true;
             try
             {
                 //Xác nhận dòng đó đã edit xong
                bdsBoDe.EndEdit();
 
-                HidePanelEdit(true);
+                //HidePanelEdit(true);
                 btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = true;
                 String[] keyValue = Array.ConvertAll(currentDataRow.ItemArray.Skip(1).ToArray(), x => x.ToString().Trim());
                 String key = String.Join(", ", keyValue);
@@ -284,14 +284,41 @@ namespace THITRACNGHIEM
                 if (currentAction == ActionState.ADDED)
                 {
                     UndoStack.Push(ActionState.ADDED, key,currentDataRow.ItemArray);
+                    HidePanelEdit(true);
                 }
                 //2 sửa
-                else if (HasChange)
+                else if (!calKey(previousData).Equals(calKey(currentDataRow.ItemArray)))
                 {
+                    if (currentDataRow["ISUSED"].ToString().Equals("False"))
+                    {
+                        int check = Data.ExecSqlAndGetReturnedValue("SP_KIEMTRA_SO_CH", new SqlParameter("@CAUHOI", ((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString()));
+                        if (check == -1)
+                        {
+                            MessageBox.Show("Lỗi kết nối vui lòng thử lại");
+                            HidePanelEdit(false);
+                            btnThoat.Enabled = false;
+                            return;
+                        }
+                        else if (check == 1)
+                        {
+                            MessageBox.Show("Không thể bỏ sử dụng vì số câu hỏi không đủ để thi");
+                            btnThoat.Enabled = false;
+                            HidePanelEdit(false);
+                            return;
+                        }
+                    }
                     UndoStack.Push(ActionState.MODIFIED, key,previousData);
+                    HidePanelEdit(true);
                 }
-                else return;//khong sua gi
+                else
+                {
+                    HidePanelEdit(true);
+                    btnThoat.Enabled = true;
+                    return;//khong sua gi
+                }    
                 RedoStack.Clear();
+                btnThoat.Enabled = true;
+               btnGhi_ItemClick(null, null);
             }
             catch (Exception ex)
             {
@@ -300,6 +327,7 @@ namespace THITRACNGHIEM
             finally
             {
                 currentDataRow = null;
+                UndoStackChange();
             }
         }
         /// <summary>
@@ -315,6 +343,8 @@ namespace THITRACNGHIEM
             {
                 this.bdsBoDe.EndEdit();
                 this.BODETableAdapter.Update(this.DS_BODE.BODE);
+                DS_BODE.BODE.AcceptChanges();
+                this.BODETableAdapter.Fill(this.DS_BODE.BODE, mamh);
                 index = this.UndoStack.getSize();
                 listOfIndex[mamh] = index;
                 this.UndoStack.TriggerEvent();
@@ -344,8 +374,13 @@ namespace THITRACNGHIEM
             //Nếu câu hỏi mới thêm thì không kiểm tra nó đã  thi hay chưa ngược lại thì kiểm tra.
             if (!((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString().Equals(""))
             {
-                int check = Data.ExecuteScalar("SELECT dbo.UDF_KIEMTRA_CH_DATHI (" + ((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString() + ")", Data.ServerConnection);
+                int check = Data.ExecSqlAndGetReturnedValue("SP_KIEMTRA_CH_DATHI" , new SqlParameter ("@CAUHOI", ( (DataRowView) bdsBoDe.Current)["CAUHOI"].ToString() ) );
                 if (check == 1) btnXong.Enabled = false;
+                else if(check == -1)
+                {
+                    MessageBox.Show("Lỗi không thể hiệu chỉnh câu hỏi lúc này");
+                    return;
+                }
             }
             
             currentAction = ActionState.MODIFIED;
@@ -427,8 +462,7 @@ namespace THITRACNGHIEM
 
             if (bdsBoDe.Count == 0)
                 btnHieuChinh.Enabled = btnXoa.Enabled=false;
-            else   if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-                || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+            else   if (!((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
             {
                 btnHieuChinh.Enabled = false;
                 btnXoa.Enabled = false;
@@ -439,6 +473,14 @@ namespace THITRACNGHIEM
         // Khi thoát đóng form
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            if(btnGhi.Enabled == true)
+            {
+                DialogResult result = MessageBox.Show("Bạn có muốn thoát? Các thao tác trên bộ đề sẽ không được lưu", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
             this.Close();
         }
 
@@ -472,38 +514,49 @@ namespace THITRACNGHIEM
             cmbMonHoc_SelectedIndexChanged(sender, e);
         }
 
-        private void btnHuy_Click(object sender, EventArgs e)
-        {
-            this.bdsBoDe.CancelEdit();
-            HidePanelEdit(true);
-            this.bdsBoDe.Position = vitri;
-            if (bdsBoDe.Count == 0)
-                btnHieuChinh.Enabled = btnXoa.Enabled = false;
-            else if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-                || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
-            {
-                btnHieuChinh.Enabled = false;
-                btnXoa.Enabled = false;
-            }
-            //btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
-            //Kiểm tra thử cho reload, ghi, thoát,chuyển môn ko
-            //   UndoStackChange();
-            btnXong.Enabled = true;
-        }
+        //private void btnHuy_Click(object sender, EventArgs e)
+        //{
+        //    this.bdsBoDe.CancelEdit();
+        //    HidePanelEdit(true);
+        //    this.bdsBoDe.Position = vitri;
+        //    if (bdsBoDe.Count == 0)
+        //        btnHieuChinh.Enabled = btnXoa.Enabled = false;
+        //    else if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
+        //        || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+        //    {
+        //        btnHieuChinh.Enabled = false;
+        //        btnXoa.Enabled = false;
+        //    }
+        //    //btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
+        //    //Kiểm tra thử cho reload, ghi, thoát,chuyển môn ko
+        //    //   UndoStackChange();
+        //    btnXong.Enabled = true;
+        //}
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             //Kiểm tra câu hỏi mới thêm hay không.
             if (!((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString().Equals(""))
             {
-                    int check = Data.ExecuteScalar("SELECT dbo.UDF_KIEMTRA_SO_CH(" + ((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString() + ")",Data.ServerConnection);
-                    if (check == 1)
+                    int check = Data.ExecSqlAndGetReturnedValue("SP_KIEMTRA_CH_DATHI", new SqlParameter("@CAUHOI", ((DataRowView)bdsBoDe.Current)["CAUHOI"].ToString()));
+                    if (check == -1)
                     {
-                        MessageBox.Show("Câu hỏi đã thi, không thể xóa");
+                        MessageBox.Show("Lỗi kết nối vui lòng thử lại");
                         return;
                     }
-                    if(check == 2)
+                    if (check == 1)
                     {
+                        MessageBox.Show("Không thể xóa vì câu hỏi đã được thi");
+                        return;
+                    }
+                    check = Data.ExecSqlAndGetReturnedValue("SP_KIEMTRA_SO_CH",new SqlParameter("@CAUHOI", ( (DataRowView) bdsBoDe.Current )["CAUHOI"].ToString()) );
+                    if(check == -1)
+                    {
+                        MessageBox.Show("Lỗi kết nối vui lòng thử lại");
+                        return;
+                    }    
+                    if (check == 1)
+                     {
                         MessageBox.Show("Không thể xóa vì số câu hỏi không đủ để thi");
                         return;
                     }
@@ -517,6 +570,7 @@ namespace THITRACNGHIEM
             //trường hợp phục hồi dẫn tới không còn dòng nào nữa
             if (bdsBoDe.Count == 0)
                 btnHieuChinh.Enabled = btnXoa.Enabled = false;
+            btnGhi_ItemClick(null, null);
         }
 
 
@@ -534,18 +588,18 @@ namespace THITRACNGHIEM
             this.bdsBoDe.Position = vitri;
             if (bdsBoDe.Count == 0)
                 btnHieuChinh.Enabled = btnXoa.Enabled = false;
-            else if (((DataRowView)bdsBoDe.Current).Row["ISUSED"].ToString().Equals("True")
-                || !((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
+            else if (!((DataRowView)bdsBoDe.Current).Row["MAGV"].ToString().Trim().Equals(Data.username))
             {
                 btnHieuChinh.Enabled = false;
                 btnXoa.Enabled = false;
             }
             else btnXoa.Enabled = btnHieuChinh.Enabled = true;
             btnThem.Enabled = true;
-            //Kiểm tra thử cho reload, ghi, thoát,chuyển môn ko
+            //Kiểm tra thử cho reload, ghi,chuyển môn ko
             UndoStackChange();
             //bật lên khi trường hợp người dùng nhấn nút hiệu chỉnh nhưng câu đó đã thi nên không cho hiệu chỉnh-> disable nút xong
             btnXong.Enabled = true;
+            btnThoat.Enabled = true;
         }
 
         private void checkGV_BD_CheckedChanged(object sender, EventArgs e)
@@ -618,6 +672,7 @@ namespace THITRACNGHIEM
                 if (bdsBoDe.Count == 0)
                     btnHieuChinh.Enabled = btnXoa.Enabled = false;
                 //else btnHieuChinh.Enabled = btnXoa.Enabled = true;
+                btnGhi_ItemClick(null, null);
             }
             catch (Exception ex)
             {
@@ -653,6 +708,7 @@ namespace THITRACNGHIEM
                 //trường hợp phục hồi dẫn tới không còn dòng nào nữa
                 if (bdsBoDe.Count == 0)
                     btnHieuChinh.Enabled = btnXoa.Enabled = false;
+                btnGhi_ItemClick(null, null);
             }
             catch (Exception ex)
             {

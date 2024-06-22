@@ -16,12 +16,34 @@ namespace THITRACNGHIEM
         public formXemDanhSachDangKy()
         {
             InitializeComponent();
+            lblErrorTuNgay.Visible = lblErrorDenNgay.Visible = false;
         }
 
         private void btnXem_Click(object sender, EventArgs e)
         {
+            lblErrorTuNgay.Visible = lblErrorDenNgay.Visible = false;
             String tungay = dateEditTuNgay.Text;
             String denngay = dateEditDenNgay.Text;
+            if (tungay.Length == 0)
+            {
+                lblErrorTuNgay.Text = "Vui lòng nhập ngày bắt đầu";
+                lblErrorTuNgay.Visible = true;
+            }
+            if (denngay.Length == 0)
+            {
+                 lblErrorDenNgay.Text = "Vui lòng nhập ngày đến";
+                lblErrorDenNgay.Visible = true;
+            }
+            if( denngay.Length != 0&&tungay.Length!=0)
+            if(dateEditDenNgay.DateTime < dateEditTuNgay.DateTime)
+            {
+                lblErrorTuNgay.Text = "Ngày bắt đầu không thể lớn hơn ngày kết thúc";
+                lblErrorTuNgay.Visible = true;
+            }
+            if(lblErrorTuNgay.Visible == true|| lblErrorDenNgay.Visible == true)
+            {
+                return;
+            }
             try
             {
             Xrpt_DangKyThi danhSachDangKyThi = new Xrpt_DangKyThi(tungay,denngay);
