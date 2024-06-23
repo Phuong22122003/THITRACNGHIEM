@@ -30,16 +30,16 @@ namespace WindowsFormsApp1
                 btnDangNhap.Enabled = false;
                 return;
             }
-            if (Data.mlogin.Length > 0)
-            {
-                btnDangNhap.Enabled = false;
-                return;
-            }
             Data.bds_dspm.DataSource = danhSachCoso;
             this.cmbCoSo.DataSource = Data.bds_dspm;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             Data.bds_dspm.DataSource = danhSachCoso;
+            if (Data.mlogin.Length > 0)
+            {
+                btnDangNhap.Enabled = false;
+                return;
+            }
         }
 
         private void btnDangNhap_Click(object sender, EventArgs e)

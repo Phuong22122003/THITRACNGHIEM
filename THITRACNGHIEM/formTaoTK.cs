@@ -138,12 +138,12 @@ namespace THITRACNGHIEM
         }
         private void btnTaoTK_Click(object sender, EventArgs e)
         {
-            if(txtTK.Text==null && txtTK.Text.Equals(""))
+            if(txtTK.Text==null || txtTK.Text.Equals(""))
             {
                 lblLoiTK.Text = "Tên tài khoảng không được trống";
                 return;
             }
-            if (txtMK.Text == null && txtTK.Text.Equals(""))
+            if (txtMK.Text == null || txtTK.Text.Equals(""))
             {
                 lblLoiMK.Text = "Mật khẩu không được trống";
                 return;
@@ -204,7 +204,20 @@ namespace THITRACNGHIEM
                 lblMessage.Text = "Xóa thất bại";
                 return;
             }
-            else lblMessage.Text = "Xóa thành công";
+            lblMessage.Text = "Xóa thành công";
+            dtNhom.Clear();
+            if (Data.username.Contains("TRUONG"))
+            {
+                dtNhom.Rows.Add("TRƯỜNG", "TRUONG");
+            }
+            else
+            {
+                dtNhom.Rows.Add("CƠ SỞ", "COSO");
+                dtNhom.Rows.Add("GIẢNG VIÊN", "GIANGVIEN");
+            }
+
+            txtTK.Text = "";
+            txtMK.Text = "";
             txtTK.Enabled = txtMK.Enabled = cmbNhom.Enabled = true;
             btnTaoTK.Enabled = true;
             btnXoaTK.Enabled = false;

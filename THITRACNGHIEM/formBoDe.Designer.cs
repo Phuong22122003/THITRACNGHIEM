@@ -117,65 +117,72 @@
             // nOIDUNGLabel
             // 
             nOIDUNGLabel.AutoSize = true;
-            nOIDUNGLabel.Location = new System.Drawing.Point(346, 50);
+            nOIDUNGLabel.Location = new System.Drawing.Point(307, 84);
+            nOIDUNGLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             nOIDUNGLabel.Name = "nOIDUNGLabel";
-            nOIDUNGLabel.Size = new System.Drawing.Size(65, 16);
+            nOIDUNGLabel.Size = new System.Drawing.Size(93, 19);
             nOIDUNGLabel.TabIndex = 4;
-            nOIDUNGLabel.Text = "NOIDUNG:";
+            nOIDUNGLabel.Text = "NỘI DUNG:";
             // 
             // aLabel
             // 
             aLabel.AutoSize = true;
-            aLabel.Location = new System.Drawing.Point(417, 163);
+            aLabel.Location = new System.Drawing.Point(315, 235);
+            aLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             aLabel.Name = "aLabel";
-            aLabel.Size = new System.Drawing.Size(20, 16);
+            aLabel.Size = new System.Drawing.Size(89, 19);
             aLabel.TabIndex = 6;
-            aLabel.Text = "A:";
+            aLabel.Text = "ĐÁP ÁN A:";
             // 
             // bLabel
             // 
             bLabel.AutoSize = true;
-            bLabel.Location = new System.Drawing.Point(418, 224);
+            bLabel.Location = new System.Drawing.Point(316, 354);
+            bLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             bLabel.Name = "bLabel";
-            bLabel.Size = new System.Drawing.Size(19, 16);
+            bLabel.Size = new System.Drawing.Size(87, 19);
             bLabel.TabIndex = 8;
-            bLabel.Text = "B:";
+            bLabel.Text = "ĐÁP ÁN B:";
             // 
             // cLabel
             // 
             cLabel.AutoSize = true;
-            cLabel.Location = new System.Drawing.Point(417, 282);
+            cLabel.Location = new System.Drawing.Point(315, 515);
+            cLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             cLabel.Name = "cLabel";
-            cLabel.Size = new System.Drawing.Size(20, 16);
+            cLabel.Size = new System.Drawing.Size(88, 19);
             cLabel.TabIndex = 10;
-            cLabel.Text = "C:";
+            cLabel.Text = "ĐÁP ÁN C:";
             // 
             // dLabel
             // 
             dLabel.AutoSize = true;
-            dLabel.Location = new System.Drawing.Point(417, 337);
+            dLabel.Location = new System.Drawing.Point(315, 641);
+            dLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             dLabel.Name = "dLabel";
-            dLabel.Size = new System.Drawing.Size(20, 16);
+            dLabel.Size = new System.Drawing.Size(89, 19);
             dLabel.TabIndex = 12;
-            dLabel.Text = "D:";
+            dLabel.Text = "ĐÁP ÁN D:";
             // 
             // dAP_ANLabel
             // 
             dAP_ANLabel.AutoSize = true;
-            dAP_ANLabel.Location = new System.Drawing.Point(356, 401);
+            dAP_ANLabel.Location = new System.Drawing.Point(297, 732);
+            dAP_ANLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             dAP_ANLabel.Name = "dAP_ANLabel";
-            dAP_ANLabel.Size = new System.Drawing.Size(55, 16);
+            dAP_ANLabel.Size = new System.Drawing.Size(122, 19);
             dAP_ANLabel.TabIndex = 14;
-            dAP_ANLabel.Text = "DAP AN:";
+            dAP_ANLabel.Text = "ĐÁP ÁN ĐÚNG:";
             // 
             // tRINHDOLabel
             // 
             tRINHDOLabel.AutoSize = true;
-            tRINHDOLabel.Location = new System.Drawing.Point(955, 397);
+            tRINHDOLabel.Location = new System.Drawing.Point(1583, 716);
+            tRINHDOLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             tRINHDOLabel.Name = "tRINHDOLabel";
-            tRINHDOLabel.Size = new System.Drawing.Size(65, 16);
+            tRINHDOLabel.Size = new System.Drawing.Size(91, 19);
             tRINHDOLabel.TabIndex = 15;
-            tRINHDOLabel.Text = "TRINHDO:";
+            tRINHDOLabel.Text = "TRÌNH ĐỘ:";
             // 
             // barManager1
             // 
@@ -318,31 +325,31 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1828, 51);
+            this.barDockControlTop.Size = new System.Drawing.Size(2564, 55);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 1035);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 1231);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1828, 20);
+            this.barDockControlBottom.Size = new System.Drawing.Size(2564, 20);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 51);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 55);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 984);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 1176);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1828, 51);
+            this.barDockControlRight.Location = new System.Drawing.Point(2564, 55);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 984);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 1176);
             // 
             // panelControl1
             // 
@@ -350,17 +357,19 @@
             this.panelControl1.Controls.Add(this.lblMonHoc);
             this.panelControl1.Controls.Add(this.cmbMonHoc);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelControl1.Location = new System.Drawing.Point(0, 51);
+            this.panelControl1.Location = new System.Drawing.Point(0, 55);
+            this.panelControl1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1828, 81);
+            this.panelControl1.Size = new System.Drawing.Size(2564, 145);
             this.panelControl1.TabIndex = 4;
             // 
             // checkGV_BD
             // 
             this.checkGV_BD.AutoSize = true;
-            this.checkGV_BD.Location = new System.Drawing.Point(908, 31);
+            this.checkGV_BD.Location = new System.Drawing.Point(1751, 55);
+            this.checkGV_BD.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.checkGV_BD.Name = "checkGV_BD";
-            this.checkGV_BD.Size = new System.Drawing.Size(180, 20);
+            this.checkGV_BD.Size = new System.Drawing.Size(222, 23);
             this.checkGV_BD.TabIndex = 2;
             this.checkGV_BD.Text = "      Xem câu hỏi của mình";
             this.checkGV_BD.UseVisualStyleBackColor = true;
@@ -369,9 +378,10 @@
             // lblMonHoc
             // 
             this.lblMonHoc.AutoSize = true;
-            this.lblMonHoc.Location = new System.Drawing.Point(65, 30);
+            this.lblMonHoc.Location = new System.Drawing.Point(126, 53);
+            this.lblMonHoc.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblMonHoc.Name = "lblMonHoc";
-            this.lblMonHoc.Size = new System.Drawing.Size(60, 16);
+            this.lblMonHoc.Size = new System.Drawing.Size(75, 19);
             this.lblMonHoc.TabIndex = 1;
             this.lblMonHoc.Text = "Môn học:";
             // 
@@ -381,9 +391,10 @@
             this.cmbMonHoc.DisplayMember = "TENMH";
             this.cmbMonHoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMonHoc.FormattingEnabled = true;
-            this.cmbMonHoc.Location = new System.Drawing.Point(180, 27);
+            this.cmbMonHoc.Location = new System.Drawing.Point(347, 48);
+            this.cmbMonHoc.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cmbMonHoc.Name = "cmbMonHoc";
-            this.cmbMonHoc.Size = new System.Drawing.Size(354, 24);
+            this.cmbMonHoc.Size = new System.Drawing.Size(679, 27);
             this.cmbMonHoc.TabIndex = 0;
             this.cmbMonHoc.ValueMember = "MAMH";
             this.cmbMonHoc.SelectedIndexChanged += new System.EventHandler(this.cmbMonHoc_SelectedIndexChanged);
@@ -421,9 +432,9 @@
             // fillToolStrip
             // 
             this.fillToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.fillToolStrip.Location = new System.Drawing.Point(0, 132);
+            this.fillToolStrip.Location = new System.Drawing.Point(0, 200);
             this.fillToolStrip.Name = "fillToolStrip";
-            this.fillToolStrip.Size = new System.Drawing.Size(1828, 25);
+            this.fillToolStrip.Size = new System.Drawing.Size(2564, 25);
             this.fillToolStrip.TabIndex = 9;
             this.fillToolStrip.Text = "fillToolStrip";
             // 
@@ -431,11 +442,13 @@
             // 
             this.gcBode.DataSource = this.bdsBoDe;
             this.gcBode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcBode.Location = new System.Drawing.Point(0, 157);
+            this.gcBode.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gcBode.Location = new System.Drawing.Point(0, 225);
             this.gcBode.MainView = this.gridView1;
+            this.gcBode.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gcBode.MenuManager = this.barManager1;
             this.gcBode.Name = "gcBode";
-            this.gcBode.Size = new System.Drawing.Size(1828, 878);
+            this.gcBode.Size = new System.Drawing.Size(2564, 1006);
             this.gcBode.TabIndex = 9;
             this.gcBode.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -455,107 +468,107 @@
             this.colMAGV,
             this.colTD,
             this.colISUED});
-            this.gridView1.DetailHeight = 373;
+            this.gridView1.DetailHeight = 664;
             this.gridView1.GridControl = this.gcBode;
             this.gridView1.Name = "gridView1";
             // 
             // colCAUHOI
             // 
             this.colCAUHOI.FieldName = "CAUHOI";
-            this.colCAUHOI.MinWidth = 25;
+            this.colCAUHOI.MinWidth = 48;
             this.colCAUHOI.Name = "colCAUHOI";
             this.colCAUHOI.OptionsColumn.AllowEdit = false;
-            this.colCAUHOI.Width = 97;
+            this.colCAUHOI.Width = 186;
             // 
             // colMAMH
             // 
             this.colMAMH.FieldName = "MAMH";
-            this.colMAMH.MinWidth = 25;
+            this.colMAMH.MinWidth = 48;
             this.colMAMH.Name = "colMAMH";
             this.colMAMH.OptionsColumn.AllowEdit = false;
-            this.colMAMH.Width = 94;
+            this.colMAMH.Width = 181;
             // 
             // colTRINHDO
             // 
             this.colTRINHDO.FieldName = "TRINHDO";
-            this.colTRINHDO.MinWidth = 25;
+            this.colTRINHDO.MinWidth = 48;
             this.colTRINHDO.Name = "colTRINHDO";
             this.colTRINHDO.OptionsColumn.AllowEdit = false;
-            this.colTRINHDO.Width = 144;
+            this.colTRINHDO.Width = 278;
             // 
             // colNOIDUNG
             // 
             this.colNOIDUNG.FieldName = "NOIDUNG";
-            this.colNOIDUNG.MinWidth = 25;
+            this.colNOIDUNG.MinWidth = 48;
             this.colNOIDUNG.Name = "colNOIDUNG";
             this.colNOIDUNG.OptionsColumn.AllowEdit = false;
             this.colNOIDUNG.Visible = true;
             this.colNOIDUNG.VisibleIndex = 0;
-            this.colNOIDUNG.Width = 262;
+            this.colNOIDUNG.Width = 505;
             // 
             // colA
             // 
             this.colA.FieldName = "A";
-            this.colA.MinWidth = 25;
+            this.colA.MinWidth = 48;
             this.colA.Name = "colA";
             this.colA.OptionsColumn.AllowEdit = false;
             this.colA.Visible = true;
             this.colA.VisibleIndex = 1;
-            this.colA.Width = 262;
+            this.colA.Width = 505;
             // 
             // colB
             // 
             this.colB.FieldName = "B";
-            this.colB.MinWidth = 25;
+            this.colB.MinWidth = 48;
             this.colB.Name = "colB";
             this.colB.OptionsColumn.AllowEdit = false;
             this.colB.Visible = true;
             this.colB.VisibleIndex = 2;
-            this.colB.Width = 262;
+            this.colB.Width = 505;
             // 
             // colC
             // 
             this.colC.FieldName = "C";
-            this.colC.MinWidth = 25;
+            this.colC.MinWidth = 48;
             this.colC.Name = "colC";
             this.colC.OptionsColumn.AllowEdit = false;
             this.colC.Visible = true;
             this.colC.VisibleIndex = 3;
-            this.colC.Width = 262;
+            this.colC.Width = 505;
             // 
             // colD
             // 
             this.colD.FieldName = "D";
-            this.colD.MinWidth = 25;
+            this.colD.MinWidth = 48;
             this.colD.Name = "colD";
             this.colD.OptionsColumn.AllowEdit = false;
             this.colD.Visible = true;
             this.colD.VisibleIndex = 4;
-            this.colD.Width = 262;
+            this.colD.Width = 505;
             // 
             // colDAP_AN
             // 
             this.colDAP_AN.FieldName = "DAP_AN";
-            this.colDAP_AN.MinWidth = 25;
+            this.colDAP_AN.MinWidth = 48;
             this.colDAP_AN.Name = "colDAP_AN";
             this.colDAP_AN.OptionsColumn.AllowEdit = false;
             this.colDAP_AN.Visible = true;
             this.colDAP_AN.VisibleIndex = 5;
-            this.colDAP_AN.Width = 135;
+            this.colDAP_AN.Width = 260;
             // 
             // colMAGV
             // 
             this.colMAGV.FieldName = "MAGV";
-            this.colMAGV.MinWidth = 25;
+            this.colMAGV.MinWidth = 48;
             this.colMAGV.Name = "colMAGV";
             this.colMAGV.OptionsColumn.AllowEdit = false;
-            this.colMAGV.Width = 94;
+            this.colMAGV.Width = 181;
             // 
             // colTD
             // 
             this.colTD.Caption = "TRÌNH ĐỘ";
             this.colTD.FieldName = "colTD";
-            this.colTD.MinWidth = 25;
+            this.colTD.MinWidth = 48;
             this.colTD.Name = "colTD";
             this.colTD.OptionsColumn.AllowEdit = false;
             this.colTD.UnboundDataType = typeof(string);
@@ -563,18 +576,18 @@
     "uyên ngành\', \'Cao đẳng\')";
             this.colTD.Visible = true;
             this.colTD.VisibleIndex = 6;
-            this.colTD.Width = 235;
+            this.colTD.Width = 453;
             // 
             // colISUED
             // 
             this.colISUED.Caption = "Is used";
             this.colISUED.FieldName = "ISUSED";
-            this.colISUED.MinWidth = 25;
+            this.colISUED.MinWidth = 48;
             this.colISUED.Name = "colISUED";
             this.colISUED.OptionsColumn.AllowEdit = false;
             this.colISUED.Visible = true;
             this.colISUED.VisibleIndex = 7;
-            this.colISUED.Width = 94;
+            this.colISUED.Width = 181;
             // 
             // panelEditCauHoi
             // 
@@ -596,27 +609,30 @@
             this.panelEditCauHoi.Controls.Add(this.txtC);
             this.panelEditCauHoi.Controls.Add(this.txtD);
             this.panelEditCauHoi.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelEditCauHoi.Location = new System.Drawing.Point(0, 517);
+            this.panelEditCauHoi.Location = new System.Drawing.Point(0, 386);
+            this.panelEditCauHoi.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.panelEditCauHoi.Name = "panelEditCauHoi";
-            this.panelEditCauHoi.Size = new System.Drawing.Size(1828, 518);
+            this.panelEditCauHoi.Size = new System.Drawing.Size(2564, 845);
             this.panelEditCauHoi.TabIndex = 10;
             // 
             // iSUSEDCheckEdit
             // 
             this.iSUSEDCheckEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "ISUSED", true));
             this.iSUSEDCheckEdit.EditValue = true;
-            this.iSUSEDCheckEdit.Location = new System.Drawing.Point(720, 392);
+            this.iSUSEDCheckEdit.Location = new System.Drawing.Point(1029, 714);
+            this.iSUSEDCheckEdit.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.iSUSEDCheckEdit.MenuManager = this.barManager1;
             this.iSUSEDCheckEdit.Name = "iSUSEDCheckEdit";
             this.iSUSEDCheckEdit.Properties.Caption = "Còn sử dụng";
-            this.iSUSEDCheckEdit.Size = new System.Drawing.Size(145, 24);
+            this.iSUSEDCheckEdit.Size = new System.Drawing.Size(280, 27);
             this.iSUSEDCheckEdit.TabIndex = 19;
             // 
             // btnHuy
             // 
-            this.btnHuy.Location = new System.Drawing.Point(920, 441);
+            this.btnHuy.Location = new System.Drawing.Point(1414, 779);
+            this.btnHuy.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnHuy.Name = "btnHuy";
-            this.btnHuy.Size = new System.Drawing.Size(75, 33);
+            this.btnHuy.Size = new System.Drawing.Size(144, 59);
             this.btnHuy.TabIndex = 18;
             this.btnHuy.Text = "Hủy";
             this.btnHuy.UseVisualStyleBackColor = true;
@@ -624,9 +640,10 @@
             // 
             // btnXong
             // 
-            this.btnXong.Location = new System.Drawing.Point(720, 442);
+            this.btnXong.Location = new System.Drawing.Point(1029, 780);
+            this.btnXong.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnXong.Name = "btnXong";
-            this.btnXong.Size = new System.Drawing.Size(75, 33);
+            this.btnXong.Size = new System.Drawing.Size(144, 59);
             this.btnXong.TabIndex = 17;
             this.btnXong.Text = "Xong";
             this.btnXong.UseVisualStyleBackColor = true;
@@ -634,71 +651,80 @@
             // 
             // cmbTrinhDo
             // 
+            this.cmbTrinhDo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTrinhDo.FormattingEnabled = true;
-            this.cmbTrinhDo.Location = new System.Drawing.Point(1075, 390);
+            this.cmbTrinhDo.Location = new System.Drawing.Point(1755, 711);
+            this.cmbTrinhDo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cmbTrinhDo.Name = "cmbTrinhDo";
-            this.cmbTrinhDo.Size = new System.Drawing.Size(305, 24);
+            this.cmbTrinhDo.Size = new System.Drawing.Size(585, 27);
             this.cmbTrinhDo.TabIndex = 16;
             // 
             // cmbDapAn
             // 
+            this.cmbDapAn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDapAn.FormattingEnabled = true;
-            this.cmbDapAn.Location = new System.Drawing.Point(452, 393);
+            this.cmbDapAn.Location = new System.Drawing.Point(512, 722);
+            this.cmbDapAn.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cmbDapAn.Name = "cmbDapAn";
-            this.cmbDapAn.Size = new System.Drawing.Size(121, 24);
+            this.cmbDapAn.Size = new System.Drawing.Size(230, 27);
             this.cmbDapAn.TabIndex = 15;
             // 
             // txtNoiDung
             // 
             this.txtNoiDung.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "NOIDUNG", true));
-            this.txtNoiDung.Location = new System.Drawing.Point(452, 27);
+            this.txtNoiDung.Location = new System.Drawing.Point(512, 49);
+            this.txtNoiDung.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtNoiDung.MenuManager = this.barManager1;
             this.txtNoiDung.Name = "txtNoiDung";
-            this.txtNoiDung.Size = new System.Drawing.Size(948, 62);
+            this.txtNoiDung.Size = new System.Drawing.Size(1828, 90);
             this.txtNoiDung.TabIndex = 5;
             // 
             // txtA
             // 
             this.txtA.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "A", true));
-            this.txtA.Location = new System.Drawing.Point(452, 133);
+            this.txtA.Location = new System.Drawing.Point(512, 193);
+            this.txtA.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtA.MenuManager = this.barManager1;
             this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(948, 49);
+            this.txtA.Size = new System.Drawing.Size(1828, 70);
             this.txtA.TabIndex = 7;
             // 
             // txtB
             // 
             this.txtB.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "B", true));
-            this.txtB.Location = new System.Drawing.Point(454, 210);
+            this.txtB.Location = new System.Drawing.Point(516, 328);
+            this.txtB.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtB.MenuManager = this.barManager1;
             this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(948, 40);
+            this.txtB.Size = new System.Drawing.Size(1828, 70);
             this.txtB.TabIndex = 9;
             // 
             // txtC
             // 
             this.txtC.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "C", true));
-            this.txtC.Location = new System.Drawing.Point(454, 268);
+            this.txtC.Location = new System.Drawing.Point(516, 479);
+            this.txtC.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtC.MenuManager = this.barManager1;
             this.txtC.Name = "txtC";
-            this.txtC.Size = new System.Drawing.Size(946, 40);
+            this.txtC.Size = new System.Drawing.Size(1824, 70);
             this.txtC.TabIndex = 11;
             // 
             // txtD
             // 
             this.txtD.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsBoDe, "D", true));
-            this.txtD.Location = new System.Drawing.Point(452, 325);
+            this.txtD.Location = new System.Drawing.Point(512, 602);
+            this.txtD.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtD.MenuManager = this.barManager1;
             this.txtD.Name = "txtD";
-            this.txtD.Size = new System.Drawing.Size(948, 40);
+            this.txtD.Size = new System.Drawing.Size(1828, 70);
             this.txtD.TabIndex = 13;
             // 
             // formBoDe
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1828, 1055);
+            this.ClientSize = new System.Drawing.Size(2564, 1251);
             this.Controls.Add(this.panelEditCauHoi);
             this.Controls.Add(this.gcBode);
             this.Controls.Add(this.fillToolStrip);

@@ -21,7 +21,16 @@ namespace THITRACNGHIEM
             InitializeComponent();
         }
 
+        public void reload()
+        {
+            this.dSBangDiemTheoMon.EnforceConstraints = false;
 
+            this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.MONHOCTableAdapter.Fill(this.dSBangDiemTheoMon.MONHOC);
+
+            this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.LOPTableAdapter.Fill(this.dSBangDiemTheoMon.LOP);
+        }
         private void formRptBangDiemTheoMonHoc_Load(object sender, EventArgs e)
         {
 
@@ -32,7 +41,7 @@ namespace THITRACNGHIEM
 
             this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.LOPTableAdapter.Fill(this.dSBangDiemTheoMon.LOP);
-            this.cmbCoSo.DataSource = Data.bds_dspm;
+            this.cmbCoSo.DataSource = Data.bds_dspm.DataSource;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             this.cmbCoSo.SelectedIndex = Data.mCoSo;

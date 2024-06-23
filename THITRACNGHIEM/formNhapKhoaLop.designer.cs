@@ -80,6 +80,8 @@
             this.SINHVIENTableAdapter = new THITRACNGHIEM.DSKhoaLopTableAdapters.SINHVIENTableAdapter();
             this.bdsGV_DK = new System.Windows.Forms.BindingSource(this.components);
             this.GV_DKTableAdapter = new THITRACNGHIEM.DSKhoaLopTableAdapters.GIAOVIEN_DANGKYTableAdapter();
+            this.bdsGV = new System.Windows.Forms.BindingSource(this.components);
+            this.GIAOVIENTableAdapter = new THITRACNGHIEM.DSKhoaLopTableAdapters.GIAOVIENTableAdapter();
             mAKHLabel = new System.Windows.Forms.Label();
             tENKHLabel = new System.Windows.Forms.Label();
             mACSLabel = new System.Windows.Forms.Label();
@@ -102,6 +104,7 @@
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bdsSV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsGV_DK)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsGV)).BeginInit();
             this.SuspendLayout();
             // 
             // mAKHLabel
@@ -331,6 +334,7 @@
             this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
             this.tableAdapterManager.COSOTableAdapter = null;
             this.tableAdapterManager.GIAOVIEN_DANGKYTableAdapter = null;
+            this.tableAdapterManager.GIAOVIENTableAdapter = null;
             this.tableAdapterManager.KHOATableAdapter = this.KHOATableAdapter;
             this.tableAdapterManager.LOPTableAdapter = null;
             this.tableAdapterManager.SINHVIENTableAdapter = null;
@@ -404,7 +408,7 @@
             this.pcKHOA.Location = new System.Drawing.Point(0, 364);
             this.pcKHOA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pcKHOA.Name = "pcKHOA";
-            this.pcKHOA.Size = new System.Drawing.Size(565, 484);
+            this.pcKHOA.Size = new System.Drawing.Size(642, 484);
             this.pcKHOA.TabIndex = 18;
             this.pcKHOA.Paint += new System.Windows.Forms.PaintEventHandler(this.panelControl2_Paint);
             // 
@@ -489,12 +493,12 @@
             gridLevelNode2.RelationName = "Level1";
             this.gcLOP.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode2});
-            this.gcLOP.Location = new System.Drawing.Point(565, 364);
+            this.gcLOP.Location = new System.Drawing.Point(642, 364);
             this.gcLOP.MainView = this.gvLOP;
             this.gcLOP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gcLOP.MenuManager = this.barManager1;
             this.gcLOP.Name = "gcLOP";
-            this.gcLOP.Size = new System.Drawing.Size(1574, 484);
+            this.gcLOP.Size = new System.Drawing.Size(1497, 484);
             this.gcLOP.TabIndex = 22;
             this.gcLOP.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvLOP});
@@ -568,6 +572,15 @@
             // 
             this.GV_DKTableAdapter.ClearBeforeFill = true;
             // 
+            // bdsGV
+            // 
+            this.bdsGV.DataMember = "FK_GIAOVIEN_KHOA";
+            this.bdsGV.DataSource = this.bdsKHOA;
+            // 
+            // GIAOVIENTableAdapter
+            // 
+            this.GIAOVIENTableAdapter.ClearBeforeFill = true;
+            // 
             // formNhapKhoaLop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -605,6 +618,7 @@
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bdsSV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsGV_DK)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -657,5 +671,7 @@
         private System.Windows.Forms.ToolStripMenuItem hiệuChỉnhToolStripMenuItem;
         private System.Windows.Forms.BindingSource bdsGV_DK;
         private DSKhoaLopTableAdapters.GIAOVIEN_DANGKYTableAdapter GV_DKTableAdapter;
+        private System.Windows.Forms.BindingSource bdsGV;
+        private DSKhoaLopTableAdapters.GIAOVIENTableAdapter GIAOVIENTableAdapter;
     }
 }

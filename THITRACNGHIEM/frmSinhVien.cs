@@ -200,10 +200,14 @@ namespace THITRACNGHIEM
         }
         private void HidePanelEdit(bool allow)
         {
+
             if (allow)
                panelEditSV.Dock = DockStyle.None;
             else
+            {
                 panelEditSV.Dock = DockStyle.Left;
+                lblErrorHo.Visible = lblErrorTen.Visible = lblErrorMasv.Visible = lblErrorPassword.Visible = lblErrorNgaySinh.Visible = false;
+            }
              gcLop.Enabled = allow;
              panelEditSV.Visible=!allow;
              gcSinhVien.Enabled = allow;
@@ -235,7 +239,7 @@ namespace THITRACNGHIEM
         }
         private void btnXong_Click(object sender, EventArgs e)
         {
-            lblErrorHo.Visible = lblErrorTen.Visible = lblErrorMasv.Visible = lblErrorPassword.Visible = false;
+            lblErrorHo.Visible = lblErrorTen.Visible = lblErrorMasv.Visible = lblErrorPassword.Visible = lblErrorNgaySinh.Visible = false;
             currentDataRow = ((DataRowView)bdsSinhVien.Current).Row;
             int checkError = 0;
             if (txtMasv.Text.Trim().Equals(""))
@@ -304,6 +308,12 @@ namespace THITRACNGHIEM
             {
                 lblErrorPassword.Text = "Password không được chứa khoảng trống";
                 lblErrorPassword.Visible = true;
+                checkError = 1;
+            }
+            if(txtNgaySinh.DateTime >= DateTime.Now)
+            {
+                lblErrorNgaySinh.Text = "Ngày sinh không hợp lệ";
+                lblErrorNgaySinh.Visible = true;
                 checkError = 1;
             }
             if (checkError == 1) return;
@@ -460,6 +470,7 @@ namespace THITRACNGHIEM
             HidePanelEdit(true);
             UndoStack.TriggerEvent();
             btnThoat.Enabled = btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = true;
+            lblErrorHo.Visible = lblErrorTen.Visible = lblErrorMasv.Visible = lblErrorPassword.Visible = lblErrorNgaySinh.Visible = false;
         }
 
         private void btnRedo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

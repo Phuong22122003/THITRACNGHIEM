@@ -100,6 +100,11 @@ namespace WindowsFormsApp1
             btnDangKyThi.Enabled = false;
 
             ribbonPage3.Visible = true;
+            btnXemDanhSachDk.Visibility = BarItemVisibility.Always;
+            btnXemDanhSachDk.Enabled = true;
+
+            btnBangDiem.Visibility = BarItemVisibility.Always;
+            btnBangDiem.Enabled = true;
         }
         public void GiaoDienCoSo()
         {
@@ -113,6 +118,9 @@ namespace WindowsFormsApp1
 
             ribbonPageGroupMonHoc.Visible = true;
             ribbonPageGroupMonHoc.Enabled = true;
+
+            btnMonHoc.Visibility = BarItemVisibility.Always;
+            btnMonHoc.Enabled = true;
 
             btnQuanLyCauHoi.Visibility = BarItemVisibility.Always;
             btnQuanLyCauHoi.Enabled = true;
@@ -136,6 +144,11 @@ namespace WindowsFormsApp1
             btnDangKyThi.Enabled = true;
 
             ribbonPage3.Visible = true;
+            btnXemDanhSachDk.Visibility = BarItemVisibility.Always;
+            btnXemDanhSachDk.Enabled = true;
+
+            btnBangDiem.Visibility = BarItemVisibility.Always;
+            btnBangDiem.Enabled = true;
         }
         private void dangXuatBtn_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -328,7 +341,10 @@ namespace WindowsFormsApp1
         private void btnQuanLyGiangVien_ItemClick(object sender, ItemClickEventArgs e)
         {
             Form frm = this.CheckExist(typeof(formNhapGiaoVien));
-            if (frm != null) frm.Activate();
+            if (frm != null) { 
+            frm.Activate();
+                ((formNhapGiaoVien)frm).reload();
+            }
             else
             {
                 formNhapGiaoVien f = new formNhapGiaoVien(this);
@@ -364,7 +380,11 @@ namespace WindowsFormsApp1
         private void btnBangDiem_ItemClick(object sender, ItemClickEventArgs e)
         {
             Form frm = this.CheckExist(typeof(formRptBangDiemTheoMonHoc));
-            if (frm != null) frm.Activate();
+            if (frm != null)
+            {
+                frm.Activate();
+                ((formRptBangDiemTheoMonHoc)frm).reload();
+            }
             else
             {
                 formRptBangDiemTheoMonHoc f = new formRptBangDiemTheoMonHoc();
@@ -376,7 +396,11 @@ namespace WindowsFormsApp1
         private void btnChiTietPhieuThi_ItemClick(object sender, ItemClickEventArgs e)
         {
             Form frm = this.CheckExist(typeof(formRptChiTietBaiThi));
-            if (frm != null) frm.Activate();
+            if (frm != null)
+            {
+                frm.Activate();
+                ((formRptChiTietBaiThi)frm).reload();
+            }
             else
             {
                 formRptChiTietBaiThi f = new formRptChiTietBaiThi();

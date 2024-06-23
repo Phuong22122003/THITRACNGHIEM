@@ -45,38 +45,51 @@ namespace THITRACNGHIEM
         private void formChuanBiThi_Load(object sender, EventArgs e)
         {
         
-            Data.ExecSqlNonQueryByServerConnection("SET IDENTITY_INSERT GIAOVIEN_DANGKY ON");
-            dSChuanBiThi.EnforceConstraints = false;
-
-            this.GIAOVIENTableAdapter1.Connection.ConnectionString = Data.ServerConnectionString;
-            this.GIAOVIENTableAdapter1.Fill(this.dSChuanBiThi.GIAOVIEN);
-
-            this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-            this.GIAOVIEN_DANGKYTableAdapter.Fill(this.dSChuanBiThi.GIAOVIEN_DANGKY);
-
-            this.CT_GVDKTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-            this.CT_GVDKTableAdapter.Fill(this.dSChuanBiThi.CT_GVDK);
-
-
-            this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-            this.MONHOCTableAdapter.Fill(this.dSChuanBiThi.MONHOC);
-
-            this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-            this.LOPTableAdapter.Fill(this.dSChuanBiThi.LOP);
-
-            this.cmbCoSo.DataSource = Data.bds_dspm;
-            this.cmbCoSo.DisplayMember = "TENCS";
-            this.cmbCoSo.ValueMember = "TENSERVER";
-            this.cmbCoSo.SelectedIndex = Data.mCoSo;
-
-            if (Data.mGroup == "TRUONG")
+            try
             {
-                cmbCoSo.Enabled = true;
+                Data.ExecSqlNonQueryByServerConnection("SET IDENTITY_INSERT GIAOVIEN_DANGKY ON");
+                dSChuanBiThi.EnforceConstraints = false;
+
+
+                this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.LOPTableAdapter.Fill(this.dSChuanBiThi.LOP);
+
+
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.MONHOCTableAdapter.Fill(this.dSChuanBiThi.MONHOC);
+
+                this.GIAOVIENTableAdapter1.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GIAOVIENTableAdapter1.Fill(this.dSChuanBiThi.GIAOVIEN);
+
+                this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GIAOVIEN_DANGKYTableAdapter.Fill(this.dSChuanBiThi.GIAOVIEN_DANGKY);
+
+                this.CT_GVDKTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.CT_GVDKTableAdapter.Fill(this.dSChuanBiThi.CT_GVDK);
+
+
+
+
+
+
             }
-            else
+            catch (Exception ex)
             {
-                cmbCoSo.Enabled = false;
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK);
             }
+
+
+            if (bdsGiaoVienDangKy.Count == 0)
+            {
+                btnXoa.Enabled = false;
+                btnHieuChinh.Enabled = false;
+            } else
+            {
+                btnXoa.Enabled = true;
+                btnHieuChinh.Enabled = true;
+            }
+
+   
 
             undoManager = new UndoManagerWithSubBds();
         }
@@ -268,6 +281,16 @@ namespace THITRACNGHIEM
             btnGhi.Enabled = false;
             if (undoManager.GetUndoStack().Count <= 0) btnPhucHoi.Enabled = false;
             else btnPhucHoi.Enabled = true;
+            if (bdsGiaoVienDangKy.Count == 0)
+            {
+                btnXoa.Enabled = false;
+                btnHieuChinh.Enabled = false;
+            }
+            else
+            {
+                btnXoa.Enabled = true;
+                btnHieuChinh.Enabled = true;
+            }
         }
 
         private void btnGhi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -332,6 +355,7 @@ namespace THITRACNGHIEM
                             && int.Parse(row["LAN"].ToString()) == 1)
                         {
                             count++;
+                            break;
                         }
                     }
                 }
@@ -506,6 +530,16 @@ namespace THITRACNGHIEM
             pcGV_DK.Enabled = false;
             btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
             btnGhi.Enabled = false;
+            if (bdsGiaoVienDangKy.Count == 0)
+            {
+                btnXoa.Enabled = false;
+                btnHieuChinh.Enabled = false;
+            }
+            else
+            {
+                btnXoa.Enabled = true;
+                btnHieuChinh.Enabled = true;
+            }
         }
 
         private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
@@ -521,13 +555,13 @@ namespace THITRACNGHIEM
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (Data.ExecSqlNonQueryByServerConnection($"EXEC SP_CheckDotThiDaThi @mamh = {cmbMonHoc.SelectedValue}, @malop = {cmbLop.SelectedValue}, @lan = {cmbLanThi.SelectedItem}") != 0)
-            {
-                return;
-            }
             if (bdsGiaoVienDangKy.Count == 0)
             {
                 MessageBox.Show("Không có đợt thi để xóa", "", MessageBoxButtons.OK);
+                return;
+            }
+            if (Data.ExecSqlNonQueryByServerConnection($"EXEC SP_CheckDotThiDaThi @mamh = {cmbMonHoc.SelectedValue}, @malop = {cmbLop.SelectedValue}, @lan = {cmbLanThi.SelectedItem}") != 0)
+            {
                 return;
             }
             if (MessageBox.Show
@@ -559,11 +593,26 @@ namespace THITRACNGHIEM
                     this.GIAOVIEN_DANGKYTableAdapter.Fill(dSChuanBiThi.GIAOVIEN_DANGKY);
                     this.CT_GVDKTableAdapter.Fill(dSChuanBiThi.CT_GVDK);
                 }
+                if (bdsGiaoVienDangKy.Count == 0)
+                {
+                    btnXoa.Enabled = false;
+                    btnHieuChinh.Enabled = false;
+                }
+                else
+                {
+                    btnXoa.Enabled = true;
+                    btnHieuChinh.Enabled = true;
+                }
             }
         }
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+
+            this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.LOPTableAdapter.Fill(this.dSChuanBiThi.LOP);
+
+
             this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.MONHOCTableAdapter.Fill(this.dSChuanBiThi.MONHOC);
 
@@ -576,8 +625,6 @@ namespace THITRACNGHIEM
             this.CT_GVDKTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.CT_GVDKTableAdapter.Fill(this.dSChuanBiThi.CT_GVDK);
 
-            this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
-            this.LOPTableAdapter.Fill(this.dSChuanBiThi.LOP);
 
         }
 
