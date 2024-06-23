@@ -72,6 +72,8 @@
             this.DetailData1 = new DevExpress.XtraReports.UI.XRControlStyle();
             this.DetailData3_Odd = new DevExpress.XtraReports.UI.XRControlStyle();
             this.PageInfo = new DevExpress.XtraReports.UI.XRControlStyle();
+            this.xrLabel6 = new DevExpress.XtraReports.UI.XRLabel();
+            this.txtDiem = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -107,6 +109,8 @@
             // ReportHeader
             // 
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel6,
+            this.txtDiem,
             this.lblLanThi,
             this.xrLabel5,
             this.lblNgayThi,
@@ -469,6 +473,24 @@
             this.PageInfo.Name = "PageInfo";
             this.PageInfo.Padding = new DevExpress.XtraPrinting.PaddingInfo(6, 6, 0, 0, 100F);
             // 
+            // xrLabel6
+            // 
+            this.xrLabel6.LocationFloat = new DevExpress.Utils.PointFloat(396.2302F, 80.63889F);
+            this.xrLabel6.Multiline = true;
+            this.xrLabel6.Name = "xrLabel6";
+            this.xrLabel6.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel6.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.xrLabel6.Text = "Điểm thi\t: \r\n";
+            // 
+            // txtDiem
+            // 
+            this.txtDiem.LocationFloat = new DevExpress.Utils.PointFloat(496.2302F, 80.63889F);
+            this.txtDiem.Multiline = true;
+            this.txtDiem.Name = "txtDiem";
+            this.txtDiem.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.txtDiem.SizeF = new System.Drawing.SizeF(143.7698F, 23F);
+            this.txtDiem.Text = "\r\n";
+            // 
             // xrpt_ChiTietBaiThi
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -535,5 +557,7 @@
         public DevExpress.XtraReports.UI.XRLabel lblLop;
         public DevExpress.XtraReports.UI.XRLabel lblLanThi;
         private DevExpress.XtraReports.UI.XRLabel xrLabel5;
+        private DevExpress.XtraReports.UI.XRLabel xrLabel6;
+        public DevExpress.XtraReports.UI.XRLabel txtDiem;
     }
 }

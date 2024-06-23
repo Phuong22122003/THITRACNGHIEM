@@ -20,6 +20,7 @@ namespace THITRACNGHIEM
         private int vitri = 0;
         private int vitriLop = 0;
         private String makhoa = "";
+        private String tenkhoa = "";
         private String malop = "";
         //private String tenlop = "";
         //private List<String> malopArr = new List<String>();
@@ -50,11 +51,15 @@ namespace THITRACNGHIEM
        
         private void formNhapKhoaLop_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'DSKhoaLop.GIAOVIEN' table. You can move, or remove it, as needed.
+            this.GIAOVIENTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN);
 
             DSKhoaLop.EnforceConstraints = false;
 
             this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.KHOATableAdapter.Fill(this.DSKhoaLop.KHOA);
+            this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GIAOVIENTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN);
             this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.lOPTableAdapter.Fill(this.DSKhoaLop.LOP);
             this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
@@ -63,7 +68,7 @@ namespace THITRACNGHIEM
             this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
 
 
-            this.cmbCoSo.DataSource = Data.bds_dspm;
+            this.cmbCoSo.DataSource = Data.bds_dspm.DataSource;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             this.cmbCoSo.SelectedIndex = Data.mCoSo;
@@ -127,6 +132,7 @@ namespace THITRACNGHIEM
         {
             txtMAKHOA.Enabled = false;
             makhoa = txtMAKHOA.Text;
+            tenkhoa = txtTENKHOA.Text;
             vitri = bdsKHOA.Position;
             pcKHOA.Enabled = true;
             btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = false;
@@ -175,7 +181,38 @@ namespace THITRACNGHIEM
                     Data.ServerConnection.Close();
                 }
             }
-
+            else
+            {
+                if (txtTENKHOA.Text.Trim().ToUpper() == tenkhoa.Trim().ToUpper())
+                {
+                    undoManagerKhoa.ClearReUndoStack();
+                    contextMenuStrip1.Enabled = true;
+                    gcKHOA.Enabled = true;
+                    pcKHOA.Enabled = false;
+                    btnHieuChinh.Enabled = btnReload.Enabled = btnThem.Enabled = btnXoa.Enabled = true;
+                    btnGhi.Enabled = false;
+                    return;
+                }
+                try
+                {
+                    SqlCommand Sqlcmd = new SqlCommand($"EXECUTE SP_CHECKVALIDATEKHOA @makhoa = null, @TENKHOA = N'{txtTENKHOA.Text}'", Data.ServerConnection);
+                    Sqlcmd.CommandType = CommandType.Text;
+                    Sqlcmd.CommandTimeout = 600;// 10 phut 
+                    if (Data.ServerConnection.State == ConnectionState.Closed) Data.ServerConnection.Open();
+                    Sqlcmd.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    // Lấy thông điệp lỗi từ SqlException
+                    String errorMessage = ex.Message;
+                    MessageBox.Show(errorMessage, "", MessageBoxButtons.OK);
+                    return;
+                }
+                finally
+                {
+                    Data.ServerConnection.Close();
+                }
+            }
             try
             {
                 bdsKHOA.EndEdit();
@@ -225,6 +262,12 @@ namespace THITRACNGHIEM
             if (bdsLOP.Count > 0)
             {
                 MessageBox.Show("Không thể xóa khoa có lớp", "",
+                    MessageBoxButtons.OK);
+                return;
+            }
+            if (bdsGV.Count > 0)
+            {
+                MessageBox.Show("Không thể xóa khoa có giáo viên", "",
                     MessageBoxButtons.OK);
                 return;
             }
@@ -326,7 +369,16 @@ namespace THITRACNGHIEM
         {
             try
             {
+                this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.KHOATableAdapter.Fill(this.DSKhoaLop.KHOA);
+                this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GIAOVIENTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN);
+                this.lOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.lOPTableAdapter.Fill(this.DSKhoaLop.LOP);
+                this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.SINHVIENTableAdapter.Fill(this.DSKhoaLop.SINHVIEN);
+                this.GV_DKTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.GV_DKTableAdapter.Fill(this.DSKhoaLop.GIAOVIEN_DANGKY);
             }
             catch (Exception ex)
             {
@@ -536,7 +588,7 @@ namespace THITRACNGHIEM
                     {
                         Data.ServerConnection.Open();
                     }
-                    SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @malop = " + row["MALOP"].ToString().Trim() + ", @tenlop = " + row["TENLOP"].ToString().Trim(), Data.ServerConnection);
+                    SqlCommand command = new SqlCommand("EXECUTE SP_CheckValiDateLop @malop = " + row["MALOP"].ToString().Trim() + ", @tenlop = " + "'" + row["TENLOP"].ToString().Trim() + "'", Data.ServerConnection);
                     command.ExecuteNonQuery();
                     Data.ServerConnection.Close();
                 }
@@ -902,5 +954,6 @@ namespace THITRACNGHIEM
             if (undoManagerLop.GetUndoStack().Count <= 0) phụcHồiToolStripMenuItem.Enabled = false;
             else phụcHồiToolStripMenuItem.Enabled = true;
         }
+      
     }
 }

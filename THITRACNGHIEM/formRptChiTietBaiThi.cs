@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraReports.UI;
+﻿using DevExpress.CodeParser;
+using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,38 @@ namespace THITRACNGHIEM
 
 
 
+        public void reload()
+        {
+            this.dSChiTietBaiThi.EnforceConstraints = false;
 
+
+
+            if (Data.mGroup != "SINHVIEN")
+            {
+                this.LOPTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.LOPTableAdapter.Fill(this.dSChiTietBaiThi.LOP);
+
+                this.SINHVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.SINHVIENTableAdapter.Fill(this.dSChiTietBaiThi.SINHVIEN);
+
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC, "undefined");
+
+
+            }
+            else
+            {
+                this.MONHOCTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC, Data.mlogin);
+
+                lblHoTen.Visible = false;
+                lblLop.Visible = false;
+
+                this.cmbLop.Visible = false;
+                this.cmbMaSV.Visible = false;
+
+            }
+        }
 
         private void formRptChiTietBaiThi_Load(object sender, EventArgs e)
         {
@@ -60,7 +92,7 @@ namespace THITRACNGHIEM
             //this.MONHOCTableAdapter.Fill(this.dSChiTietBaiThi.MONHOC);
 
 
-            this.cmbCoSo.DataSource = Data.bds_dspm;
+            this.cmbCoSo.DataSource = Data.bds_dspm.DataSource;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             this.cmbCoSo.SelectedIndex = Data.mCoSo;
@@ -80,6 +112,11 @@ namespace THITRACNGHIEM
 
         private void btnPreview_Click(object sender, EventArgs e)
         {
+            if (cmbMaMH.Items.Count == 0)
+            {
+                MessageBox.Show("Không có môn học đã thi!", "", MessageBoxButtons.OK);
+                return;
+            }
             if (cmbMaSV.SelectedValue == null && Data.mGroup != "SINHVIEN")
             {
                 MessageBox.Show("Lớp không có sinh viên!", "",MessageBoxButtons.OK);
@@ -88,11 +125,26 @@ namespace THITRACNGHIEM
             xrpt_ChiTietBaiThi rpt;
             if (Data.mGroup == "SINHVIEN")
             {
-                rpt = new xrpt_ChiTietBaiThi(Data.mlogin, cmbMaMH.SelectedValue.ToString(), int.Parse(cmbLanThi.Text));
+                try {
+                    rpt = new xrpt_ChiTietBaiThi(Data.mlogin, cmbMaMH.SelectedValue.ToString(), int.Parse(cmbLanThi.Text));
+                }
+                catch (Exception ex )
+                {
+                    MessageBox.Show("Không thể xem chi tiết bài thi", "", MessageBoxButtons.OK);
+                    return;
+                }
             }
             else
             {
-                rpt = new xrpt_ChiTietBaiThi(cmbMaSV.SelectedValue.ToString(), cmbMaMH.SelectedValue.ToString(), int.Parse(cmbLanThi.Text));
+                try
+                {
+                    rpt = new xrpt_ChiTietBaiThi(cmbMaSV.SelectedValue.ToString(), cmbMaMH.SelectedValue.ToString(), int.Parse(cmbLanThi.Text));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Không thể xem chi tiết bài thi", "", MessageBoxButtons.OK);
+                    return;
+                }
             }
             string command;
             if (Data.mGroup == "SINHVIEN")
@@ -106,6 +158,7 @@ namespace THITRACNGHIEM
 
             SqlDataReader reader = Data.ExecSqlDataReader(command,Data.ServerConnection);
             DateTime ngayThi = DateTime.Today.Date;
+            double diem = 0;
             String tenLop = "";
             Boolean isExist = false;
             try
@@ -114,6 +167,8 @@ namespace THITRACNGHIEM
                 {
                     isExist = true;
                     ngayThi = Convert.ToDateTime(reader["NGAYTHI"]).Date;
+                    diem = Math.Round((double)(reader["DIEM"]), 2);
+
                     tenLop = reader["TENLOP"].ToString();
                 }
                 reader.Close();
@@ -130,6 +185,7 @@ namespace THITRACNGHIEM
             }
             rpt.lblLop.Text = tenLop;
             rpt.lblNgayThi.Text = ngayThi.ToString();
+            rpt.txtDiem.Text = diem.ToString();
             if (Data.mGroup == "SINHVIEN")
             {
                 rpt.lblHoTen.Text = Data.mHoten;

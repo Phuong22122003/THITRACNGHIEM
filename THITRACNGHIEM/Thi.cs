@@ -207,7 +207,7 @@ namespace THITRACNGHIEM
         {
             try
             {
-                this.SP_LAYCAUHOITHITableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+                this.SP_PHUCHOICAUHOITHITableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
                 this.DS_THI.EnforceConstraints = false;
                 this.SP_PHUCHOICAUHOITHITableAdapter.Fill(this.DS_THI.SP_PHUCHOICAUHOITHI, this.IDBD, this.mamh);
             }

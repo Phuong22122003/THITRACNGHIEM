@@ -33,7 +33,22 @@ namespace THITRACNGHIEM
             this.formMain = formMain;
         }
 
+        public void reload()
+        {
+            this.dSNhapLop.EnforceConstraints = false;
 
+            this.KHOATableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.KHOATableAdapter.Fill(this.dSNhapLop.KHOA);
+
+            this.GIAOVIENTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GIAOVIENTableAdapter.Fill(this.dSNhapLop.GIAOVIEN);
+
+            this.GIAOVIEN_DANGKYTableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.GIAOVIEN_DANGKYTableAdapter.Fill(this.dSNhapLop.GIAOVIEN_DANGKY);
+
+            this.BODETableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
+            this.BODETableAdapter.Fill(this.dSNhapLop.BODE);
+        }
         private void formNhapGiaoVIen_Load(object sender, EventArgs e)
         {
           
@@ -52,7 +67,7 @@ namespace THITRACNGHIEM
             this.BODETableAdapter.Connection.ConnectionString = Data.ServerConnectionString;
             this.BODETableAdapter.Fill(this.dSNhapLop.BODE);
 
-            this.cmbCoSo.DataSource = Data.bds_dspm;
+            this.cmbCoSo.DataSource = Data.bds_dspm.DataSource;
             this.cmbCoSo.DisplayMember = "TENCS";
             this.cmbCoSo.ValueMember = "TENSERVER";
             this.cmbCoSo.SelectedIndex = Data.mCoSo;
@@ -155,6 +170,25 @@ namespace THITRACNGHIEM
                 gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["TEN"];
                 e.Valid = false;
                 
+                return;
+            }
+
+            if (row != null && KiemTraChuoi(row["HO"].ToString().Trim()) == false)
+            {
+                e.ErrorText = "Họ giáo viên chỉ được chứa ký tự và khoảng trống!";
+                gvGiaoVien.FocusedRowHandle = e.RowHandle;
+                gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["HO"];
+                e.Valid = false;
+
+                return;
+            }
+            if (row != null && KiemTraChuoi(row["TEN"].ToString().Trim()) == false)
+            {
+                e.ErrorText = "Tên giáo viên chỉ được chứa ký tự và khoảng trống!";
+                gvGiaoVien.FocusedRowHandle = e.RowHandle;
+                gvGiaoVien.FocusedColumn = gvGiaoVien.Columns["TEN"];
+                e.Valid = false;
+
                 return;
             }
 
@@ -368,7 +402,10 @@ namespace THITRACNGHIEM
                 }
             }
         }
-
+        public static bool KiemTraChuoi(string chuoi)
+        {
+            return chuoi.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
+        }
         private void hiệuChỉnhGiáoViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
             trangThaiGhi = TrangThaiGhi.hieuchinh;
@@ -494,7 +531,14 @@ namespace THITRACNGHIEM
                 string newDiachi = txtDiaChi.Text;
                 string newHocvi = cboHocVi.SelectedItem.ToString();
 
-
+                if (KiemTraChuoi(newHo.Trim()) == false)
+                {
+                    MessageBox.Show("Họ chỉ được chứa ký tự và khoảng trống"); return;
+                }
+                if (KiemTraChuoi(newTen.Trim()) == false)
+                {
+                    MessageBox.Show("Tên chỉ được chứa ký tự và khoảng trống");return;
+                }
                 DataRow selectedRow = ((DataRowView)gvGiaoVien.GetFocusedRow()).Row;
                 DataRowView oldRow = (DataRowView)gvGiaoVien.GetFocusedRow();
                 oldRowItemArray = oldRow.Row.ItemArray;
